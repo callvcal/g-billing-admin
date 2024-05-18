@@ -82,7 +82,8 @@ class DiningTableController extends AdminController
             'running'=>"Running",
         ])->default('blank');
         $form->text('number', __('Table Number'))->required();
-
+        $form->hidden('admin_id', __('Admin id'))->default(Admin::user()->id);
+        $form->hidden('business_id', __('Business id'))->default(Admin::user()->business_id);
         return $form;
     }
 }

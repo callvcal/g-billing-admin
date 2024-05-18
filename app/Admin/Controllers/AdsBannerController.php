@@ -27,17 +27,6 @@ class AdsBannerController extends AdminController
     protected function grid()
     {
         $grid = new Grid(new AdsBanner());
-        // $grid->quickCreate(function (Grid\Tools\QuickCreate $form) {
-        //     $form->text('title', __('Title'))->required();
-        //     $form->text('description', __('Description'))->required();
-        //     $form->image('image', __('Image'))->required();
-        //     $form->select('menu_id', __('Select menu'))->options(Menu::all()->pluck("name", "id"));
-        //     $form->select('banner_type', __('Select banner type'))->options([
-        //         'small' => "Small Banner Ad",
-        //         'normal' => "Normal Banner Ad",
-        //         'dining_table' => "Dining Table",
-        //     ]);
-        // });
         $grid->model()->orderBy('updated_at', "desc");
         $grid->column('image', __('Image'))->image("", width: 64, height: 64);
         $grid->column('title', __('Title'))->sortable();

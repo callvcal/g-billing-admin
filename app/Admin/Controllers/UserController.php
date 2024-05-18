@@ -8,6 +8,7 @@ use OpenAdmin\Admin\Form;
 use OpenAdmin\Admin\Grid;
 use OpenAdmin\Admin\Show;
 use \App\Models\User;
+use OpenAdmin\Admin\Facades\Admin;
 
 class UserController extends AdminController
 {
@@ -26,15 +27,15 @@ class UserController extends AdminController
     protected function grid()
     {
         $grid = new Grid(new User());
-        $grid->model()->orderBy('updated_at',"desc");
+        $grid->model()->orderBy('updated_at', "desc");
         (new RelationController())->gridActions($grid);
 
         $grid->column('id', __('Id'))->sortable();
-        $grid->column('image', __('Thumbnail'))->image("",64,64);
+        $grid->column('image', __('Thumbnail'))->image("", 64, 64);
         $grid->column('name', __('Name'))->sortable();
         $grid->column('email', __('Email'))->sortable();
         $grid->column('mobile', __('Mobile'))->sortable();
-        
+
 
         return $grid;
     }
@@ -77,6 +78,8 @@ class UserController extends AdminController
         $form->image('image', __('Image'));
         $form->date('date_of_birth', __('Date of birth'))->default(date('Y-m-d'));
         $form->text('gender', __('Gender'));
+        $form->hidden('admin_id', __('Admin id'))->default(Admin::user()->id);
+        $form->hidden('business_id', __('Business id'))->default(Admin::user()->business_id);
         return $form;
     }
 }

@@ -7,6 +7,7 @@ use OpenAdmin\Admin\Form;
 use OpenAdmin\Admin\Grid;
 use OpenAdmin\Admin\Show;
 use \App\Models\SpecialDiscount;
+use OpenAdmin\Admin\Facades\Admin;
 
 class SpecialDiscountController extends AdminController
 {
@@ -89,7 +90,8 @@ class SpecialDiscountController extends AdminController
         $form->number('sell_id', __('Sell id'));
         $form->phonenumber('mobile', __('Mobile'));
         $form->text('discount_index', __('Discount index'));
-
+        $form->hidden('admin_id', __('Admin id'))->default(Admin::user()->id);
+        $form->hidden('business_id', __('Business id'))->default(Admin::user()->business_id);
         return $form;
     }
 }

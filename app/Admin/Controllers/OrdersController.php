@@ -15,6 +15,7 @@ use OpenAdmin\Admin\Show;
 use \App\Models\Sell;
 use App\Models\User;
 use Carbon\Carbon;
+use OpenAdmin\Admin\Facades\Admin;
 use OpenAdmin\Admin\Form\Row;
 use OpenAdmin\Admin\Layout\Content;
 use OpenAdmin\Admin\Widgets\Tab;
@@ -198,7 +199,8 @@ class OrdersController extends Controller
         $form->number('invoice_id', __('Invoice id'));
         $form->number('user_id', __('User id'));
         $form->number('address_id', __('Address id'));
-
+        $form->hidden('admin_id', __('Admin id'))->default(Admin::user()->id);
+        $form->hidden('business_id', __('Business id'))->default(Admin::user()->business_id);
         return $form;
     }
 }

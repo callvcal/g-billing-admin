@@ -7,6 +7,7 @@ use OpenAdmin\Admin\Form;
 use OpenAdmin\Admin\Grid;
 use OpenAdmin\Admin\Show;
 use \App\Models\Unit;
+use OpenAdmin\Admin\Facades\Admin;
 
 class UnitController extends AdminController
 {
@@ -67,8 +68,8 @@ class UnitController extends AdminController
     {
         $form = new Form(new Unit());
         $form->text('name', __('Name'));
-        // $form->number('qty', __('Qty'));
-
+        $form->hidden('admin_id', __('Admin id'))->default(Admin::user()->id);
+        $form->hidden('business_id', __('Business id'))->default(Admin::user()->business_id);
         return $form;
     }
 }

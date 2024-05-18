@@ -7,6 +7,7 @@ use OpenAdmin\Admin\Form;
 use OpenAdmin\Admin\Grid;
 use OpenAdmin\Admin\Show;
 use \App\Models\DiningTableUser;
+use OpenAdmin\Admin\Facades\Admin;
 
 class DiningTableUserController extends AdminController
 {
@@ -89,7 +90,8 @@ class DiningTableUserController extends AdminController
         $form->number('invoice_id', __('Invoice id'));
         $form->number('staff_user_id', __('Staff user id'));
         $form->number('discount', __('Discount'));
-
+        $form->hidden('admin_id', __('Admin id'))->default(Admin::user()->id);
+        $form->hidden('business_id', __('Business id'))->default(Admin::user()->business_id);
         return $form;
     }
 }

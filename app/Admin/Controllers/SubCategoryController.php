@@ -73,7 +73,8 @@ class SubCategoryController extends AdminController
         $form->image('image', __('Image'));
         $form->select('category_id', __('Select Category'))->options(Category::all()->pluck("name","id"));
         $form->select('kitchen_id', __('Select Kitchen'))->options(Kitchen::all()->pluck("name","id"));
-
+        $form->hidden('admin_id', __('Admin id'))->default(Admin::user()->id);
+        $form->hidden('business_id', __('Business id'))->default(Admin::user()->business_id);
         return $form;
     }
 }

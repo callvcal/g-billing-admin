@@ -2,11 +2,14 @@
 
 namespace App\Admin\Controllers;
 
+use App\Models\AdminUser;
+use App\Models\Business;
 use OpenAdmin\Admin\Controllers\AdminController;
 use OpenAdmin\Admin\Form;
 use OpenAdmin\Admin\Grid;
 use OpenAdmin\Admin\Show;
 use \App\Models\Category;
+use App\Models\User;
 use OpenAdmin\Admin\Facades\Admin;
 
 class CategoryController extends AdminController
@@ -76,10 +79,8 @@ class CategoryController extends AdminController
         $form->text('name', __('Name'));
         $form->image('image', __('Image'));
         $form->image('web_image', __('Web Image'));
-        // $form->hidden('admin_id', __('Admin'))
-        // ->defaultOnEmpty(Admin::user()->id)
-        // ;
-
+        $form->hidden('admin_id', __('Admin id'))->default(Admin::user()->id);
+        $form->hidden('business_id', __('Business id'))->default(Admin::user()->business_id);
         return $form;
     }
 }

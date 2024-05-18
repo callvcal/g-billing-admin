@@ -7,6 +7,7 @@ use OpenAdmin\Admin\Form;
 use OpenAdmin\Admin\Grid;
 use OpenAdmin\Admin\Show;
 use \App\Models\OrderStatusUpdate;
+use OpenAdmin\Admin\Facades\Admin;
 
 class OrderStatusUpdateController extends AdminController
 {
@@ -73,7 +74,8 @@ class OrderStatusUpdateController extends AdminController
         $form->number('driver_id', __('Driver id'));
         $form->number('user_id', __('User id'));
         $form->text('status', __('Status'));
-
+        $form->hidden('admin_id', __('Admin id'))->default(Admin::user()->id);
+        $form->hidden('business_id', __('Business id'))->default(Admin::user()->business_id);
         return $form;
     }
 }

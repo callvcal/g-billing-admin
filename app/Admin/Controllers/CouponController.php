@@ -89,7 +89,7 @@ class CouponController extends AdminController
         $form->datetime('start_date', __('Start date'))->default(date('Y-m-d H:i:s'))->required();
         $form->datetime('end_date', __('End date'))->default(date('Y-m-d H:i:s'))->required();
         $form->hidden('admin_id', __('Admin id'))->default(Admin::user()->id);
-
+        $form->hidden('business_id', __('Business id'))->default(Admin::user()->business_id);
         return $form;
     }
 }

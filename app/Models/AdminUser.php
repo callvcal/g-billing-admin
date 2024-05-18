@@ -27,9 +27,7 @@ class AdminUser extends Authenticatable
         'mobile',
         'date_of_birth',
         'gender',
-        'business_id',
-        'is_driver',
-        'is_verified_driver',
+        'business_id'
     ];
 
     /**

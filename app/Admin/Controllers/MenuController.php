@@ -133,10 +133,8 @@ class MenuController extends AdminController
         $form->number('alert_stocks', __('Alert Stocks'))->default(0);
         $form->text('weight_per_serving', __('Weight per serving ,(Enter unit also)'))->default(0);
         $form->text('proteins_count', __('Proteins count ,(Enter unit also)'))->default(0);
-
-        
-        // $form->hidden('admin_id', __('Admin'))->defaultOnEmpty(Admin::user()->id);
-
+        $form->hidden('admin_id', __('Admin id'))->default(Admin::user()->id);
+        $form->hidden('business_id', __('Business id'))->default(Admin::user()->business_id);
         return $form;
     }
 }

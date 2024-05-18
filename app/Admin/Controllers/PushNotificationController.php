@@ -74,7 +74,8 @@ class PushNotificationController extends AdminController
         $form->image('image', __('Image'));
         // $form->datetime('date_time', __('Date time'))->default(date('Y-m-d H:i:s'));
         $form->hidden('admin_id', __('Admin id'))->default(Admin::user()->id);
-
+        $form->hidden('admin_id', __('Admin id'))->default(Admin::user()->id);
+        $form->hidden('business_id', __('Business id'))->default(Admin::user()->business_id);
         return $form;
     }
 }

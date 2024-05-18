@@ -2,6 +2,7 @@
 
 namespace App\Admin\Controllers;
 
+use App\Models\AdminUser;
 use OpenAdmin\Admin\Controllers\AdminController;
 use OpenAdmin\Admin\Form;
 use OpenAdmin\Admin\Grid;
@@ -37,7 +38,7 @@ class BusinessController extends AdminController
         $grid->column('on_board_date', __('On board date'));
         $grid->column('purchase_date', __('Purchase date'));
         $grid->column('last_subscription_date', __('Last subscription date'));
-        $grid->column('user_admin_id', __('User admin id'));
+        $grid->column('admin_id', __('User admin id'));
         $grid->column('expiry_date', __('Expiry Date'));
         $grid->column('deleting_date', __('Deleted Date'));
 
@@ -57,7 +58,7 @@ class BusinessController extends AdminController
 
         $show->field('id', __('Id'));
         $show->field('name', __('Name'));
-        $show->field('user_admin_id', __('User admin id'));
+        $show->field('admin_id', __('User admin id'));
         $show->field('created_at', __('Created at'));
         $show->field('updated_at', __('Updated at'));
         $show->field('deleting_date', __('deleted at'));
@@ -75,7 +76,7 @@ class BusinessController extends AdminController
         $form = new Form(new Location());
 
         $form->text('name', __('Name'));
-        $form->select('user_admin_id', __('User admin id'))->options(User::all()->pluck('username', 'id'));
+        $form->select('admin_id', __('User admin id'))->options(AdminUser::all()->pluck('name', 'id'));
         $form->select('plan', __('plan'))->options(['free' => 'Free', 'monthly' => "Monthly", 'annual' => "Annual", 'lifetime' => "10 years"]);
         $form->select('on_board_way', __('On board way'))->options(['app' => 'App', 'offline' => "Offline"]);
         $form->date('on_board_date', __('On board date'));

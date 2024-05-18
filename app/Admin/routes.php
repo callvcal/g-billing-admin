@@ -34,6 +34,7 @@ use App\Admin\Controllers\RawMatrialController;
 use App\Admin\Controllers\SellController;
 use App\Admin\Controllers\SellItemController;
 use App\Admin\Controllers\SpecialDiscountController;
+use App\Admin\Controllers\StaffController;
 use App\Admin\Controllers\StockController;
 use App\Admin\Controllers\SubCategoryController;
 use App\Admin\Controllers\TableRequestController;
@@ -84,6 +85,8 @@ Route::group([
     $router->resource('raw-matrials', RawMatrialController::class);
     $router->resource('materials', MaterialController::class);
     $router->resource('businesses', BusinessController::class);
+    $router->resource('working-locations', WorkingLocationController::class);
+    $router->resource('staffs', StaffController::class);
 
 
 

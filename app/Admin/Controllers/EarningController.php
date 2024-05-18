@@ -7,6 +7,7 @@ use OpenAdmin\Admin\Form;
 use OpenAdmin\Admin\Grid;
 use OpenAdmin\Admin\Show;
 use \App\Models\OfflineTransaction;
+use OpenAdmin\Admin\Facades\Admin;
 
 class EarningController extends AdminController
 {
@@ -79,7 +80,8 @@ class EarningController extends AdminController
         $form->number('amount', __('Amount'));
         $form->hidden('type', __('Type'))->default($this->type);
         $form->textarea('cause', __('Cause'));
-
+        $form->hidden('admin_id', __('Admin id'))->default(Admin::user()->id);
+        $form->hidden('business_id', __('Business id'))->default(Admin::user()->business_id);
         return $form;
     }
 }
