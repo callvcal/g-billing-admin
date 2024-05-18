@@ -13,7 +13,6 @@ class CreateInAppPurchasesTable extends Migration
      */
     public function up()
     {
-        Schema::dropIfExists('in_app_purchases');
         Schema::create('in_app_purchases', function (Blueprint $table) {
             $table->id();
             $table->json('json')->nullable();
