@@ -3,6 +3,7 @@
 use App\Admin\Controllers\AddressController;
 use App\Admin\Controllers\AdsBannerController;
 use App\Admin\Controllers\AppHomeController;
+use App\Admin\Controllers\BusinessController;
 use App\Admin\Controllers\CategoryController;
 use App\Admin\Controllers\CouponController;
 use App\Admin\Controllers\CustomerEventController;
@@ -55,41 +56,35 @@ Route::group([
     'as'            => config('admin.route.prefix') . '.',
 ], function (Router $router) {
 
-    $router->get('/', 'HomeController@index')->name('home');
     $router->resource('users', UserController::class);
-    $router->get('php', [HomeController::class, 'php']);
     $router->resource('addresses', AddressController::class);
     $router->resource('categories', CategoryController::class);
     $router->resource('sub-categories', SubCategoryController::class);
     $router->resource('kitchens', KitchenController::class);
-
     $router->resource('units', UnitController::class);
-
     $router->resource('menus', MenuController::class);
     $router->resource('sells', SellController::class);
     $router->resource('sell-items', SellItemController::class);
-    $router->resource('stocks', StockController::class);
     $router->resource('pos', POSController::class);
-
-    
     $router->resource('dining-tables', DiningTableController::class);
-
     $router->resource('table-requests', TableRequestController::class);
-
     $router->resource('coupons', CouponController::class);
     $router->resource('user-coupons', UserCouponController::class);
-
     $router->resource('order-status-updates', OrderStatusUpdateController::class);
     $router->resource('kds', PizzaKDSController::class);
-    $router->post('placeOrder', [POSController::class,'placeOrder']);
-
     $router->resource('special-discounts', SpecialDiscountController::class);
     $router->resource('push-notifications', PushNotificationController::class);
-
     $router->resource('dining-table-users', DiningTableUserController::class);
-
     $router->resource('expenses', ExpenseController::class);
     $router->resource('earning', EarningController::class);
+    $router->resource('app-home', AppHomeController::class);
+    $router->resource('delivery-boys', DriverController::class);
+    $router->resource('ads-banners', AdsBannerController::class);
+    $router->resource('customer-events', CustomerEventController::class);
+    $router->resource('raw-matrials', RawMatrialController::class);
+    $router->resource('materials', MaterialController::class);
+    $router->resource('businesses', BusinessController::class);
+
 
 
     $router->get('print/bill/{id}', [PrintController::class, 'billPrint']);
@@ -98,9 +93,13 @@ Route::group([
     $router->get('sells-summary/{value}', [HomeController::class, 'getSalesByDateRangeRequest']);
     $router->get('offline-transaction-summary/{value}', [HomeController::class, 'getOfflineTrnByDateRangeRequest']);
 
+    $router->get('settings', [SettingController::class, 'create']);
+    $router->get('orders', [OrdersController::class, 'orders']);
+    $router->post('placeOrder', [POSController::class,'placeOrder']);
+    $router->get('php', [HomeController::class, 'php']);
+    $router->get('/', 'HomeController@index')->name('home');
 
-
-    $router->resource('ads-banners', AdsBannerController::class);
+    
     $router->get('pusher/events', [HomeController::class, function () {
         $user = Admin::user();
         $orderStatus = request()->input('order_status');
@@ -137,16 +136,6 @@ Route::group([
     $router->get('/load-subcategories', [ControllersHomeController::class, 'loadSubcategories']);
 
 
-    $router->resource('working-locations', WorkingLocationController::class);
-    $router->resource('app-home', AppHomeController::class);
-    $router->resource('delivery-boys', DriverController::class);
-    $router->get('settings', [SettingController::class, 'create']);
-    $router->get('orders', [OrdersController::class, 'orders']);
-
-
-    $router->resource('customer-events', CustomerEventController::class);
-    $router->resource('raw-matrials', RawMatrialController::class);
-    $router->resource('materials', MaterialController::class);
 
 
 

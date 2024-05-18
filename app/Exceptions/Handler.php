@@ -2,8 +2,8 @@
 
 namespace App\Exceptions;
 
-use Encore\Admin\Reporter\Reporter;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use OpenAdmin\Admin\Reporter\Reporter;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -27,7 +27,8 @@ class Handler extends ExceptionHandler
         $this->reportable(function (Throwable $e) {
             //
             if ($this->shouldReport($e)) {
-                
+                Reporter::report($e);
+
             }
         });
         
