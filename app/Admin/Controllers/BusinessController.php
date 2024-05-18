@@ -3,11 +3,11 @@
 namespace App\Admin\Controllers;
 
 use App\Models\AdminUser;
+use App\Models\Business;
 use OpenAdmin\Admin\Controllers\AdminController;
 use OpenAdmin\Admin\Form;
 use OpenAdmin\Admin\Grid;
 use OpenAdmin\Admin\Show;
-use \App\Models\Location;
 use App\Models\User;
 
 class BusinessController extends AdminController
@@ -26,7 +26,7 @@ class BusinessController extends AdminController
      */
     protected function grid()
     {
-        $grid = new Grid(new Location());
+        $grid = new Grid(new Business());
 
         $grid->model()->orderBy('id',"DESC");
         $grid->column('id', __('Id'));
@@ -54,7 +54,7 @@ class BusinessController extends AdminController
      */
     protected function detail($id)
     {
-        $show = new Show(Location::findOrFail($id));
+        $show = new Show(Business::findOrFail($id));
 
         $show->field('id', __('Id'));
         $show->field('name', __('Name'));
@@ -73,7 +73,7 @@ class BusinessController extends AdminController
      */
     protected function form()
     {
-        $form = new Form(new Location());
+        $form = new Form(new Business());
 
         $form->text('name', __('Name'));
         $form->select('admin_id', __('User admin id'))->options(AdminUser::all()->pluck('name', 'id'));

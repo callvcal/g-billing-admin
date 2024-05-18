@@ -273,9 +273,6 @@ class HomeController extends AdminController
     }
     function admins()
     {
-
-        
-
         if (FacadesAdmin::user()->isAdministrator()) {
             return AdminUser::count();
         }
