@@ -3,6 +3,7 @@
 namespace App\Admin\Controllers;
 
 use App\Models\AdminUser;
+use App\Models\Business;
 use OpenAdmin\Admin\Controllers\AdminController;
 use OpenAdmin\Admin\Form;
 use OpenAdmin\Admin\Grid;
@@ -20,7 +21,7 @@ class StaffController extends AdminController
      */
     protected $title = 'Staff';
 
-    
+
 
     /**
      * Make a grid builder.
@@ -115,14 +116,25 @@ class StaffController extends AdminController
         $form->ignore(['password_confirmation']);
         $form->phonenumber('mobile', __('Mobile'));
         $form->image('avatar', trans('admin.avatar'));
-        $form->hidden('business_id', __('Business id'))->default(Admin::user()->business_id);
-        $form->hidden('admin_id', __('Admin id'))->default(Admin::user()->id);
+
+        if (Admin::user()->isAdministrator()) {
+            $form->select('business_id', __('Business id'))->options(Business::all()->pluck('name', 'id'));
+            $form->select('admin_id', __('Admin id'))->options(AdminUser::all()->pluck('name', 'id'));
+        } else {
+            $form->hidden('business_id', __('Business id'))->default(Admin::user()->business_id);
+            $form->hidden('admin_id', __('Admin id'))->default(Admin::user()->id);
+        }
+
+
         $form->multipleSelect('roles', trans('admin.roles'))->options($roleModel::where('slug', 'like', 'Partner-%')->pluck('name', 'id'));
         $form->saving(function (Form $form) {
             if ($form->password && $form->model()->password != $form->password) {
                 $form->password = Hash::make($form->password);
             }
         });
+
+
+
         return $form;
     }
 }
