@@ -5,6 +5,7 @@ namespace App\Admin\Forms;
 use App\Models\Setting as ModelsSetting;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use OpenAdmin\Admin\Facades\Admin;
 use OpenAdmin\Admin\Widgets\Form;
 
 class Setting extends Form
@@ -120,7 +121,13 @@ class Setting extends Form
      */
     public function data()
     {
-        $data = ModelsSetting::find(1);
+        $data = ModelsSetting::find(Admin::user()->business_id);
+
+        if(!$data){
+            ModelsSetting::create([
+                'id'=>Admin::user()->business_id
+            ]);
+        }
 
         if ($data) {
             return $data->json;
