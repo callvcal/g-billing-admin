@@ -88,7 +88,11 @@ Route::group([
     $router->resource('working-locations', WorkingLocationController::class);
     $router->resource('staffs', StaffController::class);
 
-
+    $router->get('settings', [SettingController::class, 'create']);
+    $router->get('orders', [OrdersController::class, 'orders']);
+    $router->post('placeOrder', [POSController::class,'placeOrder']);
+    $router->get('php', [HomeController::class, 'php']);
+    $router->get('/', 'HomeController@index')->name('home');
 
     $router->get('print/bill/{id}', [PrintController::class, 'billPrint']);
     $router->get('print/kot/{id}', [PrintController::class, 'kotPrint']);
@@ -96,11 +100,7 @@ Route::group([
     $router->get('sells-summary/{value}', [HomeController::class, 'getSalesByDateRangeRequest']);
     $router->get('offline-transaction-summary/{value}', [HomeController::class, 'getOfflineTrnByDateRangeRequest']);
 
-    $router->get('settings', [SettingController::class, 'create']);
-    $router->get('orders', [OrdersController::class, 'orders']);
-    $router->post('placeOrder', [POSController::class,'placeOrder']);
-    $router->get('php', [HomeController::class, 'php']);
-    $router->get('/', 'HomeController@index')->name('home');
+    
 
     
     $router->get('pusher/events', [HomeController::class, function () {

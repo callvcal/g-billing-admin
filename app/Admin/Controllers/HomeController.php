@@ -5,6 +5,7 @@ namespace App\Admin\Controllers;
 use App\Admin\Actions\PrepareOrder;
 use App\Http\Controllers\Controller;
 use App\Models\Address;
+use App\Models\AdminUser;
 use App\Models\Category;
 use App\Models\DiningTable;
 use App\Models\Menu;
@@ -21,6 +22,7 @@ use Illuminate\Support\Facades\Redirect;
 use OpenAdmin\Admin\Admin;
 use OpenAdmin\Admin\Controllers\AdminController;
 use OpenAdmin\Admin\Controllers\Dashboard;
+use OpenAdmin\Admin\Facades\Admin as FacadesAdmin;
 use OpenAdmin\Admin\Grid;
 use OpenAdmin\Admin\Grid\Column as GridColumn;
 use OpenAdmin\Admin\Layout\Column;
@@ -37,42 +39,20 @@ class HomeController extends AdminController
     public function index(Content $content)
     {
 
-        // if (Admin::user()->isRole('kds')) {
-        //     return redirect('/kds');
-        // }
 
+        $admins = $this->admins();
+        $users_total = 0;
+        if (FacadesAdmin::user()->isAdminstrator()) {
+            $users_total = User::count();
+        }
 
-
-        $months = array(
-            array("Oct", "800", "400", "400"),
-            array("Nov", "1000", "600", "400"),
-            array("Dec", "1100", "700", "400"),
-            array("Jan", "1300", "800", "500"),
-            array("Feb", "1400", "900", "500"),
-            array("Mar", "1600", "1100", "500"),
-            array("Apr", "1800", "1300", "500")
-        );
-
-        $admins = DB::table('admin_users')->count();
-        $users_total = User::count();
-
-        $activeOrders = Sell::whereDate('created_at', now()->toDateString())->whereNotIN('order_status', [
+        $activeOrders = $this->query(Sell::class)->whereDate('created_at', now()->toDateString())->whereNotIN('order_status', [
             'g_cancelled',
             'f_rejected'
         ])->count();
-        $all = Sell::where('order_status', 'e_completed')->groupBy('sell_type')->selectRaw('SUM(total_amt) as total,sell_type as type')->get();
-        $today = Sell::whereDate('created_at', now()->toDateString())->where('order_status', 'e_completed')->groupBy('sell_type')->selectRaw('SUM(total_amt) as total,sell_type as type')->get();
-        // $PayMethodCounter = Sell::where('order_status', 'e_completed')->where('sell_type', 'counter')->groupBy('payment_method')->selectRaw('SUM(total_amt) as total');
-        // $PayMethodApp = Sell::where('order_status', 'e_completed')->where('sell_type', 'app')->groupBy('payment_method')->selectRaw('SUM(total_amt) as total');
 
-
-
-
-
-
-
-
-
+        $all = $this->query(Sell::class)->where('order_status', 'e_completed')->groupBy('sell_type')->selectRaw('SUM(total_amt) as total,sell_type as type')->get();
+        $today = $this->query(Sell::class)->whereDate('created_at', now()->toDateString())->where('order_status', 'e_completed')->groupBy('sell_type')->selectRaw('SUM(total_amt) as total,sell_type as type')->get();
 
 
         $startDate = Carbon::now()->subHours(24);
@@ -81,47 +61,44 @@ class HomeController extends AdminController
         $sells = $this->getSalesByDateRange($startDate, $endDate);
 
 
-        $transactions =$this->getOfflineTrnByDateRange($startDate, $endDate);
+        $transactions = $this->getOfflineTrnByDateRange($startDate, $endDate);
 
         $data = [
             'counts' => [
                 [
                     'name' => "Dining Requests",
-                    'count' => TableRequest::count(),
+                    'count' => $this->query(TableRequest::class)->count(),
                 ],
                 [
                     'name' => "Admins",
                     'count' => $admins,
                 ],
 
-                [
-                    'name' => "Customers",
-                    'count' => $users_total,
-                ],
+
                 [
                     'name' => "Categories",
-                    'count' => Category::count(),
+                    'count' => $this->query(Category::class)->count(),
                 ],
                 [
                     'name' => "Subcategories",
-                    'count' => SubCategory::count(),
+                    'count' => $this->query(SubCategory::class)->count(),
                 ],
                 [
                     'name' => "Today's Orders",
-                    'count' => Sell::whereDate('created_at', now()->toDateString())->count(),
+                    'count' => $this->query(Sell::class)->whereDate('created_at', now()->toDateString())->count(),
                 ],
 
                 [
                     'name' => "Total food item",
-                    'count' => Menu::count(),
+                    'count' => $this->query(Menu::class)->count(),
                 ],
                 [
                     'name' => "Total available food item",
-                    'count' => Menu::where('in_stock', 1)->count(),
+                    'count' => $this->query(Menu::class)->where('in_stock', 1)->count(),
                 ],
                 [
                     'name' => "Active Orders",
-                    'count' => Sell::whereDate('created_at', now()->toDateString())->whereIN('order_status', [
+                    'count' => $this->query(Sell::class)->whereDate('created_at', now()->toDateString())->whereIN('order_status', [
                         'a_sent',
                         'b_accepted',
                         'c_preparing',
@@ -130,7 +107,7 @@ class HomeController extends AdminController
                 ],
                 [
                     'name' => "Completed Orders",
-                    'count' => Sell::whereDate('created_at', now()->toDateString())->whereIN('order_status', [
+                    'count' => $this->query(Sell::class)->whereDate('created_at', now()->toDateString())->whereIN('order_status', [
 
                         'e_completed',
                     ])->count(),
@@ -170,6 +147,12 @@ class HomeController extends AdminController
             'name' => "Today Sale",
             'count' => "Rs." . $total,
         ]);
+        if ($users_total > 0) {
+            array_unshift($data['counts'], [
+                'name' => "Customers",
+                'count' => $users_total,
+            ],);
+        }
 
 
 
@@ -186,16 +169,16 @@ class HomeController extends AdminController
     {
 
         if ($startDate != null) {
-            $sells = DB::table('sells')
+            $sells = $this->subQuery(DB::table('sells')
                 ->select(DB::raw('DATE(date_time) as date'), DB::raw('SUM(total_amt) as total_sales'))
                 ->where('order_status', 'e_completed')
-                ->whereBetween('date_time', [$startDate, $endDate])
+                ->whereBetween('date_time', [$startDate, $endDate]))
                 ->groupBy('date')
                 ->get();
         } else {
-            $sells = DB::table('sells')
+            $sells = $this->subQuery(DB::table('sells')
                 ->select(DB::raw('DATE(date_time) as date'), DB::raw('SUM(total_amt) as total_sales'))
-                ->where('order_status', 'e_completed')
+                ->where('order_status', 'e_completed'))
                 ->groupBy('date')
                 ->get();
         }
@@ -208,13 +191,13 @@ class HomeController extends AdminController
     {
 
         if ($startDate != null) {
-            $trns= OfflineTransaction::whereBetween('created_at',[$startDate, $endDate])->selectRaw('SUM(amount) as amount, type')
-            ->groupBy('type')
-            ->get();
+            $trns = $this->query(OfflineTransaction::class)->whereBetween('created_at', [$startDate, $endDate])->selectRaw('SUM(amount) as amount, type')
+                ->groupBy('type')
+                ->get();
         } else {
-           $trns= OfflineTransaction::selectRaw('SUM(amount) as amount, type')
-            ->groupBy('type')
-            ->get();
+            $trns = $this->query(OfflineTransaction::class)->selectRaw('SUM(amount) as amount, type')
+                ->groupBy('type')
+                ->get();
         }
 
 
@@ -250,20 +233,51 @@ class HomeController extends AdminController
         $sells = $this->getSalesByDateRange($startDate, $endDate);
         $trns = $this->getOfflineTrnByDateRange($startDate, $endDate);
         return response()->json([
-            'sells'=>$sells,
-            'trns'=>$trns,
+            'sells' => $sells,
+            'trns' => $trns,
         ]);
     }
-    
-    
+
+
 
     public function pusher()
     {
-        $user = Admin::user();
+        $user = FacadesAdmin::user();
 
         // Check if the user has the role 'owner'
         $isOwner = $user->isRole('owner');
 
         return response()->json(['is_owner' => $isOwner]);
+    }
+
+
+    function query($model)
+    {
+        $user = FacadesAdmin::user();
+
+        if ($user->isAdminstrator()) {
+            return $model::query();
+        }
+
+        return $model::where('business_id', $user->business_id);
+    }
+    function subQuery($query)
+    {
+        $user = FacadesAdmin::user();
+
+        if ($user->isAdminstrator()) {
+            return $query;
+        }
+
+        return $query->where('business_id', $user->business_id);
+    }
+    function admins()
+    {
+
+        if (FacadesAdmin::user()->isAdminstrator()) {
+            return AdminUser::count();
+        }
+
+        return AdminUser::where('business_id', FacadesAdmin::user()->business_id)->count();
     }
 }
