@@ -106,7 +106,7 @@ Grid::init(function (Grid $grid) {
     });
   });
 
-  if(!isAdministrator()){
+  if(isAdministrator()){
     $grid->column('business_id', __('Business ID'));
 
   }
