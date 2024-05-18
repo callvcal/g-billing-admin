@@ -105,6 +105,13 @@ Grid::init(function (Grid $grid) {
       }
     });
   });
+
+  if(!isAdministrator()){
+    $grid->column('business_id', __('Business ID'));
+
+  }
+
+
 });
 
 
@@ -119,6 +126,10 @@ Show::init(function (Show $show) {
         $tools->disableDelete();
       }
     });;
+    if(!isAdministrator()){
+      $show->field('business_id', __('Business ID'));
+  
+    }
 });
 
 
