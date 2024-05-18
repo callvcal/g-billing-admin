@@ -59,7 +59,7 @@ Grid::init(function (Grid $grid) {
 
   $grid->enableDblClick();
 
-  $grid->disableActions();
+  
 
   if (!isAdministrator()) {
     $grid->model()->where('business_id', Admin::user()->business_id)->orderBy('id', 'DESC');
@@ -94,7 +94,7 @@ Grid::init(function (Grid $grid) {
       $actions->disableDelete();
     }
   });
-  
+
   $grid->tools(function (Grid\Tools $tools) {
     $tools->batch(function (Grid\Tools\BatchActions $actions) {
       if (!canAllowDelete()) {
@@ -106,12 +106,9 @@ Grid::init(function (Grid $grid) {
     });
   });
 
-  if(isAdministrator()){
+  if (isAdministrator()) {
     $grid->column('business_id', __('Business ID'));
-
   }
-
-
 });
 
 
@@ -126,10 +123,9 @@ Show::init(function (Show $show) {
         $tools->disableDelete();
       }
     });;
-    if(isAdministrator()){
-      $show->field('business_id', __('Business ID'));
-  
-    }
+  if (isAdministrator()) {
+    $show->field('business_id', __('Business ID'));
+  }
 });
 
 
