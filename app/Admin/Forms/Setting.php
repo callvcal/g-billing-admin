@@ -79,7 +79,7 @@ class Setting extends Form
      */
     public function form()
     {
-        $this->text('shop_name', 'Shop Name')->default('Eatplan8')->rules('required');
+        $this->text('shop_name', 'Shop Name')->rules('required');
         $this->text('address', 'Address')->rules('required');
         $this->text('mobile', 'Mobile Number')->rules('required');
         $this->email('email', 'Email Address')->rules('required|email');

@@ -23,6 +23,7 @@ use Illuminate\Support\Facades\Redirect;
 use OpenAdmin\Admin\Admin;
 use OpenAdmin\Admin\Controllers\AdminController;
 use OpenAdmin\Admin\Controllers\Dashboard;
+use OpenAdmin\Admin\Facades\Admin as FacadesAdmin;
 use OpenAdmin\Admin\Grid;
 use OpenAdmin\Admin\Grid\Column as GridColumn;
 use OpenAdmin\Admin\Layout\Column;
@@ -50,25 +51,25 @@ class POSController extends AdminController
     {
 
 
-        $subcategories = SubCategory::all();
-        $menus = Menu::where('price', ">", 0)->get();
-        $tables = DiningTable::all();
+        $subcategories = $this->query(SubCategory::class)->all();
+        $menus = $this->query(Menu::class)->where('price', ">", 0)->get();
+        $tables = $this->query(DiningTable::class)->all();
 
 
-        $sell=new Sell();
-        $items=[];
-        $diningID=request()->query('dining_table_id');
-        if(isset($diningID)){
-            $table=DiningTable::find($diningID);
-            if($table){
-                $sell=Sell::find($table->sell_id);
-                if($sell){
-                    $items=SellItem::with('menu')->where('sell_id',$sell->id)->get();                
-                }else{
-                    $sell=new Sell();
+        $sell = new Sell();
+        $items = [];
+        $diningID = request()->query('dining_table_id');
+        if (isset($diningID)) {
+            $table = $this->query(DiningTable::class)->find($diningID);
+            if ($table) {
+                $sell = $this->query(Sell::class)->find($table->sell_id);
+                if ($sell) {
+                    $items = $this->query(SellItem::class)->with('menu')->where('sell_id', $sell->id)->get();
+                } else {
+                    $sell = new Sell();
+                   
                 }
             }
-           
         }
 
         $running = [];
@@ -76,15 +77,18 @@ class POSController extends AdminController
         return $content
             ->css_file(Admin::asset("open-admin/css/pages/dashboard.css"))
             ->title('POS Table Booking')
-            ->row(function (Row $row) use ($subcategories, $menus, $tables, $running,$sell,$items) {
-                $row->column(12, function (Column $column) use ($subcategories, $menus, $tables, $running,$sell,$items) {
-                    $column->append(view("widgets.subcategories", compact(['subcategories', 'menus', 'tables', 'running','sell','items'])));
+            ->row(function (Row $row) use ($subcategories, $menus, $tables, $running, $sell, $items) {
+                $row->column(12, function (Column $column) use ($subcategories, $menus, $tables, $running, $sell, $items) {
+                    $column->append(view("widgets.subcategories", compact(['subcategories', 'menus', 'tables', 'running', 'sell', 'items'])));
                 });
             });
     }
     public function placeOrder(Request $request)
     {
         $orderData = $request->toArray();
+        $user = FacadesAdmin::user();
+        $orderData['business_id'] = $user->business_id;
+        $orderData['admin_id'] = $user->id;
 
         $orderData['date_time'] = Carbon::now();
         $orderData['user_id'] = null;
@@ -92,10 +96,10 @@ class POSController extends AdminController
         $orderData['payment_status'] = $request->payment_status;
         $orderData['order_status'] = ($request->payment_status == 'paid') ? "e_completed" : 'unknown';
         if ($request->pos_action == 'BILL') {
-            $orderData['order_status']='e_completed';
+            $orderData['order_status'] = 'e_completed';
         }
         $orderData['invoice_id'] = (new KotTokenController())->generateToken(type: 'invoice');
-        $orderData['gst_amt'] = $request->total_amt * (((new Setting())->data()['gst_rate'])??0)/100;
+        $orderData['gst_amt'] = $request->total_amt * (((new Setting())->data()['gst_rate']) ?? 0) / 100;
         $orderData['total_amt'] =  $request->total_amt + $request->gst_amt;
         $orderData['order_id'] = (new OrderController())->generateOrderID(1);
 
@@ -104,12 +108,13 @@ class POSController extends AdminController
             $orderData['paid_amt'] =   $orderData['total_amt'];
         }
 
-        $order = Sell::updateOrCreate(
-            ['id'=>$request->id],
-            $orderData);
+        $order = $this->query(Sell::class)->updateOrCreate(
+            ['id' => $request->id],
+            $orderData
+        );
 
 
-        $items=[];
+        $items = [];
 
         $itemsJson = json_decode($request->items);
         foreach ($itemsJson as $key => $item) {
@@ -123,16 +128,17 @@ class POSController extends AdminController
                 'menu_id' => $item->menu_id,
                 'sell_id' => $order->id,
             ];
-            $model=SellItem::updateOrCreate(
-                ['id'=>$item->id??null],
-                $orderItemData);
+            $model = $this->query(SellItem::class)->updateOrCreate(
+                ['id' => $item->id ?? null],
+                $orderItemData
+            );
             $model->load('menu');
-            array_push($items,$model);
+            array_push($items, $model);
         }
 
         // return json_encode($request->toArray());
         if (isset($order->dining_table_id)) {
-            $table = DiningTable::find($order->dining_table_id);
+            $table = $this->query(DiningTable::class)->find($order->dining_table_id);
             $table->customer_name = $order->customer_name;
             $table->customer_mobile = $order->customer_mobile;
             $table->amount = $order->total_amt;
@@ -151,7 +157,7 @@ class POSController extends AdminController
                 $table->status = 'running';
             }
 
-            $order->pos_status=$request->pos_action;
+            $order->pos_status = $request->pos_action;
             $order->save();
             $table->save();
         }
@@ -160,7 +166,7 @@ class POSController extends AdminController
             $data = [
                 "sell" => $order,
                 'items' => $items,
-                'height'=>  (count($items)*50)
+                'height' => (count($items) * 50)
             ];
             $view = view('templates.kot', $data)->render();
             return response()->json(['html' => $view]);
@@ -168,13 +174,13 @@ class POSController extends AdminController
             return redirect("/admin/print/kot/" . $order->id);
         }
         if ($request->pos_action == 'BILL') {
-            $order->load(['user','diningTable']);
-            $image=(new RazorPayController())->getQRcode($order);
+            $order->load(['user', 'diningTable']);
+            $image = (new RazorPayController())->getQRcode($order);
             $data = [
                 "sell" => $order,
                 'items' => $items,
-                'image'=>$image,
-                'height'=> 172 + (count($items)*12)
+                'image' => $image,
+                'height' => 172 + (count($items) * 12)
             ];
             $view = view('templates.bill', $data)->render();
             return response()->json(['html' => $view]);
@@ -182,5 +188,25 @@ class POSController extends AdminController
         } else {
             return redirect('/admin/pos');
         }
+    }
+    function query($model)
+    {
+        $user = FacadesAdmin::user();
+
+        if ($user->isAdministrator()) {
+            return $model::query();
+        }
+
+        return $model::where('business_id', $user->business_id);
+    }
+    function subQuery($query)
+    {
+        $user = FacadesAdmin::user();
+
+        if ($user->isAdministrator()) {
+            return $query;
+        }
+
+        return $query->where('business_id', $user->business_id);
     }
 }
