@@ -15,7 +15,7 @@ class Business extends Model
         'purchase_date',
         'last_subscription_date',
         'expiry_date',
-        'user_admin_id',
+        'admin_id',
         'deleting_date',
         'deleted'
     ];
