@@ -136,7 +136,7 @@ class OrderController extends Controller
                 'total_amt' => $item['total_amt'],
                 'user_id' => $user_id,
                 'menu_id' => $item['menu_id'],
-                'sell_id' => $order->id,
+                'sell_id' => $order->uuid,
                 'address_id' => $order->address_id,
             ];
             SellItem::create($orderItemData);
@@ -329,10 +329,10 @@ class OrderController extends Controller
                 'menu_id' => $item['menu_id'],
                 'admin_id' => auth()->user()->id,
                 'token_number' => (new KotTokenController())->generateToken(),
-                'sell_id' => $order->id,
+                'sell_id' => $order->uuid,
             ];
             $model = SellItem::updateOrCreate([
-                'sell_id' => $order->id,
+                'sell_id' => $order->uuid,
                 'menu_id' => $item['menu_id'],
 
             ], $orderItemData);
@@ -347,7 +347,7 @@ class OrderController extends Controller
             $table->customer_name = $order->customer_name;
             $table->customer_mobile = $order->customer_mobile;
             $table->amount = $order->total_amt;
-            $table->sell_id = $order->id;
+            $table->sell_id = $order->uuid;
             if ($request->pos_action == 'BILL') {
                 $table->customer_name = null;
                 $table->customer_mobile = null;
@@ -358,7 +358,7 @@ class OrderController extends Controller
                 $table->customer_name = $order->customer_name;
                 $table->customer_mobile = $order->customer_mobile;
                 $table->amount = $order->total_amt;
-                $table->sell_id = $order->id;
+                $table->sell_id = $order->uuid;
                 $table->status = 'running';
             }
 

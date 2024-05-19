@@ -14,9 +14,8 @@ class CreateSellItemsTable extends Migration
      */
     public function up()
     {
-        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
-        Schema::dropIfExists('sell_items');
-        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+       
+        
         Schema::create('sell_items', function (Blueprint $table) {
             $table->id();
             $table->uuid('sell_id')->nullable();

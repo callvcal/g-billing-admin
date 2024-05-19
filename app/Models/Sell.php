@@ -22,6 +22,7 @@ class Sell extends Model
         'gst_amt',
         'gst_type',
         'discount_amt',
+        'uuid',
         'special_discount_id',
         'due_amt',
         'full_address',

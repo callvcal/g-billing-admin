@@ -14,14 +14,14 @@ class CreateSellsTable extends Migration
      */
     public function up()
     {
-        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
-        Schema::dropIfExists('sells');
-        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+        // DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+        // Schema::dropIfExists('-');
+        // DB::statement('SET FOREIGN_KEY_CHECKS=1;');
 
         Schema::create('sells', function (Blueprint $table) {
             $table->id();
             $table->uuid('uuid')->default(DB::raw('(UUID())'))->unique();
-           
+
             $table->dateTime('date_time')->nullable();
             $table->string('order_id')->nullable();
             $table->string('transaction_id')->nullable();
