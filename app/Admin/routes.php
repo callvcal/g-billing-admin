@@ -82,7 +82,7 @@ Route::group([
     $router->resource('delivery-boys', DriverController::class);
     $router->resource('ads-banners', AdsBannerController::class);
     $router->resource('customer-events', CustomerEventController::class);
-    $router->resource('raw-matrials', RawMatrialController::class);
+    $router->resource('raw-materials', RawMatrialController::class);
     $router->resource('materials', MaterialController::class);
     $router->resource('businesses', BusinessController::class);
     $router->resource('working-locations', WorkingLocationController::class);
