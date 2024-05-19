@@ -31,7 +31,8 @@ class ExpenseController extends AdminController
             $form->number('amount', __('Amount'));
             $form->text('cause', __('cause'));
             $form->hidden('type', __('e'))->default($this->type);
-            // $form->number('qty', __('Qty'));
+            $form->hidden('business_id', __('Business id'))->default(Admin::user()->business_id);
+            $form->hidden('admin_id', __('Admin id'))->default(Admin::user()->id);
         });
         $grid->model()->where('type',$this->type);
         $grid->model()->orderBy('id',"desc");

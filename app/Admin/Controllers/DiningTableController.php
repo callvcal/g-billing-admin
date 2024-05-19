@@ -32,7 +32,9 @@ class DiningTableController extends AdminController
             $form->text('name', __('Name'));
             $form->number('capacity', __('Capacity'));
             $form->text('number', __('Table Number'))->required();
-        });
+            $form->hidden('business_id', __('Business id'))->default(Admin::user()->business_id);
+            $form->hidden('admin_id', __('Admin id'))->default(Admin::user()->id);
+           });
         $grid->column('id', __('Id'))->sortable();
         $grid->column('status', __('status'))->sortable();
         $grid->column('name', __('Name'))->sortable();
