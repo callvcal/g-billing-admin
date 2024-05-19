@@ -98,18 +98,18 @@ class Setting extends Form
         $this->select('print_gst', 'Print GST')->options($states)->default(1);
         $this->select('is_gst_included', 'Is GST Included')->options($states)->default(1);
         $this->number('gst_rate', 'Enter GST Rate(0-100)%')->default(10)->rules('required');
-        $this->text('price_per_km', 'Delivery Charge Per KM')->rules('required');
-        $this->image('refer_earn_image', 'Refer & Earn Image');
-        $this->number('refer_earn_new_user_rewards', 'Refere & Earn New user rewards')->default(200)->rules('required');
-        $this->number('refer_earn_old_user_rewards', 'Refere & Earn Old user rewards')->default(0)->rules('required');
-        $this->number('refer_earn_referer_discount', 'Referer user discount (0-100)%')->default(10)->rules('required');
-        $this->number('refer_earn_refered_discount_first_order', 'Refered user discount for 1st order(0-100)%')->default(50)->rules('required');
-        $this->number('refer_earn_refered_discount_second_order', 'Refered user discount for 2nd order(0-100)%')->default(25)->rules('required');
-        $this->number('refer_earn_refered_discount_third_order', 'Refered user discount for 3rd order(0-100)%')->default(10)->rules('required');
-        $this->text('rewardConvertRate', 'Reward convert rate')->rules('required');
-        $this->text('printer_network_address', 'Printer Network address')->rules('required');
-        $this->text('printer_port', 'Printer Port')->rules('required');
-        $this->text('footer_message', 'Footer Message')->default("Thank You")->rules('required');
+        // $this->text('price_per_km', 'Delivery Charge Per KM')->rules('required');
+        // $this->image('refer_earn_image', 'Refer & Earn Image');
+        // $this->number('refer_earn_new_user_rewards', 'Refere & Earn New user rewards')->default(200)->rules('required');
+        // $this->number('refer_earn_old_user_rewards', 'Refere & Earn Old user rewards')->default(0)->rules('required');
+        // $this->number('refer_earn_referer_discount', 'Referer user discount (0-100)%')->default(10)->rules('required');
+        // $this->number('refer_earn_refered_discount_first_order', 'Refered user discount for 1st order(0-100)%')->default(50)->rules('required');
+        // $this->number('refer_earn_refered_discount_second_order', 'Refered user discount for 2nd order(0-100)%')->default(25)->rules('required');
+        // $this->number('refer_earn_refered_discount_third_order', 'Refered user discount for 3rd order(0-100)%')->default(10)->rules('required');
+        // $this->text('rewardConvertRate', 'Reward convert rate')->rules('required');
+        $this->text('printer_network_address', 'Printer Network address');
+        $this->text('printer_port', 'Printer Port');
+        $this->text('footer_message', 'Footer Message')->default("Thank You");
         $this->text('gstin', 'GSTIN');
 
     }
