@@ -55,6 +55,7 @@ class POSController extends AdminController
         $menus = $this->query(Menu::class)->where('price', ">", 0)->get();
         $tables = $this->query(DiningTable::class)->get();
 
+        
 
         $sell = new Sell();
         $items = [];
@@ -77,11 +78,12 @@ class POSController extends AdminController
         return $content
             ->css_file(Admin::asset("open-admin/css/pages/dashboard.css"))
             ->title('POS Table Booking')
-            ->row(function (Row $row) use ($subcategories, $menus, $tables, $running, $sell, $items) {
-                $row->column(12, function (Column $column) use ($subcategories, $menus, $tables, $running, $sell, $items) {
-                    $column->append(view("widgets.subcategories", compact(['subcategories', 'menus', 'tables', 'running', 'sell', 'items'])));
-                });
-            });
+            ->body(view("widgets.subcategories", compact(['subcategories', 'menus', 'tables', 'running', 'sell', 'items'])));
+            // ->row(function (Row $row) use ($subcategories, $menus, $tables, $running, $sell, $items) {
+            //     $row->column(12, function (Column $column) use ($subcategories, $menus, $tables, $running, $sell, $items) {
+            //         $column->append(view("widgets.subcategories", compact(['subcategories', 'menus', 'tables', 'running', 'sell', 'items'])));
+            //     });
+            // });
     }
     public function placeOrder(Request $request)
     {

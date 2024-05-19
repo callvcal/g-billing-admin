@@ -34,6 +34,7 @@ class DiningTableController extends AdminController
             $form->text('number', __('Table Number'))->required();
             $form->hidden('business_id', __('Business id'))->default(Admin::user()->business_id);
             $form->hidden('admin_id', __('Admin id'))->default(Admin::user()->id);
+            $form->hidden('status', __('status'))->default('blank');
            });
         $grid->column('id', __('Id'))->sortable();
         $grid->column('status', __('status'))->sortable();
@@ -86,6 +87,7 @@ class DiningTableController extends AdminController
         $form->text('number', __('Table Number'))->required();
         $form->hidden('admin_id', __('Admin id'))->default(Admin::user()->id);
         $form->hidden('business_id', __('Business id'))->default(Admin::user()->business_id);
+        $form->hidden('status', __('status'))->default('blank');
         return $form;
     }
 }

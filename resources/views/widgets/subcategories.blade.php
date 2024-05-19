@@ -118,7 +118,7 @@
                     <label for="dining_table_id">Table</label>
                     <select class="form-select" name="dining_table_id" id="dining_table_id">
                         @foreach ($tables as $item)
-                            @if ($item->status == 'blank' || $item->id == $sell->dining_table_id)
+                            @if ($item->status == 'blank'||$item->status == null || $item->id == $sell->dining_table_id)
                                 <option id="dining_table_id_option_{{ $item->id }}" value="{{ $item->id }}">
                                     Table {{ $item->number }}</option>
                             @endif

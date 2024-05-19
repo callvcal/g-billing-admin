@@ -233,14 +233,16 @@ function canAllowView()
   return false;
 }
 
-
 function checkRole($adminId, $role)
 {
-  $user = AdminUser::with('roles')->find($adminId);
-  $roles = $user->roles;
-  $founds = array_filter($roles, function ($item) use ($role) {
-    return isset($item['slug']) && $item['slug'] === $role;
-  });
+    // Retrieve the user with their roles using Eloquent
+    $user = AdminUser::with('roles')->find($adminId);
 
-  return !empty($founds);
+    // Check if the user exists and has roles
+    if (!$user || !$user->roles) {
+        return false;
+    }
+
+    // Use the 'contains' method to check if any role has the matching slug
+    return $user->roles->contains('slug', $role);
 }
