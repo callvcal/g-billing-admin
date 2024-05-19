@@ -85,7 +85,7 @@ class AppHomeController extends AdminController
 
         $form->text('title', __('Title (referance)'));
 
-        $form->multipleSelect('menus', 'Select items')->options(Menu::all()->pluck('name', 'id'));
+        $form->multipleSelect('menus', 'Select items')->options((new HomeController())->query(Menu::class)->get()->pluck('name', 'id'));
         $form->hidden('admin_id', __('Admin'))->defaultOnEmpty(Admin::user()->id);
 
 

@@ -46,7 +46,7 @@ class MenuController extends AdminController
             $filter->disableIdFilter();
             
             $filter->like('name', 'name');
-            $filter->equal('subcategory_id')->select(SubCategory::all()->pluck('name','id'));
+            $filter->equal('subcategory_id')->select((new HomeController())->query(SubCategory::class)->get()->pluck('name','id'));
 
             
         });
@@ -120,8 +120,8 @@ class MenuController extends AdminController
         $form->number('discount', __('Enter discount in (%)'))->default(0)->required();
         $form->select('food_type', __('Food type'))->options(["veg" => "Veg", "non-veg" => "Non-Veg", "vegan" => "Vegan", "egg" => "Egg"])->required();
 
-        $form->select('category_id', __('Select Category'))->options(Category::all()->pluck('name', 'id'))->required()->load('subcategory_id', '/api/load-subcategories');
-        $form->select('subcategory_id', __('Select Sub-Category'))->options(SubCategory::all()->pluck("name", "id"))->required();
+        $form->select('category_id', __('Select Category'))->options((new HomeController())->query(Category::class)->get()->pluck('name', 'id'))->required()->load('subcategory_id', '/api/load-subcategories');
+        $form->select('subcategory_id', __('Select Sub-Category'))->options((new HomeController())->query(SubCategory::class)->get()->pluck("name", "id"))->required();
 
         $form->select('unit_id', __('Qty Unit'))->options(Unit::all()->pluck("name", "id"))->required();
         $form->text('qty', __('Enter quantity'))->default(1);

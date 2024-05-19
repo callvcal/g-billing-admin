@@ -99,7 +99,6 @@ class MaterialController extends AdminController
 
         $form->text('name', __('Name'));
         $form->hidden('admin_id', __('Admin id'))->default(Admin::user()->id);
-        // $form->select('unit_id', __('Qty Unit'))->options(Unit::all()->pluck("name", "id"))->required();
         $form->hidden('admin_id', __('Admin id'))->default(Admin::user()->id);
         $form->hidden('business_id', __('Business id'))->default(Admin::user()->business_id);
         return $form;

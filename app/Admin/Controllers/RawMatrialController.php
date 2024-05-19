@@ -29,25 +29,9 @@ class RawMatrialController extends AdminController
     {
         $grid = new Grid(new RawMatrial());
         $grid->enableHotKeys();
-        // $grid->quickCreate(function (Grid\Tools\QuickCreate $form) {
-        //     $form->text('name', __('Name'))->required();
-        //     $form->select('unit_id', __('Qty Unit'))->options(Unit::all()->pluck("name", "id"))->required();
-        //     $form->hidden('admin_id', __('Admin id'))->default(Admin::user()->id);
-        //     $form->hidden('datetime', __('Datetime'))->default(date('Y-m-d H:i:s'));
-        //     $form->number('qty', __('Qty'))->required();
-        //     // $form->decimal('amount', __('Amount'));
-        //     $form->select('type', __('Type'))->options([
-        //         'stock-in' => "Stock In",
-        //         'stock-out' => "Stock Out",
-        //     ])->required();
-        // });
+        
         $grid->column('id', __('Id'));
-        // $grid->unit()->display(function ($model) {
-        //     if (isset($model)) {
-        //         return $model['name'];
-        //     }
-        //     return '';
-        // });
+        
         $grid->material()->display(function ($model) {
             if (isset($model)) {
                 return $model['name'];

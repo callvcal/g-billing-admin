@@ -51,9 +51,9 @@ class POSController extends AdminController
     {
 
 
-        $subcategories = $this->query(SubCategory::class)->all();
+        $subcategories = $this->query(SubCategory::class)->get();
         $menus = $this->query(Menu::class)->where('price', ">", 0)->get();
-        $tables = $this->query(DiningTable::class)->all();
+        $tables = $this->query(DiningTable::class)->get();
 
 
         $sell = new Sell();

@@ -71,7 +71,7 @@ class AdsBannerController extends AdminController
         $form->text('title', __('Title'))->required();
         $form->text('description', __('Description'))->required();
         $form->image('image', __('Image'))->required();
-        $form->select('subcategory_id', __('Select Subcategory'))->options(SubCategory::all()->pluck("name", "id"));
+        $form->select('subcategory_id', __('Select Subcategory'))->options((new HomeController())->query(SubCategory::class)->get()->pluck("name", "id"));
         $form->select('banner_type', __('Select banner type'))->options([
             'small' => "Small Banner Ad",
             'normal' => "Normal Banner Ad",
