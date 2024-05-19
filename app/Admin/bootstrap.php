@@ -18,6 +18,7 @@
  *
  */
 
+use App\Models\AdminUser;
 use Illuminate\Support\Facades\Log;
 use OpenAdmin\Admin\Facades\Admin;
 use OpenAdmin\Admin\Form;
@@ -59,7 +60,7 @@ Grid::init(function (Grid $grid) {
 
   $grid->enableDblClick();
 
-  
+
 
   if (!isAdministrator()) {
     $grid->model()->where('business_id', Admin::user()->business_id)->orderBy('id', 'DESC');
@@ -180,7 +181,7 @@ function canAllowDelete()
   if (isAdministrator()) {
     return true;
   }
-  if (is('Partner-Admin')) {
+  if (is('Partner-Admin') || is('Partner-Admin-Access-Only')) {
     return true;
   }
   return false;
@@ -192,7 +193,7 @@ function canAllowCreate()
   if (isAdministrator()) {
     return true;
   }
-  if (is('Partner-Admin')) {
+  if (is('Partner-Admin') || is('Partner-Admin-Access-Only')) {
     return true;
   }
   if (is('Partner-Manager')) {
@@ -208,7 +209,7 @@ function canAllowEdit()
   if (isAdministrator()) {
     return true;
   }
-  if (is('Partner-Admin')) {
+  if (is('Partner-Admin') || is('Partner-Admin-Access-Only')) {
     return true;
   }
   if (is('Partner-Manager')) {
@@ -223,11 +224,23 @@ function canAllowView()
   if (isAdministrator()) {
     return true;
   }
-  if (is('Partner-Admin')) {
+  if (is('Partner-Admin') || is('Partner-Admin-Access-Only')) {
     return true;
   }
   if (is('Partner-Manager')) {
     return true;
   }
   return false;
+}
+
+
+function checkRole($adminId, $role)
+{
+  $user = AdminUser::with('roles')->find($adminId);
+  $roles = $user->roles;
+  $founds = array_filter($roles, function ($item) use ($role) {
+    return isset($item['slug']) && $item['slug'] === $role;
+  });
+
+  return !empty($founds);
 }

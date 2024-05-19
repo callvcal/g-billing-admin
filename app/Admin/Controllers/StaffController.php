@@ -10,6 +10,7 @@ use OpenAdmin\Admin\Grid;
 use OpenAdmin\Admin\Show;
 use \App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use OpenAdmin\Admin\Facades\Admin;
 
 class StaffController extends AdminController
@@ -41,15 +42,28 @@ class StaffController extends AdminController
         $grid->column('created_at', trans('admin.created_at'));
         $grid->column('updated_at', trans('admin.updated_at'));
 
-        $grid->actions(function (Grid\Displayers\Actions\Actions $actions) {
-            // $actions->disableDelete();
-        });
+
+
 
         $grid->tools(function (Grid\Tools $tools) {
             $tools->batch(function (Grid\Tools\BatchActions $actions) {
-                // $actions->disableDelete();
+                $actions->disableDelete();
             });
         });
+
+        
+
+        $grid->actions(function (Grid\Displayers\Actions\Actions $actions) {
+            if (checkRole($actions->getKey(), 'Partner-Admin')) {
+                $actions->disableDelete();
+            }
+            if (!is('Partner-Admin')) {
+                $actions->disableShow();
+                $actions->disableEdit();
+            }
+
+        });
+
 
         return $grid;
     }
@@ -126,7 +140,7 @@ class StaffController extends AdminController
         }
 
 
-        $form->multipleSelect('roles', trans('admin.roles'))->options($roleModel::where('slug', 'like', 'Partner-%')->pluck('name', 'id'));
+        $form->multipleSelect('roles', trans('admin.roles'))->options($roleModel::where('slug', 'like', 'Partner-%')->where('slug', '!=', 'Partner-Admin')->pluck('name', 'id'));
         $form->saving(function (Form $form) {
             if ($form->password && $form->model()->password != $form->password) {
                 $form->password = Hash::make($form->password);
