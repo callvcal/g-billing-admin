@@ -37,7 +37,7 @@ class DiningTableController extends AdminController
             $form->hidden('status', __('status'))->default('blank');
            });
         $grid->column('id', __('Id'))->sortable();
-        $grid->column('status', __('status'))->sortable();
+        $grid->column('status', __('status'))->select(['blank' => 'Blank', 'running' => 'Running'])->sortable();
         $grid->column('name', __('Name'))->sortable();
         $grid->column('capacity', __('Capacity'))->sortable();
         $grid->column('number', __('Number'))->sortable();

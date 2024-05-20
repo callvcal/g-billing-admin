@@ -118,7 +118,7 @@
                     <label for="dining_table_id">Table</label>
                     <select class="form-select" name="dining_table_id" id="dining_table_id">
                         @foreach ($tables as $item)
-                            @if ($item->status == 'blank'||$item->status == null || $item->id == $sell->dining_table_id)
+                            @if ($item->status == 'blank' || $item->status == null || $item->id == $sell->dining_table_id)
                                 <option id="dining_table_id_option_{{ $item->id }}" value="{{ $item->id }}">
                                     Table {{ $item->number }}</option>
                             @endif
@@ -151,13 +151,14 @@
 
                 <input type="hidden" name="items" id="items">
                 <input type="hidden" name="sell_type" id="sell_type" value="counter">
+                <input type="hidden" name="uuid" id="uuid" value="{{ $sell->uuid }}">
                 <input type="hidden" name="discount_amt" id="discount_amt" value="0">
                 <input type="hidden" name="remark" id="remark" value="Order placed from admin panel">
                 <input type="hidden" name="total_amt" id="total_amt" value="0">
                 <input type="hidden" name="id" id="id" value="{{ $sell->id }}">
                 <input type="hidden" name="pos_action" id="pos_action" value="KOT">
 
-                
+
                 <div class="col-2 din-table">
                     <label for="customer_name">Cust. name</label>
                     <input type="text" class="form-control" name="customer_name" id="customer_name" />
@@ -227,7 +228,7 @@
 
                 <div class="col-5 text-end">
 
-                    
+
                     <button class="btn btn-sm btn-info mx-1" type="button" onclick="submitForm('KOT')">
                         <i class="fas fa-list-alt"></i> KOT
                     </button>
@@ -247,7 +248,7 @@
 </form>
 
 <script type="text/javascript" data-navigate-once defer>
-    var selectedSubcategoryId = 1;
+    var selectedSubcategoryId = null;
     let searchInput = document.getElementById('searchInput');
 
 
@@ -326,11 +327,15 @@
             menu: item.menu
         };
     }
+    const subcategories = {!! json_encode($subcategories) !!};
 
     console.log(cart);
+    if (Array.isArray(subcategories) && subcategories.length > 0) {
+        selectedSubcategoryId = subcategories[0].id;
+    }
 
-    renderSubcategories();
-    showMenus(1, '');
+    {{--  renderSubcategories();  --}}
+    showMenus(selectedSubcategoryId, '');
     renderCart();
     update();
 
@@ -372,25 +377,39 @@
     }
 
     function kot(selectedValue, text) {
+        console.log("KOT: " + "Table Value: " + selectedValue + " Table Text: " + text);
+    
+        // Remove the option from the dropdown if it exists
         var dropdown = document.getElementById('dining_table_id');
         var optionToRemove = document.getElementById('dining_table_id_option_' + selectedValue);
         if (optionToRemove) {
             optionToRemove.remove();
         }
-
+    
+        // Create a new button
         var newButton = document.createElement('div');
         newButton.className = 'btn btn-outline-info running';
         newButton.setAttribute('id', 'running_container_' + selectedValue);
         newButton.textContent = 'Table ' + text;
-
+    
         // Add an onclick event to the new button
         newButton.onclick = function() {
             openTable(selectedValue); // Use selectedValue instead of value
         };
-
+    
+        // Get the running tables container
         var runningTablesContainer = document.getElementById('running_container');
+    
+        // Check if a button with the same ID already exists
+        var existingButton = document.getElementById('running_container_' + selectedValue);
+        if (existingButton) {
+            runningTablesContainer.removeChild(existingButton); // Remove the existing button
+        }
+    
+        // Append the new button to the container
         runningTablesContainer.appendChild(newButton);
     }
+    
 
     function bill(selectedValue, text) { // Changed value to selectedValue
         var dropdown = document.getElementById('dining_table_id');
