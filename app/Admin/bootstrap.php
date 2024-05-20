@@ -56,6 +56,27 @@ Admin::html('<div class="toast-container position-fixed bottom-0 end-0 p-3">
 
 Admin::js("js/pusher.js",);
 Admin::js("js/print.js",);
+Admin::script("
+document.addEventListener('DOMContentLoaded', function() {
+  const sidebar = document.getElementById('menu'); // Ensure the correct ID of your sidebar menu
+  if (sidebar) {
+      sidebar.addEventListener('click', function(event) {
+          const target = event.target.closest('a');
+          if (target) {
+            var url=target.getAttribute('href');
+              console.log(url);
+              
+              const parts = url.split('/');
+                const lastPart = parts[parts.length - 1];
+                if(lastPart=='pos'){
+                  window.location.href=url;
+                }
+          }
+      });
+  }
+});
+");
+
 Grid::init(function (Grid $grid) {
 
   $grid->enableDblClick();

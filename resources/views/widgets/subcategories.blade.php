@@ -248,6 +248,17 @@
 </form>
 
 <script type="text/javascript" data-navigate-once defer>
+    var pageReloaded = localStorage.getItem('pageReloaded') === 'true';
+
+    console.log('localStorage:'+localStorage.getItem('pageReloaded'));
+    {{--  reloadPageOnce();  --}}
+    function reloadPageOnce() {
+        if (!pageReloaded) {
+            window.location.reload(true); // Reload the page only if not already reloaded
+            localStorage.setItem('pageReloaded', 'true'); // Set the flag in localStorage
+        }
+    }
+
     var selectedSubcategoryId = null;
     let searchInput = document.getElementById('searchInput');
 
