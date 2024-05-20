@@ -49,9 +49,10 @@
 
         .shop-name {
             text-align: center;
-            font-size: 25px;
-            font-weight: bold;
-            margin-top: 0px;
+            font-size: 14px;
+            display: flex;
+            width: 50%;
+            text-transform: uppercase;
         }
 
         .address {
@@ -129,8 +130,13 @@
 
         @foreach ($items as $item)
             <div class="container">
+                
+                <div style="display: flex">
+                    <div class="shop-name">{{$setting['shop_name']}}</div>
 
-                <div class="shop-name">KOT {{ $item->token_number }}</div>
+                    <div class="shop-name">KOT {{ $item->token_number }}</div>
+                </div>
+                
                 <div class="receipt-info">
                     <p>Order ID: {{ $sell->order_id }}</p>
                     <p>table No : {{ $sell->diningTable->number ?? '' }}</p>

@@ -124,11 +124,12 @@
     <div class="container">
         <div>
 
+            
 
-            <div class="shop-name">Eatplan8</div>
-            <div class="address">
-                2nd Floor, Gayatri Palace, West Patel Nagar, Adarsh Colony, North Shastri Nagar, Patna, Bihar 800023<br>
-                +91 9102424888 <br>
+
+            <div class="shop-name">{{$setting['shop_name']}}</div>
+            <div class="address">{{$setting['address']}}<br>
+                {{$setting['mobile']}} <br>
                 <p>Invoice</p>
 
                 <p>{{ $sell->serve_type }}</p>

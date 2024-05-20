@@ -120,11 +120,11 @@ class POSController extends AdminController
             $orderData['paid_amt'] =   $orderData['total_amt'];
         }
 
-        $order = $this->query(Sell::class)->updateOrCreate(
+        $order = Sell::updateOrCreate(
             ['id' => $request->id],
             $orderData
         );
-        Log::channel('callvcal')->info("Order:UUID: ".$order->uuid);
+        Log::channel('callvcal')->info("Order:business_id: ".$order->business_id);
 
 
         $items = [];
@@ -137,11 +137,12 @@ class POSController extends AdminController
                 'qty' => $item->qty,
                 'total_amt' => $item->total_amt,
                 'user_id' => null,
+                'business_id'=>$order->business_id,
                 'token_number' => (new KotTokenController())->generateToken(),
                 'menu_id' => $item->menu_id,
                 'sell_id' => $order->uuid,
             ];
-            $model = $this->query(SellItem::class)->updateOrCreate(
+            $model = SellItem::updateOrCreate(
                 ['id' => $item->id ?? null],
                 $orderItemData
             );
@@ -179,6 +180,7 @@ class POSController extends AdminController
             $data = [
                 "sell" => $order,
                 'items' => $items,
+                'setting'=>(new Setting())->data(),
                 'height' => (count($items) * 50)
             ];
             $view = view('templates.kot', $data)->render();
@@ -193,6 +195,7 @@ class POSController extends AdminController
                 "sell" => $order,
                 'items' => $items,
                 'image' => $image,
+                'setting'=>(new Setting())->data(),
                 'height' => 172 + (count($items) * 12)
             ];
             $view = view('templates.bill', $data)->render();

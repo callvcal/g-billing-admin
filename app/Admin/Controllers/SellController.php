@@ -103,7 +103,7 @@ class SellController extends AdminController
             $selector->select('order_status', 'Order Status', $this->orderStatusOptionsSelector());
             $selector->select('delivery_status', 'Delivery Status', $this->deliveryStatusOptionsSelector());
         });
-        if (!(Admin::user()->isAdministrator() || (Admin::user()->isRole('owner')))) {
+        if (!canAllowEdit()) {
             $grid->disableCreateButton();
             $grid->disableFilter();
             $grid->disablePagination();
@@ -111,9 +111,12 @@ class SellController extends AdminController
             $grid->disableActions();
             $grid->disableColumnSelector();
             $grid->disableRowSelector();
-            // $grid->fixHeader();
             $grid->model()->whereDate('created_at', date("Y-m-d")) // Filter by today's date
-                ->whereNotIn('order_status', ['e_completed', 'g_cancelled', 'f_rejected'])->orderBy('id', 'desc'); // Exclude certain order statuses            
+            ->whereNotIn('order_status', ['e_completed', 'g_cancelled', 'f_rejected'])->orderBy('id', 'desc'); // Exclude certain order statuses            
+ 
+            // $grid->fixHeader();
+            // $grid->model()->whereDate('created_at', date("Y-m-d")) // Filter by today's date
+            //     ->whereNotIn('order_status', ['e_completed', 'g_cancelled', 'f_rejected'])->orderBy('id', 'desc'); // Exclude certain order statuses            
         }
         $grid->expandFilter();
 
@@ -177,7 +180,6 @@ class SellController extends AdminController
         $grid->column('order_status', __('Order Status'))->select((new SellController())->orderStatusOptions());
         $grid->column('driver_id', __('Assign Delivery boy'))->select(User::where('is_driver', 1)->where('is_verified_driver', 1)->get()->pluck("name", "id")->toArray());
 
-        (new RelationController())->gridActions($grid, type: 'sells');
 
         $grid->column('payment_method', __('Payment method'))->sortable();
         $grid->column('payment_status', __('Payment status'))->sortable();
@@ -225,6 +227,7 @@ class SellController extends AdminController
         $show->field('total_amt', __('Total amt'));
         $show->field('paid_amt', __('Paid amt'));
         $show->field('gst_amt', __('Gst amt'));
+        $show->field('order_status', __('order status'));
         $show->field('gst_type', __('Gst type'));
         $show->field('discount_amt', __('Discount amt'));
         $show->field('due_amt', __('Due amt'));

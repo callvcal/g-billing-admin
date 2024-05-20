@@ -22,6 +22,7 @@ class PrintController extends Controller
         $items = $sell->items;
         $data = [
             "sell" => $sell,
+            'setting'=>(new Setting())->data(),
             'items' => $items,
             'height'=> 172 + (count($items)*12)
         ];
@@ -106,6 +107,7 @@ class PrintController extends Controller
         $data = [
             "sell" => $sell,
             'items' => $items,
+            'setting'=>(new Setting())->data(),
             'height'=>  (count($items)*50)
         ];
         $view = view('templates.kot', $data)->render();
@@ -170,6 +172,7 @@ class PrintController extends Controller
         $data = [
             "sell" => $sell,
             'items' => $items,
+            'setting'=>(new Setting())->data(),
             'height'=> (count($items)*48)
         ];
         $view = view('templates.sticker', $data)->render();
