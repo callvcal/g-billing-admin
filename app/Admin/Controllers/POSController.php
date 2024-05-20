@@ -19,6 +19,7 @@ use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Redirect;
 use OpenAdmin\Admin\Admin;
 use OpenAdmin\Admin\Controllers\AdminController;
@@ -31,6 +32,7 @@ use OpenAdmin\Admin\Layout\Content;
 use OpenAdmin\Admin\Layout\Row;
 use OpenAdmin\Admin\Widgets\Box;
 use OpenAdmin\Admin\Widgets\Table;
+use Illuminate\Support\Str;
 
 class POSController extends AdminController
 {
@@ -69,9 +71,9 @@ class POSController extends AdminController
         if (isset($diningID)) {
             $table = $this->query(DiningTable::class)->find($diningID);
             if ($table) {
-                $sell = $this->query(Sell::class)->find($table->sell_id);
+                $sell = $this->query(Sell::class)->where('uuid',$table->sell_id)->first();
                 if ($sell) {
-                    $items = $this->query(SellItem::class)->with('menu')->where('sell_id', $sell->id)->get();
+                    $items = $this->query(SellItem::class)->with('menu')->where('sell_id', $sell->uuid)->get();
                 } else {
                     $sell = new Sell();
                    
@@ -100,6 +102,7 @@ class POSController extends AdminController
 
         $orderData['date_time'] = Carbon::now();
         $orderData['user_id'] = null;
+        $orderData['uuid'] =$orderData['uuid']?? Str::orderedUuid();
         $orderData['delivery_status'] = "a_unassigned";
         $orderData['payment_status'] = $request->payment_status;
         $orderData['order_status'] = ($request->payment_status == 'paid') ? "e_completed" : 'unknown';
@@ -120,6 +123,7 @@ class POSController extends AdminController
             ['id' => $request->id],
             $orderData
         );
+        Log::channel('callvcal')->info("Order:UUID: ".$order->uuid);
 
 
         $items = [];
@@ -134,7 +138,7 @@ class POSController extends AdminController
                 'user_id' => null,
                 'token_number' => (new KotTokenController())->generateToken(),
                 'menu_id' => $item->menu_id,
-                'sell_id' => $order->id,
+                'sell_id' => $order->uuid,
             ];
             $model = $this->query(SellItem::class)->updateOrCreate(
                 ['id' => $item->id ?? null],
@@ -150,7 +154,7 @@ class POSController extends AdminController
             $table->customer_name = $order->customer_name;
             $table->customer_mobile = $order->customer_mobile;
             $table->amount = $order->total_amt;
-            $table->sell_id = $order->id;
+            $table->sell_id = $order->uuid;
             if ($request->pos_action == 'BILL') {
                 $table->customer_name = null;
                 $table->customer_mobile = null;
@@ -161,7 +165,7 @@ class POSController extends AdminController
                 $table->customer_name = $order->customer_name;
                 $table->customer_mobile = $order->customer_mobile;
                 $table->amount = $order->total_amt;
-                $table->sell_id = $order->id;
+                $table->sell_id = $order->uuid;
                 $table->status = 'running';
             }
 

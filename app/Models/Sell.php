@@ -73,7 +73,7 @@ class Sell extends Model
     }
     public function items()
     {
-        return $this->hasMany(SellItem::class);
+        return $this->hasMany(SellItem::class,'sell_id','uuid');
     }
 
     // Define an event to create a user_coupon record when an order is created

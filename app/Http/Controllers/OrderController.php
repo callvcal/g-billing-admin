@@ -10,6 +10,7 @@ use App\Models\Sell;
 use App\Models\SellItem;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class OrderController extends Controller
 {
@@ -104,6 +105,7 @@ class OrderController extends Controller
                 $orderData['full_address'] = $address->address;
             }
         }
+        $orderData['uuid'] =$orderData['uuid']?? Str::orderedUuid();
 
         $orderData['customer_mobile'] = $user->mobile;
         $orderData['order_status'] = ($orderData['payment_method'] == 'cash') ? "a_sent" : 'unknown';
@@ -293,7 +295,7 @@ class OrderController extends Controller
     public function placeOrderPOS(Request $request)
     {
         $orderData = $request->toArray();
-
+        $orderData['uuid'] =$orderData['uuid']?? Str::orderedUuid();
         $orderData['date_time'] = Carbon::now();
         $orderData['admin_id'] = auth()->user()->id;
         $orderData['delivery_status'] = "a_unassigned";

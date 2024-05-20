@@ -18,6 +18,7 @@ class DiningTable extends Model
         'invoice_number',
         'name',
         'capacity',
+        'uuid',
         'number',
 
     ];

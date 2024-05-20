@@ -48,11 +48,11 @@ class SellItem extends Model
 
             if($model->order_status_prepared==1){
                 if(SellItem::where('sell_id',$model->sell_id)->where('order_status_prepared',0)->count()==0){
-                    Sell::find($model->sell_id)->update(['order_status'=>'d_readyToPickup']);
+                    Sell::where('uuid',$model->sell_id)->update(['order_status'=>'d_readyToPickup']);
                 }
             }else if($model->order_status_preparing==1){
                 if(SellItem::where('sell_id',$model->sell_id)->where('order_status_preparing',1)->count()==1){
-                    Sell::find($model->sell_id)->update(['order_status'=>'c_preparing']);
+                    Sell::where('uuid',$model->sell_id)->update(['order_status'=>'c_preparing']);
                 }
             }
 
