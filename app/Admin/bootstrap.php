@@ -68,7 +68,7 @@ document.addEventListener('DOMContentLoaded', function() {
               
               const parts = url.split('/');
                 const lastPart = parts[parts.length - 1];
-                if(lastPart=='pos'){
+                if(lastPart=='pos'||lastPart=='admin'){
                   window.location.href=url;
                 }
           }
