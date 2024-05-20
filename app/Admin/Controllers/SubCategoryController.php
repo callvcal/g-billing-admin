@@ -72,7 +72,7 @@ class SubCategoryController extends AdminController
         $form->text('name', __('Name'));
         $form->image('image', __('Image'));
         $form->select('category_id', __('Select Category'))->options((new HomeController())->query(Category::class)->get()->pluck("name","id"));
-        $form->select('kitchen_id', __('Select Kitchen'))->options((new HomeController())->query(Category::class)->get()->pluck("name","id"));
+        $form->select('kitchen_id', __('Select Kitchen'))->options((new HomeController())->query(Kitchen::class)->get()->pluck("name","id"));
         $form->hidden('admin_id', __('Admin id'))->default(Admin::user()->id);
         $form->hidden('business_id', __('Business id'))->default(Admin::user()->business_id);
         return $form;

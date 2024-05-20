@@ -36,7 +36,7 @@ class Setting extends Form
         //     $data[$value]=$data[$value.'_cb']??$data[$value];
         // }
 
-        ModelsSetting::updateOrCreate(['id' => 1], [
+        ModelsSetting::updateOrCreate(['id' =>isAdministrator()?1:Admin::user()->business_id], [
             'json' => $data
         ]);
 
@@ -121,11 +121,11 @@ class Setting extends Form
      */
     public function data()
     {
-        $data = ModelsSetting::find(Admin::user()->business_id);
+        $data = ModelsSetting::find(isAdministrator()?1:Admin::user()->business_id);
 
         if(!$data){
             ModelsSetting::create([
-                'id'=>Admin::user()->business_id
+                'id'=>isAdministrator()?1:Admin::user()->business_id
             ]);
         }
 
