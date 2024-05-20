@@ -29,9 +29,9 @@ class RawMatrialController extends AdminController
     {
         $grid = new Grid(new RawMatrial());
         $grid->enableHotKeys();
-        
+
         $grid->column('id', __('Id'));
-        
+
         $grid->material()->display(function ($model) {
             if (isset($model)) {
                 return $model['name'];
@@ -79,7 +79,7 @@ class RawMatrialController extends AdminController
     {
         $form = new Form(new RawMatrial());
 
-        $form->select('material_id', __('Material'))->options(Material::all()->pluck("name", "id"))->required();
+        $form->select('material_id', __('Material'))->options((new HomeController())->query(Material::class)->get()->pluck("name", "id"))->required();
         $form->hidden('admin_id', __('Admin id'))->default(Admin::user()->id);
         $form->datetime('datetime', __('Datetime'))->default(date('Y-m-d H:i:s'));
         $form->number('qty', __('Qty'))->required();
