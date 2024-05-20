@@ -83,10 +83,11 @@ class POSController extends AdminController
 
         $running = [];
 
+        $view=view("widgets.subcategories", compact(['subcategories', 'menus', 'tables', 'running', 'sell', 'items']));
         return $content
             ->css_file(Admin::asset("open-admin/css/pages/dashboard.css"))
             ->title('POS Table Booking')
-            ->body(view("widgets.subcategories", compact(['subcategories', 'menus', 'tables', 'running', 'sell', 'items'])));
+            ->body($view);
             // ->row(function (Row $row) use ($subcategories, $menus, $tables, $running, $sell, $items) {
             //     $row->column(12, function (Column $column) use ($subcategories, $menus, $tables, $running, $sell, $items) {
             //         $column->append(view("widgets.subcategories", compact(['subcategories', 'menus', 'tables', 'running', 'sell', 'items'])));

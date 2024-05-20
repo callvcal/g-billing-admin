@@ -246,7 +246,7 @@
 
 </form>
 
-<script>
+<script type="text/javascript" data-navigate-once defer>
     var selectedSubcategoryId = 1;
     let searchInput = document.getElementById('searchInput');
 
