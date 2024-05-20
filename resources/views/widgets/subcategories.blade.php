@@ -378,38 +378,38 @@
 
     function kot(selectedValue, text) {
         console.log("KOT: " + "Table Value: " + selectedValue + " Table Text: " + text);
-    
+
         // Remove the option from the dropdown if it exists
         var dropdown = document.getElementById('dining_table_id');
         var optionToRemove = document.getElementById('dining_table_id_option_' + selectedValue);
         if (optionToRemove) {
             optionToRemove.remove();
         }
-    
+
         // Create a new button
         var newButton = document.createElement('div');
         newButton.className = 'btn btn-outline-info running';
         newButton.setAttribute('id', 'running_container_' + selectedValue);
         newButton.textContent = 'Table ' + text;
-    
+
         // Add an onclick event to the new button
         newButton.onclick = function() {
             openTable(selectedValue); // Use selectedValue instead of value
         };
-    
+
         // Get the running tables container
         var runningTablesContainer = document.getElementById('running_container');
-    
+
         // Check if a button with the same ID already exists
         var existingButton = document.getElementById('running_container_' + selectedValue);
         if (existingButton) {
             runningTablesContainer.removeChild(existingButton); // Remove the existing button
         }
-    
+
         // Append the new button to the container
         runningTablesContainer.appendChild(newButton);
     }
-    
+
 
     function bill(selectedValue, text) { // Changed value to selectedValue
         var dropdown = document.getElementById('dining_table_id');
@@ -578,6 +578,18 @@
 
                 if ({{ $menu->subcategory_id }} === subcategoryId) {
                     var menuItem = `
+                        <div class="menu-item btn btn-outline-primary m-1" onclick="addToCart({{ $menu->id }})">
+                            <img class="card-img-top" src="{{ asset($menu->image) }}" alt="" style="width: 64px; height:64px">
+                            <p class="card-text" style="font-size: 0.8em"> {{ $menu->name }}</p>
+                            <p class="card-text" style="font-size: 0.9em"> Rs. {{ $menu->price }}</p>
+                           
+                        </div>
+                    `;
+                    menuContainer.insertAdjacentHTML('beforeend', menuItem);
+                }
+
+            } else if ("{{ $menu->name }}".toLowerCase().includes(query)) {
+                var menuItem = `
                     <div class="menu-item btn btn-outline-primary m-1" onclick="addToCart({{ $menu->id }})">
                         <img class="card-img-top" src="{{ asset($menu->image) }}" alt="" style="width: 64px; height:64px">
                         <p class="card-text" style="font-size: 0.8em"> {{ $menu->name }}</p>
@@ -585,18 +597,6 @@
                        
                     </div>
                 `;
-                    menuContainer.insertAdjacentHTML('beforeend', menuItem);
-                }
-
-            } else if ("{{ $menu->name }}".toLowerCase().includes(query)) {
-                var menuItem = `
-                <div class="menu-item btn btn-outline-primary m-1" onclick="addToCart({{ $menu->id }})">
-                    <img class="card-img-top" src="{{ asset($menu->image) }}" alt="" style="width: 64px; height:64px">
-                    <p class="card-text" style="font-size: 0.8em"> {{ $menu->name }}</p>
-                    <p class="card-text" style="font-size: 0.9em"> Rs. {{ $menu->price }}</p>
-                   
-                </div>
-            `;
                 menuContainer.insertAdjacentHTML('beforeend', menuItem);
 
 
@@ -617,13 +617,13 @@
         // Render menus for the selected subcategory
         @foreach ($subcategories as $subcategory)
             var menuItem = `
-            <div id="subcategory-{{ $subcategory->id }}" class="btn btn-outline-primary m-1" style="width: 100%" onclick="showMenus({{ $subcategory->id }},'')">
-               
-                <div style="font-size:0.8em">
-                    {{ $subcategory->name }}
+                <div id="subcategory-{{ $subcategory->id }}" class="btn btn-outline-primary m-1" style="width: 100%" onclick="showMenus({{ $subcategory->id }},'')">
+                   
+                    <div style="font-size:0.8em">
+                        {{ $subcategory->name }}
+                    </div>
                 </div>
-            </div>
-    `;
+        `;
 
 
 
