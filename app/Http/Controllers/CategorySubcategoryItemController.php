@@ -119,7 +119,7 @@ class CategorySubcategoryItemController extends Controller
         $data['admin_id'] = auth()->user()->id;
         $menu = Menu::updateOrCreate(['id' => $request->id], $data);
         $this->saveImageFile($request, $menu);
-        return response($menu);
+        return response(Menu::find($menu->id));
     }
 
     public function createUnit(Request $request)

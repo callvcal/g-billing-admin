@@ -30,10 +30,9 @@ class AuthController extends Controller
                 'message' => "There is no staff registered with username " . $request->username
             ], 401);
         }
-        if (Hash::check($request->password, $user->password)) 
-        {
-            $user->load('roles','permissions');
-          return  response([
+        if (Hash::check($request->password, $user->password)) {
+            $user->load('roles', 'permissions');
+            return  response([
                 'token' => $user->createToken('token')->plainTextToken,
                 'user' => $user,
                 'message' => "success",
@@ -42,8 +41,8 @@ class AuthController extends Controller
         }
         return response([
             'message' => "worng password with username " . $request->username,
-            'pass'=> $user->password,
-            'rpass'=> $request->password,
+            'pass' => $user->password,
+            'rpass' => $request->password,
         ], 401);
     }
 
@@ -299,13 +298,12 @@ class AuthController extends Controller
 
         if (isset(apache_request_headers()['isbilling']) && (apache_request_headers()['isbilling'] == 'true')) {
             $auth = AdminUser::find($auth->id);
-            $auth->load('roles','permissions');
-
+            $auth->load('roles', 'permissions');
         }
 
         return response([
-            'authenticated' => ($auth)!=null,
-            'user'=>$auth
+            'authenticated' => ($auth) != null,
+            'user' => $auth
         ]);
     }
 
@@ -358,7 +356,14 @@ class AuthController extends Controller
     {
         $fcmToken = $request->fcm_token;
         if (isset($fcmToken)) {
-            $user = User::find(auth()->user()->id);
+
+            if (isset(apache_request_headers()['isbilling']) && (apache_request_headers()['isbilling'] == 'true')) {
+                $user = AdminUser::find(auth()->user()->id);
+            } else {
+                $user = User::find(auth()->user()->id);
+            }
+
+
             $user->fcm_token = $fcmToken;
             $user->save();
 

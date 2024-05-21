@@ -30,7 +30,6 @@ class Menu extends Model
         'category_id',
         'subcategory_id',
         'unit_id',
-        'kitchen_id',
         'admin_id',
         'ratings',
         'sells',
