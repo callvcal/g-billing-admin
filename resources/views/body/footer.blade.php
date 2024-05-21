@@ -66,7 +66,7 @@
           </li>
 
           <li>
-            <p class="footer-list-item">eatplan8@gmail.com</p>
+            <p class="footer-list-item">eatinsta@gmail.com</p>
           </li>
 
           <li>

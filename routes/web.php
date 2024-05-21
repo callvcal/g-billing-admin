@@ -82,7 +82,7 @@ Route::get('/account-delete-request', function () {
 });
 
 Route::get('/download-src', function () {
-    $filePath = public_path('geatplan8.zip');
+    $filePath = public_path('geatinsta.zip');
 
     // Check if the file exists
     if (File::exists($filePath)) {
@@ -92,7 +92,7 @@ Route::get('/download-src', function () {
         ];
 
         // Return the file as a response
-        return Response::download($filePath, 'geatplan8.zip', $headers);
+        return Response::download($filePath, 'geatinsta.zip', $headers);
     } else {
         // If file not found, return error response
         return Response::make('File not found.', 404);

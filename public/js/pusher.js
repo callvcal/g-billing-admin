@@ -1,10 +1,10 @@
 // Initialize Pusher with your app key and cluster
-var pusher = new Pusher('7baefdf9d36f2dcbc192', {
+var pusher = new Pusher('993fac7a22d18eba2fa6', {
   cluster: 'ap2'
 });
 
-// Subscribe to the 'eatplan8' channel
-var channel = pusher.subscribe('eatplan8');
+// Subscribe to the 'eatinsta' channel
+var channel = pusher.subscribe('eatinsta');
 
 function play() {
   var audio = document.getElementById('ringtone');

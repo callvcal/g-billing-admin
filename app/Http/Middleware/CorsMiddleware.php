@@ -17,10 +17,10 @@ class CorsMiddleware
     public function handle(Request $request, Closure $next): Response
     {
         $allowedDomains = [
-            'https://eatplan8.callvcal.com',
-            'https://buy.eatplan8.callvcal.com',
-            'https://eatplan8.com',
-            'https://dashboard.eatplan8.com',
+            'https://eatinsta.callvcal.com',
+            'https://buy.eatinsta.callvcal.com',
+            'https://eatinsta.callvcal.com',
+            'https://dashboard.eatinsta.callvcal.com',
             // Add more domains as needed
         ];
 

@@ -35,7 +35,7 @@ Admin::js('https://js.pusher.com/8.2.0/pusher.min.js');
 // Admin::js("https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js");
 
 
-Admin::html('<audio id="ringtone" src="https://eatplan8.callvcal.com/ringtones/ring.mp3" hidden ></audio>');
+Admin::html('<audio id="ringtone" src="https://eatinsta.callvcal.com/ringtones/ring.mp3" hidden ></audio>');
 Admin::html('<div class="toast-container position-fixed bottom-0 end-0 p-3">
 <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
   <div class="toast-header">

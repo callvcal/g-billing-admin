@@ -71,7 +71,7 @@
             <!--<button class="btn btn-hover" onclick="redirectToApp()">Login</button>-->
 
             <a href="{{route('app')}}" class="btn btn-hover" >
-            {{--  <a href="https://eatplan8.callvcal.com/purchase" class="btn btn-hover">  --}}
+            {{--  <a href="https://eatinsta.callvcal.com/purchase" class="btn btn-hover">  --}}
                 <button>Login</button>
             </a>
 
@@ -118,7 +118,7 @@
                         <p class="hero-text" style="color: grey;"> </p>
 
 
-                        {{--  <a href="https://eatplan8.callvcal.com/purchase" class="btn btn-hover">  --}}
+                        {{--  <a href="https://eatinsta.callvcal.com/purchase" class="btn btn-hover">  --}}
                         <a href="{{route('app')}}" class="btn btn-hover">
                             <button>Login</button>
                         </a>

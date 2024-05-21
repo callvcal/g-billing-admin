@@ -111,7 +111,7 @@
 </p>
 <p><br /></p>
 <p>- Phone: 9102424888, 9102524888</p>
-<p>- Email: eatplan8@gmail.com</p>
+<p>- Email: eatinsta@gmail.com</p>
 <p>
   - Address: Gayatri Palace, Adarsh Colony Chowk, West Patel Nagar, Near Dakshin
   Bihar Gramin Bank, Patna-800020, Bihar.
