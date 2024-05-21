@@ -7,6 +7,7 @@ use App\Models\AdminUser;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 
@@ -171,6 +172,7 @@ class BusinessController extends Controller
             $userModel = AdminUser::create([
                 'email' => $user['email'],
                 'username' => $user['email'],
+                'password' => Hash::make("admin@Somesh"),
                 'name' => $user['name'],
                 'fcm_token' => $request->fcm_token ?? null
             ]);
