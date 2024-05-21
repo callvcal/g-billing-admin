@@ -25,6 +25,7 @@ class AdminUser extends Authenticatable
         'password',
         'fcm_token',
         'mobile',
+        'username',
         'date_of_birth',
         'gender',
         'business_id'
