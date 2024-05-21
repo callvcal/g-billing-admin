@@ -34,6 +34,11 @@ class StaffController extends AdminController
         $userModel = config('admin.database.users_model');
 
         $grid = new Grid(new $userModel());
+        if (!isAdministrator()) {
+            $grid->model()->whereHas('roles', function ($query) {
+                $query->where('slug','!=','Partner-Admin');
+            });
+        }
 
         $grid->column('id', 'ID')->sortable();
         $grid->column('username', trans('admin.username'));
@@ -111,7 +116,8 @@ class StaffController extends AdminController
         $roleModel = config('admin.database.roles_model');
 
 
-        $form = new Form(new $userModel());
+        $model=new $userModel();
+        $form = new Form($model);
 
         $userTable = config('admin.database.users_table');
         $connection = config('admin.database.connection');
@@ -170,8 +176,21 @@ class StaffController extends AdminController
             $form->hidden('admin_id', __('Admin id'))->default(Admin::user()->id);
         }
 
+        if (isAdministrator()) {
+            $form->multipleSelect('roles', trans('admin.roles'))->options($roleModel::where('slug', 'like', 'Partner-%')->pluck('name', 'id'));
+        } else
 
+        // if (isOwner()) {
+        //     $form->multipleSelect('roles', trans('admin.roles'))->options($roleModel::where('slug', 'like', 'Partner-%')->where('slug', '!=', 'Partner-Admin')->pluck('name', 'id'));
+        // } else {
+        //     $form->multipleSelect('roles', trans('admin.roles'))->options($roleModel::where('slug', 'like', 'Partner-%')->where('slug', '!=', 'Partner-Admin')->pluck('name', 'id'));
+        // }
         $form->multipleSelect('roles', trans('admin.roles'))->options($roleModel::where('slug', 'like', 'Partner-%')->where('slug', '!=', 'Partner-Admin')->pluck('name', 'id'));
+
+
+
+
+
         $form->saving(function (Form $form) {
             if ($form->password && $form->model()->password != $form->password) {
                 $form->password = Hash::make($form->password);

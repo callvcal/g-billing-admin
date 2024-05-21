@@ -208,6 +208,21 @@ function canAllowDelete()
   return false;
 }
 
+function isOwner(){
+  if (is('Partner-Admin')) {
+    return true;
+  }
+  return false;
+}
+
+
+
+function isAdmin(){
+  if (is('Partner-Admin-Access-Only')) {
+    return true;
+  }
+  return false;
+}
 
 function canAllowCreate()
 {
