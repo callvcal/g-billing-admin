@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\BusinessController;
 use App\Http\Controllers\CouponApi;
 use App\Http\Controllers\DiningTableController;
 use App\Http\Controllers\HomeController;
@@ -43,6 +44,7 @@ Route::post('/auth/custom/signup', [AuthController::class, 'signUpCustom'])->mid
 Route::post('/auth/custom/signin', [AuthController::class, 'signInCustom'])->middleware('security');
 Route::post('/auth/check/email', [AuthController::class, 'isEmailExists'])->middleware('security');
 Route::post('/auth/users/platform-sign-in-check', [AuthController::class, 'verifyGAF'])->middleware('security');
+Route::post('/auth/business/platform-sign-in-check', [BusinessController::class, 'verifyGAF'])->middleware('security');
 Route::get('/auth/forgot/password/{email}', [AuthController::class, 'sendResetLink']);
 Route::post('/auth/reset/password', [AuthController::class, 'resetPassword']);
 
@@ -166,6 +168,9 @@ Route::group(['middleware' => ['security', 'auth:sanctum']], function () {
 
     Route::post('/billing/place', [OrderController::class, 'placeOrderPOS']);
 
+
+    Route::post('/business/set', [BusinessController::class, 'setBusiness']);
+    Route::get('/business/verify', [BusinessController::class, 'verifyBusiness']);
 
 
 });
