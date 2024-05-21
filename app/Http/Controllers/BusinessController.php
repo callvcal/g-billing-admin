@@ -141,7 +141,7 @@ class BusinessController extends Controller
 
     public function verifyGAF(Request $request)
     {
-        if ($this->invalid($request->all())) {
+        if ((new AuthController())->invalid($request->all())) {
             $data = array();
             $data['message'] = 'Invalid secretes';
             return response($data);
