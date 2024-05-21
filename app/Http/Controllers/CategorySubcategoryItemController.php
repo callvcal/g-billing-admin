@@ -118,6 +118,8 @@ class CategorySubcategoryItemController extends Controller
         $data = $request->all();
         $data['admin_id'] = auth()->user()->id;
         $data['business_id'] = auth()->user()->business_id;
+        $data['active'] = (($data['active']==1)||($data['active']==true)||($data['active']=='true'))?1:0;
+
         $menu = Menu::updateOrCreate(['id' => $request->id], $data);
         $this->saveImageFile($request, $menu);
         return response(Menu::find($menu->id));
