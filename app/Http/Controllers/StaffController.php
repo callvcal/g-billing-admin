@@ -34,6 +34,8 @@ class StaffController extends Controller
 
         $admin->username = $request->input('username');
         $admin->name = $request->input('name');
+        $admin->admin_id = auth()->user()->id;
+        $admin->business_id = auth()->user()->business_id;
 
         if ($request->filled('password')) {
             $admin->password = Hash::make($request->input('password'));

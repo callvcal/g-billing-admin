@@ -47,7 +47,7 @@ class BusinessController extends Controller
                 'purchase_date' => null,
                 'last_subscription_date' => null,
                 'expiry_date' => null,
-                'user_admin_id' => $user->id
+                'admin_id' => $user->id
             ]
         );
         $user->business_id = $business->id;
