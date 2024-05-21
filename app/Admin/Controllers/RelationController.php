@@ -139,7 +139,7 @@ class RelationController
 
     public function gridActions($grid, $type = null)
     {
-        if (!(Admin::user()->isAdministrator() || (Admin::user()->isRole('owner')))) {
+        if (!(isAdministrator() || (Admin::user()->isRole('owner')))) {
 
             if (Admin::user()->isRole('manager')) {
                 $grid->actions(function ($actions) {
@@ -169,7 +169,7 @@ class RelationController
     public function showTools($show)
     {
        
-        if (!(Admin::user()->isAdministrator() || (Admin::user()->isRole('owner')))) {
+        if (!(isAdministrator() || (Admin::user()->isRole('owner')))) {
 
             if (Admin::user()->isRole('manager')) {
                

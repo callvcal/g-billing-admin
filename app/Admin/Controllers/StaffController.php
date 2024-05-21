@@ -51,17 +51,19 @@ class StaffController extends AdminController
             });
         });
 
-        
+
 
         $grid->actions(function (Grid\Displayers\Actions\Actions $actions) {
-            if (checkRole($actions->getKey(), 'Partner-Admin')) {
-                $actions->disableDelete();
-            }
-            if (!is('Partner-Admin')) {
-                $actions->disableShow();
-                $actions->disableEdit();
-            }
 
+            if (!isAdministrator()) {
+                if (checkRole($actions->getKey(), 'Partner-Admin')) {
+                    $actions->disableDelete();
+                }
+                if (!is('Partner-Admin')) {
+                    $actions->disableShow();
+                    $actions->disableEdit();
+                }
+            }
         });
 
 
@@ -115,9 +117,34 @@ class StaffController extends AdminController
         $connection = config('admin.database.connection');
 
         $form->display('id', 'ID');
-        $form->text('username', trans('admin.username'))
-            ->creationRules(['required', "unique:{$connection}.{$userTable}"])
-            ->updateRules(['required', "unique:{$connection}.{$userTable},username,{{id}}"]);
+
+
+        if (isAdministrator()) {
+            $form->text('username', trans('admin.username'))
+
+                ->creationRules(['required', "unique:{$connection}.{$userTable}"])
+                ->updateRules(['required', "unique:{$connection}.{$userTable},username,{{id}}"]);
+        } else {
+            $business = Admin::user()->business;
+            $pattern = '/^.{2,8}@' . preg_quote($business, '/') . '$/';
+            $form->text('username', trans('admin.username'))
+                ->rules(
+                    'required|regex:' . $pattern . '|unique:admin_users,username,{{id}}',
+                    [
+                        'regex' => 'The code format is invalid. It must be in the format [anything, min 2, max 8]@' . $business,
+                        'unique' => "There is already user with this username",
+                        'required' => "required",
+                    ]
+                )
+                // ->creationRules(['required', "unique:{$connection}.{$userTable}"])
+                // ->updateRules(['required', "unique:{$connection}.{$userTable},username,{{id}}"])
+                ->default("staff@$business")
+                ->help("The username must be in the format [anything, min 2, max 8]@$business.");
+        }
+
+
+
+
 
         $form->text('name', __('Name'))->required();
         $form->email('email', __('Email'));
@@ -127,15 +154,19 @@ class StaffController extends AdminController
                 return $form->model()->password;
             });
 
+
+
         $form->ignore(['password_confirmation']);
         $form->phonenumber('mobile', __('Mobile'));
         $form->image('avatar', trans('admin.avatar'));
 
-        if (Admin::user()->isAdministrator()) {
+        if (isAdministrator()) {
             $form->select('business_id', __('Business id'))->options(Business::all()->pluck('name', 'id'));
+            $form->select('business', __('Business name'))->options(Business::all()->pluck('name', 'name'));
             $form->select('admin_id', __('Admin id'))->options(AdminUser::all()->pluck('name', 'id'));
         } else {
             $form->hidden('business_id', __('Business id'))->default(Admin::user()->business_id);
+            $form->hidden('business', __('Business id'))->default(Admin::user()->business);
             $form->hidden('admin_id', __('Admin id'))->default(Admin::user()->id);
         }
 
@@ -144,6 +175,9 @@ class StaffController extends AdminController
         $form->saving(function (Form $form) {
             if ($form->password && $form->model()->password != $form->password) {
                 $form->password = Hash::make($form->password);
+            }
+            if ($form->username && $form->model()->username != $form->username) {
+                // $form->username = Hash::make($form->password);
             }
         });
 

@@ -120,7 +120,7 @@ Route::group([
             // echo '<script>playAudio("your-audio-file.mp3");</script>';
         }
 
-        if (!$isOwner && !$isManager && !Admin::user()->isAdministrator()) {
+        if (!$isOwner && !$isManager && !isAdministrator()) {
             return redirect('admin/kds');
         }
 

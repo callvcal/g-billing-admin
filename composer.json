@@ -16,7 +16,6 @@
         "laravel/tinker": "^2.8",
         "mike42/escpos-php": "^4.0",
         "open-admin-ext/api-tester": "^1.0",
-        "open-admin-ext/config": "^1.0",
         "open-admin-ext/helpers": "^1.0",
         "open-admin-ext/log-viewer": "^1.0",
         "open-admin-ext/media-manager": "^1.0",

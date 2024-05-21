@@ -42,7 +42,7 @@ class HomeController extends AdminController
 
         $admins = $this->admins();
         $users_total = 0;
-        if (FacadesAdmin::user()->isAdministrator()) {
+        if (FacadesisAdministrator()) {
             $users_total = User::count();
         }
 
@@ -273,7 +273,7 @@ class HomeController extends AdminController
     }
     function admins()
     {
-        if (FacadesAdmin::user()->isAdministrator()) {
+        if (FacadesisAdministrator()) {
             return AdminUser::count();
         }
 
