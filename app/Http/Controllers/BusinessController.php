@@ -57,7 +57,7 @@ class BusinessController extends Controller
         $username = $request->username;
 
         $user->mobile = $mobile;
-        $user->password = $request->password;
+        $user->password =Hash::make($request->password);
         $user->name = $name;
         $user->username = $username;
         $user->status = 1;
