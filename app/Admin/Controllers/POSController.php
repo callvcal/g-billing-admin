@@ -209,7 +209,7 @@ class POSController extends AdminController
     {
         $user = FacadesAdmin::user();
 
-        if ($user->isAdministrator()) {
+        if (isAdministrator()) {
             return $model::query();
         }
 
@@ -219,7 +219,7 @@ class POSController extends AdminController
     {
         $user = FacadesAdmin::user();
 
-        if ($user->isAdministrator()) {
+        if (isAdministrator()) {
             return $query;
         }
 

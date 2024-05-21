@@ -42,7 +42,7 @@ class HomeController extends AdminController
 
         $admins = $this->admins();
         $users_total = 0;
-        if (FacadesisAdministrator()) {
+        if (isAdministrator()) {
             $users_total = User::count();
         }
 
@@ -242,11 +242,7 @@ class HomeController extends AdminController
 
     public function pusher()
     {
-        $user = FacadesAdmin::user();
-
-        // Check if the user has the role 'owner'
-        $isOwner = $user->isRole('owner');
-
+        $isOwner = is('owner');
         return response()->json(['is_owner' => $isOwner]);
     }
 
@@ -255,7 +251,7 @@ class HomeController extends AdminController
     {
         $user = FacadesAdmin::user();
 
-        if ($user->isAdministrator()) {
+        if (isAdministrator()) {
             return $model::query();
         }
 
@@ -265,7 +261,7 @@ class HomeController extends AdminController
     {
         $user = FacadesAdmin::user();
 
-        if ($user->isAdministrator()) {
+        if (isAdministrator()) {
             return $query;
         }
 
@@ -273,7 +269,7 @@ class HomeController extends AdminController
     }
     function admins()
     {
-        if (FacadesisAdministrator()) {
+        if (isAdministrator()) {
             return AdminUser::count();
         }
 

@@ -139,9 +139,9 @@ class RelationController
 
     public function gridActions($grid, $type = null)
     {
-        if (!(isAdministrator() || (Admin::user()->isRole('owner')))) {
+        if (!(isAdministrator() || (is('owner')))) {
 
-            if (Admin::user()->isRole('manager')) {
+            if (is('manager')) {
                 $grid->actions(function ($actions) {
                     $actions->add(new BillPrint());
                     $actions->disableDelete();
@@ -169,9 +169,9 @@ class RelationController
     public function showTools($show)
     {
        
-        if (!(isAdministrator() || (Admin::user()->isRole('owner')))) {
+        if (!(isAdministrator() || (is('owner')))) {
 
-            if (Admin::user()->isRole('manager')) {
+            if (is('manager')) {
                
                 
                 $show->panel()
