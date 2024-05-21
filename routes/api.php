@@ -169,5 +169,8 @@ Route::group(['middleware' => ['security', 'auth:sanctum']], function () {
     Route::post('/billing/place', [OrderController::class, 'placeOrderPOS']);
 
 
+    Route::post('/business/set', [BusinessController::class, 'setBusiness']);
+    Route::get('/business/verify', [BusinessController::class, 'verifyBusiness']);
+
 
 });

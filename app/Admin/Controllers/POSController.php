@@ -54,7 +54,7 @@ class POSController extends AdminController
 
 
         $subcategories = $this->query(SubCategory::class)->get();
-        
+
         // return json_encode([
         //     'sql'=>$this->query(Menu::class)->where('price', ">", 0)->toSql(),
         //     'data'=>$this->query(Menu::class)->where('price', ">", 0)->get(),
@@ -63,7 +63,7 @@ class POSController extends AdminController
 
         $tables = $this->query(DiningTable::class)->get();
 
-        
+
 
         $sell = new Sell();
         $items = [];
@@ -71,28 +71,27 @@ class POSController extends AdminController
         if (isset($diningID)) {
             $table = $this->query(DiningTable::class)->find($diningID);
             if ($table) {
-                $sell = $this->query(Sell::class)->where('uuid',$table->sell_id)->first();
+                $sell = $this->query(Sell::class)->where('uuid', $table->sell_id)->first();
                 if ($sell) {
                     $items = $this->query(SellItem::class)->with('menu')->where('sell_id', $sell->uuid)->get();
                 } else {
                     $sell = new Sell();
-                   
                 }
             }
         }
 
         $running = [];
 
-        $view=view("widgets.subcategories", compact(['subcategories', 'menus', 'tables', 'running', 'sell', 'items']));
+        $view = view("widgets.subcategories", compact(['subcategories', 'menus', 'tables', 'running', 'sell', 'items']));
         return $content
             ->css_file(Admin::asset("open-admin/css/pages/dashboard.css"))
             ->title('POS Table Booking')
             ->body($view);
-            // ->row(function (Row $row) use ($subcategories, $menus, $tables, $running, $sell, $items) {
-            //     $row->column(12, function (Column $column) use ($subcategories, $menus, $tables, $running, $sell, $items) {
-            //         $column->append(view("widgets.subcategories", compact(['subcategories', 'menus', 'tables', 'running', 'sell', 'items'])));
-            //     });
-            // });
+        // ->row(function (Row $row) use ($subcategories, $menus, $tables, $running, $sell, $items) {
+        //     $row->column(12, function (Column $column) use ($subcategories, $menus, $tables, $running, $sell, $items) {
+        //         $column->append(view("widgets.subcategories", compact(['subcategories', 'menus', 'tables', 'running', 'sell', 'items'])));
+        //     });
+        // });
     }
     public function placeOrder(Request $request)
     {
@@ -103,16 +102,38 @@ class POSController extends AdminController
 
         $orderData['date_time'] = Carbon::now();
         $orderData['user_id'] = null;
-        $orderData['uuid'] =$orderData['uuid']?? Str::orderedUuid();
+        $orderData['uuid'] = $orderData['uuid'] ?? Str::orderedUuid();
         $orderData['delivery_status'] = "a_unassigned";
         $orderData['payment_status'] = $request->payment_status;
         $orderData['order_status'] = ($request->payment_status == 'paid') ? "e_completed" : 'unknown';
         if ($request->pos_action == 'BILL') {
             $orderData['order_status'] = 'e_completed';
         }
+
+        $setting = (new Setting())->data();
+
         $orderData['invoice_id'] = (new KotTokenController())->generateToken(type: 'invoice');
-        $orderData['gst_amt'] = $request->total_amt * (((new Setting())->data()['gst_rate']) ?? 0) / 100;
-        $orderData['total_amt'] =  $request->total_amt + $request->gst_amt;
+
+        $gst = 0;
+
+        $gstRate = 0;
+        $orderData['gst_amt'] = 0;
+
+        if (($setting['print_gst'] === 1) && (isset($setting['gst_rate']))) {
+            $gstRate = $setting['gst_rate'];
+            $isIncluded = $setting['is_gst_included'] == 1;
+
+            if ($isIncluded) {
+                $gst =(int) $this->calculateGSTIncluded($request->total_amt, $gstRate);
+            } else {
+                $gst =(int) $this->calculateGSTExcluded($request->total_amt, $gstRate);
+                $orderData['total_amt'] =  $request->total_amt + $gst;
+            }
+            $orderData['gst_amt'] = $gst;
+        }
+
+
+       
         $orderData['order_id'] = (new OrderController())->generateOrderID(1);
 
         if ($orderData['payment_status'] == 'paid') {
@@ -124,7 +145,7 @@ class POSController extends AdminController
             ['id' => $request->id],
             $orderData
         );
-        Log::channel('callvcal')->info("Order:business_id: ".$order->business_id);
+        Log::channel('callvcal')->info("Order:business_id: " . $order->business_id);
 
 
         $items = [];
@@ -137,7 +158,7 @@ class POSController extends AdminController
                 'qty' => $item->qty,
                 'total_amt' => $item->total_amt,
                 'user_id' => null,
-                'business_id'=>$order->business_id,
+                'business_id' => $order->business_id,
                 'token_number' => (new KotTokenController())->generateToken(),
                 'menu_id' => $item->menu_id,
                 'sell_id' => $order->uuid,
@@ -180,7 +201,7 @@ class POSController extends AdminController
             $data = [
                 "sell" => $order,
                 'items' => $items,
-                'setting'=>(new Setting())->data(),
+                'setting' => $setting,
                 'height' => (count($items) * 50)
             ];
             $view = view('templates.kot', $data)->render();
@@ -195,7 +216,7 @@ class POSController extends AdminController
                 "sell" => $order,
                 'items' => $items,
                 'image' => $image,
-                'setting'=>(new Setting())->data(),
+                'setting' => $setting,
                 'height' => 172 + (count($items) * 12)
             ];
             $view = view('templates.bill', $data)->render();
@@ -224,5 +245,21 @@ class POSController extends AdminController
         }
 
         return $query->where('business_id', $user->business_id);
+    }
+    function calculateGSTIncluded($total, $gstRate)
+    {
+        // Calculate pre-GST amount
+        $gst = $total / (1 + ($gstRate / 100));
+
+
+        return $gst;
+    }
+    function calculateGSTExcluded($total, $gstRate)
+    {
+        // Calculate pre-GST amount
+        $gst = $total * ($gstRate / 100);
+
+
+        return $gst;
     }
 }

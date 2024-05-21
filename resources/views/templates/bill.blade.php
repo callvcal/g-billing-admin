@@ -124,12 +124,23 @@
     <div class="container">
         <div>
 
-            
+
+            @php
+
+                $isIncluded = $setting['is_gst_included'] == 1;
+                if( $isIncluded){
+                    $subtotal = $sell->total_amt - $sell->gst_amt - $sell->delivery_charge + $sell->discount_amt;
+
+                }else{
+                    $subtotal = $sell->total_amt - $sell->gst_amt - $sell->delivery_charge + $sell->discount_amt;
+                }
+
+            @endphp
 
 
-            <div class="shop-name">{{$setting['shop_name']}}</div>
-            <div class="address">{{$setting['address']}}<br>
-                {{$setting['mobile']}} <br>
+            <div class="shop-name">{{ $setting['shop_name'] }}</div>
+            <div class="address">{{ $setting['address'] }}<br>
+                {{ $setting['mobile'] }} <br>
                 <p>Invoice</p>
 
                 <p>{{ $sell->serve_type }}</p>
@@ -168,12 +179,17 @@
         <div class="total">
             <div>
                 <span>Subtotal :</span>
-                <span>Rs. {{ $sell->total_amt - $sell->gst_amt - $sell->delivery_charge + $sell->discount_amt }}</span>
+                <span>Rs. {{ $subtotal }}</span>
             </div>
-            <div>
-                <span>GST (5%) :</span>
-                <span>Rs. {{ $sell->gst_amt }}</span>
-            </div>
+
+            @if ($sell->gst_amt > 0)
+                <div>
+                    <span>GST ({{ $setting['gst_rate'] }}%) :</span>
+                    <span>Rs. {{ $sell->gst_amt }}</span>
+                </div>
+            @endif
+
+
             @if (($sell->delivery_charge ?? 0) > 0)
                 <div>
                     <span>Delivery Fee :</span>
@@ -201,7 +217,7 @@
         <hr>
 
         <div class="thank-message">
-            <i class="fas fa-star text-warning icon"></i> Thank you for dining with us! <i
+            <i class="fas fa-star text-warning icon"></i> {{ $setting['footer_message'] }} <i
                 class="fas fa-star text-warning icon"></i>
         </div>
 
