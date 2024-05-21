@@ -176,33 +176,20 @@ class BusinessController extends Controller
         }
 
         try {
-            if (!isset($userModel->avatar)) {
+            if (!isset($userModel->image)) {
                 if (isset($user['image'])) {
-                    $dist = 'admins/images';
-
-                    $name = "user_" . $userModel->id . "image.png";
-
+                    $dist = 'eatinsta/images';
+                    $name = time() . '_' . 'avatar.png';
                     $path = $dist . '/' . $name;
-
-
-                    $fullPath = public_path($path);
-                    if (!file_exists(public_path($path))) {
-                        mkdir(public_path($path), 0777, true);
-                    }
-
-                    if (is_dir($fullPath)) {
-                        rmdir($fullPath);
-                    }
-
-                    file_put_contents($fullPath, file_get_contents($user['image']));
-
-                    $userModel->avatar = $path;
+                    Storage::disk('s3')->put("$dist/$name", file_get_contents($user['image']));
+                    $userModel->image = $path;
                     $userModel->save();
                 }
             }
         } catch (Exception $e) {
             Log::channel('callvcal')->info("auth-file-upload error: e:" . json_encode($e) . " ,request:" . json_encode($request) . ", model:" . json_encode($userModel));
         }
+        
         return $this->returnUserToken($request, $userModel);
     }
     public function returnUserToken($request, $user)

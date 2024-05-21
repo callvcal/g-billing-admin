@@ -52,12 +52,7 @@ class SendMessage implements ShouldQueue
                 }
                 Log::channel('callvcal')->info("SendMessage:test Order: " . json_encode($order->toArray()));
 
-                // Assuming User and FirebaseController classes are properly defined
-                $user = User::find($order->user_id);
-                if (!$user || !isset($user->fcm_token)) {
-                    Log::channel('callvcal')->info("SendMessage:handle User or FCM token not found");
-                    return;
-                }
+
 
                 $orderStatus = $order->order_status;
                 $delivery_status = $order->delivery_status;
@@ -94,7 +89,12 @@ class SendMessage implements ShouldQueue
                     "imageUrl" => $data['imageUrl'],
                     "sound" => "default",
                 ];
-
+                // Assuming User and FirebaseController classes are properly defined
+                $user = User::find($order->user_id);
+                if (!$user || !isset($user->fcm_token)) {
+                    Log::channel('callvcal')->info("SendMessage:handle User or FCM token not found");
+                    return;
+                }
                 $controller = new FirebaseController();
                 $controller->sendFcmMessage($user->fcm_token, $data, $notification);
                 $localizedTimestamp = Carbon::now()->setTimezone('Asia/Kolkata');

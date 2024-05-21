@@ -60,7 +60,7 @@ class CategorySubcategoryItemController extends Controller
             ['id' => $request->id],
             [
                 'name' => $request->name,
-                
+
                 'admin_id' => auth()->user()->id
             ]
         );
@@ -132,7 +132,7 @@ class CategorySubcategoryItemController extends Controller
         );
         return response($unit);
     }
-    
+
 
     public function createDinTable(Request $request)
     {
@@ -159,13 +159,12 @@ class CategorySubcategoryItemController extends Controller
             // $model->image = $dist.'/'.$fileName;
             // $model->save();
 
-            (new BusinessController())->saveFilePath($request,'images',$model,'image');
+            (new BusinessController())->saveFilePath($request, 'images', $model, 'image');
+        } else
+        if (!isset($request->image)) {
+            (new BusinessController())->deleteFilePath($model, 'image');
 
-        }else
-        if(!isset($request->image)){
-            (new BusinessController())->deleteFilePath($model,'image');
-
-            $model->image=null;
+            $model->image = null;
             $model->save();
         }
     }
