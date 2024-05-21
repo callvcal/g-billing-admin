@@ -70,7 +70,8 @@ class HomeController extends Controller
                 'categories' => Category::where('business_id',$business_id)->get(),
                 'recentProducts' => Menu::where('business_id',$business_id)->get(),
                 'settings' => Setting::find($business_id)??[
-                    'id'=>$business_id
+                    'id'=>$business_id,
+                    'json'=>[]
                 ],
                 'app_settings' => Setting::find(1),
                 'sales' => Sell::with(['user','address','items.address'])->whereDate('created_at', today())->where('business_id',$business_id)->get(),
