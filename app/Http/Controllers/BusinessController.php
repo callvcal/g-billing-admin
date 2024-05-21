@@ -7,6 +7,7 @@ use App\Models\AdminUser;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
@@ -56,16 +57,30 @@ class BusinessController extends Controller
         $name = $request->name;
         $username = $request->username;
 
+
         $user->mobile = $mobile;
-        $user->password =Hash::make($request->password);
+        $user->password = Hash::make($request->password);
         $user->name = $name;
         $user->username = $username;
-        $user->status = 1;
-        $user->user_type = 'admin';
         $user->save();
 
         $user->load('business');
 
+        $posRoleId = DB::table('admin_roles')->where('slug', 'Partner-Admin')->value('id');
+        if (!$posRoleId) {
+            $posRoleId = DB::table('admin_roles')->insertGetId([
+                'name' => 'Partner-Admin',
+                'slug' => 'Partner-Admin'
+            ]);
+        }
+
+        // Assign the role to the user
+        DB::table('admin_role_users')->insert([
+            'role_id' => $posRoleId,
+            'user_id' => $user->id
+        ]);
+
+        $user->load('business', 'roles', 'permissions');
 
         return response($user);
     }
@@ -192,7 +207,7 @@ class BusinessController extends Controller
         } catch (Exception $e) {
             Log::channel('callvcal')->info("auth-file-upload error: e:" . json_encode($e) . " ,request:" . json_encode($request) . ", model:" . json_encode($userModel));
         }
-        
+
         return $this->returnUserToken($request, $userModel);
     }
     public function returnUserToken($request, $user)
@@ -226,7 +241,6 @@ class BusinessController extends Controller
             try {
                 $this->deleteFilePath($model, $key);
             } catch (Exception $e) {
-
             }
             $dist = "eatinsta/$dir";
             $name = time() . '_' . $image->getClientOriginalName();
