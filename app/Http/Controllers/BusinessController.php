@@ -8,6 +8,7 @@ use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 
 class BusinessController extends Controller
 {
@@ -148,7 +149,7 @@ class BusinessController extends Controller
         $user = $request->user;
         $secrete = $request->provider['secrete'];
         $provider = $request->provider['name'];
-        
+
         if ($provider == 'apple' || $provider == 'googleWeb') {
             $verified = (new FirebaseController())->validateTokenId($secrete);
         }
@@ -225,5 +226,57 @@ class BusinessController extends Controller
             'message' => "success",
 
         ]);
+    }
+    public function saveFilePath($request, $dir, $model, $key)
+    {
+
+        $image = $request->file('file');
+
+        if ($image !== null) {
+            try {
+                $this->deleteFilePath($model, $key);
+            } catch (Exception $e) {
+
+            }
+            $dist = "eatinsta/$dir";
+            $name = time() . '_' . $image->getClientOriginalName();
+
+
+            Storage::disk('s3')->put("$dist/$name", file_get_contents($image));
+
+            if (isset($model)) {
+                if ($model->$key && Storage::disk('s3')->exists($model->$key)) {
+                    Storage::disk('s3')->delete($model->$key);
+                }
+
+                $model->$key =  $dist . '/' . $name;
+                $model->save();
+            }
+            return response()->json([
+                'message' => 'File uploaded successfully',
+                $key => $dist . '/' . $name,
+
+            ]);
+        }
+
+        return response()->json([
+            'message' => 'Please select file to upload',
+        ], 401);
+    }
+
+
+    public function deleteFilePath($model, $key)
+    {
+
+
+        if ($model->$key && Storage::disk('s3')->exists($model->$key)) {
+            Storage::disk('s3')->delete($model->$key);
+        }
+        $model->$key = null;
+        $model->save();
+
+        return response()->json([
+            'message' => 'File deleted successfully',
+        ], 201);
     }
 }

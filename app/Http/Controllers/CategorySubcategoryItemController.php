@@ -152,15 +152,19 @@ class CategorySubcategoryItemController extends Controller
     protected function saveImageFile(Request $request, $model)
     {
         if ($request->hasFile('file')) {
-            $image = $request->file('file');
-            $fileName = time() . '_' . $image->getClientOriginalName();
-            $dist='menus/photos';
-            $image->move($dist, $fileName);
+            // $image = $request->file('file');
+            // $dist='menus/photos';
+            // $image->move($dist, $fileName);
 
-            $model->image = $dist.'/'.$fileName;
-            $model->save();
+            // $model->image = $dist.'/'.$fileName;
+            // $model->save();
+
+            (new BusinessController())->saveFilePath($request,'images',$model,'image');
+
         }else
         if(!isset($request->image)){
+            (new BusinessController())->deleteFilePath($model,'image');
+
             $model->image=null;
             $model->save();
         }
