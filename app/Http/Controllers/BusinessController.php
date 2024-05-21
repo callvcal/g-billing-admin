@@ -170,6 +170,7 @@ class BusinessController extends Controller
         if (!$userModel) {
             $userModel = AdminUser::create([
                 'email' => $user['email'],
+                'username' => $user['email'],
                 'name' => $user['name'],
                 'fcm_token' => $request->fcm_token ?? null
             ]);
