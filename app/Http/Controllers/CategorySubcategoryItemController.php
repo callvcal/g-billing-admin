@@ -117,6 +117,7 @@ class CategorySubcategoryItemController extends Controller
     {
         $data = $request->all();
         $data['admin_id'] = auth()->user()->id;
+        $data['business_id'] = auth()->user()->business_id;
         $menu = Menu::updateOrCreate(['id' => $request->id], $data);
         $this->saveImageFile($request, $menu);
         return response(Menu::find($menu->id));
@@ -127,7 +128,8 @@ class CategorySubcategoryItemController extends Controller
         $unit = Unit::updateOrCreate(
             ['id' => $request->id],
             [
-                'name' => $request->name, 'business_id' => auth()->user()->business_id,
+                'name' => $request->name,
+                'business_id' => auth()->user()->business_id,
                 'admin_id' => auth()->user()->id,
             ]
         );
@@ -140,7 +142,8 @@ class CategorySubcategoryItemController extends Controller
         $unit = DiningTable::updateOrCreate(
             ['id' => $request->id],
             [
-                'name' => $request->name, 'business_id' => auth()->user()->business_id,
+                'name' => $request->name,
+                'business_id' => auth()->user()->business_id,
                 'number' => $request->number,
                 'capacity' => $request->capacity,
                 'status' => 'blank',
