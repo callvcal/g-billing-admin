@@ -11,7 +11,7 @@ class StaffController extends Controller
 {
     function all()
     {
-        return response(AdminUser::all());
+        return response(AdminUser::where('business_id',auth()->user()->business_id));
     }
     function delete($id)
     {
@@ -20,17 +20,16 @@ class StaffController extends Controller
 
     function create(Request $request)
     {
-        $admin = new AdminUser();
 
        
-
+        $data = $request->validate([
+            'username' => ['required', 'string', 'max:255', 'unique:admin_users,{{id}}'],
+        ]);
+        $admin = new AdminUser();
         if ($request->filled('id')) {
             $admin = AdminUser::find($request->id);
-        }else{
-            $data = $request->validate([
-                'username' => ['required', 'string', 'max:255', 'unique:admin_users'],
-            ]);
         }
+        
 
         $admin->username = $request->input('username');
         $admin->name = $request->input('name');
@@ -43,22 +42,19 @@ class StaffController extends Controller
 
         $admin->save();
 
-        if (!$request->filled('id')) {
-            // Create a new role if 'pos' role doesn't exist
-            $posRoleId = DB::table('admin_roles')->where('slug', 'pos')->value('id');
-            if (!$posRoleId) {
-                $posRoleId = DB::table('admin_roles')->insertGetId([
-                    'name' => 'POS Staff',
-                    'slug' => 'pos'
-                ]);
-            }
-
-            // Assign the role to the user
-            DB::table('admin_role_users')->insert([
-                'role_id' => $posRoleId,
-                'user_id' => $admin->id
+        $posRoleId = DB::table('admin_roles')->where('slug', 'Partner-Staff')->value('id');
+        if (!$posRoleId) {
+            $posRoleId = DB::table('admin_roles')->insertGetId([
+                'name' => 'Staff',
+                'slug' => 'Partner-Staff'
             ]);
         }
+
+        // Assign the role to the user
+        DB::table('admin_role_users')->insert([
+            'role_id' => $posRoleId,
+            'user_id' => $admin->id
+        ]);
 
         $admin->load('roles', 'permissions');
 
