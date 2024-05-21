@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\AdminUser;
 use App\Models\AdsBanner;
 use App\Models\AppHome;
 use App\Models\CartItem;
@@ -57,51 +58,34 @@ class HomeController extends Controller
 
     public function home()
     {
-        $user = User::find(auth()->user()->id);
-        if (!isset($user->uid)) {
-            $user->uid = UID::create([
-                'user_id' => $user->id
-            ])->uid;
-            $user->save();
-        }
-
-        if (isset(apache_request_headers()['isdriver']) && (apache_request_headers()['isdriver'] == 'true')) {
-
-            return response([
-                'settings' => Setting::find(1),
-                'sales' => Sell::with(['address', 'user'])->where('driver_id', auth()->user()->id)->get(),
-            ]);
-        }
+        
+        
+       
+        
         if (isset(apache_request_headers()['isbilling']) && (apache_request_headers()['isbilling'] == 'true')) {
+            $admin_id = auth()->user()->id;
+            $business_id = auth()->user()->business_id;
 
             return response([
-                'categories' => $this->categories(),
-                'recentProducts' => Menu::all(),
-                'settings' => Setting::find(1),
-                'sales' => Sell::with(['user','address','items.address'])->whereDate('created_at', today())->get(),
-                'tables' => DiningTable::with('sell')->get(),
+                'categories' => Category::where('business_id',$business_id)->get(),
+                'recentProducts' => Menu::where('business_id',$business_id)->get(),
+                'settings' => Setting::find($business_id),
+                'app_settings' => Setting::find(1),
+                'sales' => Sell::with(['user','address','items.address'])->whereDate('created_at', today())->where('business_id',$business_id)->get(),
+                'tables' => DiningTable::with('sell')->where('business_id',$business_id)->get(),
                 'units' => (Unit::all()),
-                'kitchens' => (Kitchen::all()),
-                'materials' => (Material::all()),
-                'materialsStock' => (RawMatrial::with('material')->get()),
-                'subCategories' => SubCategory::all(),
+                'kitchens' => (Kitchen::where('business_id',$business_id)->get()),
+                'materials' => (Material::where('business_id',$business_id)->get()),
+                'materialsStock' => (RawMatrial::with('material')->where('business_id',$business_id)->get()),
+                'subCategories' => SubCategory::where('business_id',$business_id)->get(),
             ]);
         }
-        return response([
-            'ads' => $this->ads(),
-            'categories' => $this->categories(),
-            'recentProducts' => Menu::with('unit')->where('in_stock', 1)->get(),
-            'home' => AppHome::with('menus.unit')->get(),
-            'serviceLocations' => WorkingLocation::all(),
-            'settings' => Setting::find(1),
-            'account' => (new WalletController())->getAccBal(),
-            'sales' => (new OrderController())->getSales(),
-            'carts' => (new OrderController())->getCarts(),
-            'dining_table_requests' => TableRequest::with('diningTable')->where('user_id', auth()->user()->id)->get(),
-            'addresses' => (new OrderController())->getAddress(),
-            'subCategories' => SubCategory::with(['category'])->get(),
 
-        ]);
+        return response([
+            'message'=>'Not developed'
+        ],401);
+        
+        
     }
 
     public function categories()
