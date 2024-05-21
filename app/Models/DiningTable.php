@@ -19,7 +19,7 @@ class DiningTable extends Model
         'name',
         'capacity',
         'uuid',
-        'number',
+        'number','business_id',
 
     ];
     

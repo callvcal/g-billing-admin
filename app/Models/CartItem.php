@@ -20,7 +20,8 @@ class CartItem extends Model
         'menu_id',
         'total_amt',
         'dining_table_id',
-        'user_id',
+        'user_id','business_id',
+        
     ];
 
     protected $guarded = ['menu'];

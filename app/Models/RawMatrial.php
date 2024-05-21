@@ -18,7 +18,7 @@ class RawMatrial extends Model
     }
 
     protected $fillable = [
-        'name',
+        'name','business_id',
         'admin_id',
         'material_id',
         'qty',

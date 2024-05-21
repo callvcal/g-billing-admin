@@ -14,8 +14,8 @@ class InAppPurchaseModel extends Model
     protected $fillable=[
         'id',
         'json',
-        'user_id',
-        'location_id',
+        'user_id'
+        ,'business_id',
         'status',
         'json',
         'product_id',

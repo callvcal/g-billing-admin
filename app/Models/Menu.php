@@ -15,7 +15,7 @@ class Menu extends Model
         return $this->belongsTo(SubCategory::class, 'subcategory_id');
     }
     protected $fillable = [
-        'name',
+        'name','business_id',
         'image',
         'subtitle',
         'code',

@@ -12,6 +12,6 @@ class SubCategory extends Model
         return $this->belongsTo(Category::class,'category_id');
     }
     protected $fillable=[
-        'name','image','admin_id','category_id','kitchen_id'
+        'name','image','admin_id','category_id','kitchen_id','business_id'
     ];
 }

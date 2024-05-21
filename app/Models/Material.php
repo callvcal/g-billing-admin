@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Material extends Model
 {
     protected $fillable = [
-        'name',
+        'name','business_id',
         'admin_id',
 
     ];

@@ -47,7 +47,7 @@ class CategorySubcategoryItemController extends Controller
         $category = Category::updateOrCreate(
             ['id' => $request->id],
             [
-                'name' => $request->name,
+                'name' => $request->name, 'business_id' => auth()->user()->business_id,
                 'admin_id' => auth()->user()->id
             ]
         );
@@ -59,9 +59,10 @@ class CategorySubcategoryItemController extends Controller
         $category = Material::updateOrCreate(
             ['id' => $request->id],
             [
-                'name' => $request->name,
+                'name' => $request->name, 'business_id' => auth()->user()->business_id,
 
                 'admin_id' => auth()->user()->id
+
             ]
         );
         return response($category);
@@ -71,7 +72,7 @@ class CategorySubcategoryItemController extends Controller
         $category = RawMatrial::updateOrCreate(
             ['id' => $request->id],
             [
-                'name' => $request->name,
+                'name' => $request->name, 'business_id' => auth()->user()->business_id,
                 'unit_id' => $request->unit_id,
                 'qty' => $request->qty,
                 'datetime' => $request->datetime,
@@ -90,7 +91,7 @@ class CategorySubcategoryItemController extends Controller
         $kitchen = Kitchen::updateOrCreate(
             ['id' => $request->id],
             [
-                'name' => $request->name,
+                'name' => $request->name, 'business_id' => auth()->user()->business_id,
                 'admin_id' => auth()->user()->id
             ]
         );
@@ -102,7 +103,7 @@ class CategorySubcategoryItemController extends Controller
         $category = SubCategory::updateOrCreate(
             ['id' => $request->id],
             [
-                'name' => $request->name,
+                'name' => $request->name, 'business_id' => auth()->user()->business_id,
                 'admin_id' => auth()->user()->id,
                 'category_id' => $request->category_id,
                 'kitchen_id' => $request->kitchen_id,
@@ -126,7 +127,7 @@ class CategorySubcategoryItemController extends Controller
         $unit = Unit::updateOrCreate(
             ['id' => $request->id],
             [
-                'name' => $request->name,
+                'name' => $request->name, 'business_id' => auth()->user()->business_id,
                 'admin_id' => auth()->user()->id,
             ]
         );
@@ -139,7 +140,7 @@ class CategorySubcategoryItemController extends Controller
         $unit = DiningTable::updateOrCreate(
             ['id' => $request->id],
             [
-                'name' => $request->name,
+                'name' => $request->name, 'business_id' => auth()->user()->business_id,
                 'number' => $request->number,
                 'capacity' => $request->capacity,
                 'status' => 'blank',
