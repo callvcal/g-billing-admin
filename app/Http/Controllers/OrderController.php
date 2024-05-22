@@ -314,7 +314,7 @@ class OrderController extends Controller
         }
 
         $order = Sell::updateOrCreate(
-            ['id' => $request->id],
+            ['uuid' =>  $orderData['uuid']],
             $orderData
         );
 
