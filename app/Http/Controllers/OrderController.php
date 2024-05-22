@@ -298,6 +298,7 @@ class OrderController extends Controller
         $orderData['uuid'] =$orderData['uuid']?? Str::orderedUuid();
         $orderData['date_time'] = Carbon::now();
         $orderData['admin_id'] = auth()->user()->id;
+        $orderData['business_id'] = auth()->user()->business_id;
         $orderData['delivery_status'] = "a_unassigned";
         $orderData['order_status'] = ($request->pos_action == 'BILL') ? "e_completed" : (isset($request->dining_table_id) ? 'KOT' : 'e_completed');
         if ($request->pos_action == 'BILL') {
