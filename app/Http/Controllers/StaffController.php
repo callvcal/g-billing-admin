@@ -6,6 +6,7 @@ use App\Models\AdminUser;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rule;
 
 class StaffController extends Controller
 {
@@ -23,7 +24,7 @@ class StaffController extends Controller
 
        
         $data = $request->validate([
-            'username' => ['required', 'string', 'max:255', 'unique:admin_users,{{id}}'],
+            'username' => ['required', 'string', 'max:255', Rule::unique('admin_users')->ignore($request->id)],
             'role' => ['required'],
         ]);
         $admin = new AdminUser();
