@@ -298,7 +298,7 @@ class AuthController extends Controller
 
         if (isset(apache_request_headers()['isbilling']) && (apache_request_headers()['isbilling'] == 'true')) {
             $auth = AdminUser::find($auth->id);
-            $auth->load('roles', 'permissions');
+            $auth->load('roles', 'permissions','business');
         }
 
         return response([
