@@ -8,6 +8,7 @@ use App\Models\SubCategory;
 use App\Models\Menu;
 use App\Models\Kitchen;
 use App\Models\Material;
+use App\Models\OfflineTransaction;
 use App\Models\RawMatrial;
 use App\Models\Unit;
 use Illuminate\Http\Request;
@@ -16,29 +17,36 @@ class CategorySubcategoryItemController extends Controller
 {
     public function categories()
     {
-        $categories = Category::all();
+        $categories = (new HomeController())->query(Category::class)->get();
         return response($categories);
     }
 
     public function subCategories()
     {
-        $subCategories = SubCategory::all();
+        $subCategories = (new HomeController())->query(SubCategory::class)->get();
         return response($subCategories);
     }
 
+    public function earningExpense()
+    {
+        $categories = (new HomeController())->query(OfflineTransaction::class)->get();
+        return response($categories);
+    }
+
+
     public function menus()
     {
-        $menus = Menu::all();
+        $menus = (new HomeController())->query(Menu::class)->get();
         return response($menus);
     }
     public function rawMaterials()
     {
-        $menus = Material::all();
+        $menus = (new HomeController())->query(Material::class)->get();
         return response($menus);
     }
     public function rawMaterialStocks()
     {
-        $menus = RawMatrial::all();
+        $menus = (new HomeController())->query(RawMatrial::class)->get();
         return response($menus);
     }
 
@@ -59,8 +67,8 @@ class CategorySubcategoryItemController extends Controller
         $category = Material::updateOrCreate(
             ['id' => $request->id],
             [
-                'name' => $request->name, 'business_id' => auth()->user()->business_id,
-
+                'name' => $request->name,
+                'business_id' => auth()->user()->business_id,
                 'admin_id' => auth()->user()->id
 
             ]
@@ -72,7 +80,8 @@ class CategorySubcategoryItemController extends Controller
         $category = RawMatrial::updateOrCreate(
             ['id' => $request->id],
             [
-                'name' => $request->name, 'business_id' => auth()->user()->business_id,
+                'name' => $request->name,
+                'business_id' => auth()->user()->business_id,
                 'unit_id' => $request->unit_id,
                 'qty' => $request->qty,
                 'datetime' => $request->datetime,
@@ -91,7 +100,22 @@ class CategorySubcategoryItemController extends Controller
         $kitchen = Kitchen::updateOrCreate(
             ['id' => $request->id],
             [
-                'name' => $request->name, 'business_id' => auth()->user()->business_id,
+                'name' => $request->name,
+                'business_id' => auth()->user()->business_id,
+                'admin_id' => auth()->user()->id
+            ]
+        );
+        return response($kitchen);
+    }
+    public function createEarningExpense(Request $request)
+    {
+        $kitchen = OfflineTransaction::updateOrCreate(
+            ['id' => $request->id],
+            [
+                'amount' => $request->amount,
+                'type' => $request->type,
+                'cause' => $request->cause,
+                'business_id' => auth()->user()->business_id,
                 'admin_id' => auth()->user()->id
             ]
         );
@@ -103,7 +127,8 @@ class CategorySubcategoryItemController extends Controller
         $category = SubCategory::updateOrCreate(
             ['id' => $request->id],
             [
-                'name' => $request->name, 'business_id' => auth()->user()->business_id,
+                'name' => $request->name,
+                'business_id' => auth()->user()->business_id,
                 'admin_id' => auth()->user()->id,
                 'category_id' => $request->category_id,
                 'kitchen_id' => $request->kitchen_id,
@@ -118,7 +143,7 @@ class CategorySubcategoryItemController extends Controller
         $data = $request->all();
         $data['admin_id'] = auth()->user()->id;
         $data['business_id'] = auth()->user()->business_id;
-        $data['active'] = (($data['active']==1)||($data['active']==true)||($data['active']=='true'))?1:0;
+        $data['active'] = (($data['active'] == 1) || ($data['active'] == true) || ($data['active'] == 'true')) ? 1 : 0;
 
         $menu = Menu::updateOrCreate(['id' => $request->id], $data);
         $this->saveImageFile($request, $menu);
@@ -228,5 +253,12 @@ class CategorySubcategoryItemController extends Controller
 
         $unit->delete();
         return response(['message' => 'Material stock deleted successfully']);
+    }
+    public function deleteEarningExpense($id)
+    {
+        $unit = OfflineTransaction::findOrFail($id);
+
+        $unit->delete();
+        return response(['message' => 'Transaction deleted successfully']);
     }
 }

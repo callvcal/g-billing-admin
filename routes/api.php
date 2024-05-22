@@ -147,6 +147,7 @@ Route::group(['middleware' => ['security', 'auth:sanctum']], function () {
     Route::get('/menus', [CategorySubcategoryItemController::class, 'menus']);
     Route::get('/raw-materials', [CategorySubcategoryItemController::class, 'rawMaterials']);
     Route::get('/raw-materials-stock', [CategorySubcategoryItemController::class, 'rawMaterialStocks']);
+    Route::get('/earning-expense', [CategorySubcategoryItemController::class, 'earningExpense']);
     
     Route::post('/create-category', [CategorySubcategoryItemController::class, 'createCategory']);
     Route::post('/create-kitchen', [CategorySubcategoryItemController::class, 'createKitchen']);
@@ -156,6 +157,7 @@ Route::group(['middleware' => ['security', 'auth:sanctum']], function () {
     Route::post('/create-din-table', [CategorySubcategoryItemController::class, 'createDinTable']);
     Route::post('/raw-materials/create', [CategorySubcategoryItemController::class, 'createRawMaterial']);
     Route::post('/raw-materials-stock/create', [CategorySubcategoryItemController::class, 'createRawMaterialStock']);
+    Route::post('/earning-expense/create', [CategorySubcategoryItemController::class, 'createEarningExpense']);
     
     Route::delete('/delete-category/{id}', [CategorySubcategoryItemController::class, 'deleteCategory']);
     Route::delete('/delete-kitchen/{id}', [CategorySubcategoryItemController::class, 'deleteKitchen']);
@@ -165,6 +167,7 @@ Route::group(['middleware' => ['security', 'auth:sanctum']], function () {
     Route::delete('/delete-din-table/{id}', [CategorySubcategoryItemController::class, 'deleteDinTable']);
     Route::delete('/delete-raw-materials/{id}', [CategorySubcategoryItemController::class, 'deleteRawMaterial']);
     Route::delete('/delete-raw-materials-stock/{id}', [CategorySubcategoryItemController::class, 'deleteRawMaterialStock']);
+    Route::delete('/earning-expense/{id}', [CategorySubcategoryItemController::class, 'deleteEarningExpense']);
 
     Route::post('/billing/place', [OrderController::class, 'placeOrderPOS']);
 
