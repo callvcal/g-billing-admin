@@ -112,7 +112,7 @@ class CategorySubcategoryItemController extends Controller
         $kitchen = OfflineTransaction::updateOrCreate(
             ['id' => $request->id],
             [
-                'amount' => $request->amount,
+                'amount' =>(int) $request->amount,
                 'type' => $request->type,
                 'cause' => $request->cause,
                 'business_id' => auth()->user()->business_id,
