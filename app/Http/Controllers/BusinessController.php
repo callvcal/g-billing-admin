@@ -27,7 +27,7 @@ class BusinessController extends Controller
             'mobile' => ['required'],
             'name' => ['required'],
             'username' => ['required'],
-            'business' => ['required'],
+            'business_key' => ['required'],
         ]);
         $business = $request->business;
 
@@ -35,7 +35,7 @@ class BusinessController extends Controller
         if (count($businesss) != 0) {
             $business = $business .  count($businesss);
         }
-        $user->business = $business;
+        $user->business_key = $business;
         $user->username = 'admin@' . $business;
         $business = Business::create(
             [
@@ -119,7 +119,7 @@ class BusinessController extends Controller
     }
     public function fetch()
     {
-        $users = AdminUser::with('business')->where('business', auth()->user()->business)->get();
+        $users = AdminUser::with('business')->where('business_id', auth()->user()->business_id)->get();
 
 
         return response($users);

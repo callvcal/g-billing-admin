@@ -29,7 +29,8 @@ class AdminUser extends Authenticatable
         'date_of_birth',
         'gender',
         'business_id',
-        'admin_id'
+        'admin_id',
+        'business_key'
     ];
 
     /**

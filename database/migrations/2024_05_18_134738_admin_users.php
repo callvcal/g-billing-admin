@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::table('admin_users', function (Blueprint $table) {
             $table->string('email')->nullable();
             $table->string('mobile')->nullable();
-            $table->string('business')->nullable();
+            $table->string('business_key')->nullable();
             $table->unsignedBigInteger('admin_id')->nullable();
         });
     }
