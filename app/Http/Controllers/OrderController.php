@@ -349,7 +349,7 @@ class OrderController extends Controller
             $table->customer_name = $order->customer_name;
             $table->customer_mobile = $order->customer_mobile;
             $table->amount = $order->total_amt;
-            $table->sell_id = $order->id;
+            $table->sell_id = $order->uuid;
             if ($request->pos_action == 'BILL') {
                 $table->customer_name = null;
                 $table->customer_mobile = null;

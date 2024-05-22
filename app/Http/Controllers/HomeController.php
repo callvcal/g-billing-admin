@@ -148,7 +148,7 @@ class HomeController extends Controller
 
     function isAdministrator($user)
     {
-        return checkRole($user->id, 'administrator');
+        return $this->checkRole($user->id, 'administrator');
     }
 
     function subQuery($query)
