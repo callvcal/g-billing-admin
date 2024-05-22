@@ -24,11 +24,14 @@ class StaffController extends Controller
        
         $data = $request->validate([
             'username' => ['required', 'string', 'max:255', 'unique:admin_users,{{id}}'],
+            'role' => ['required'],
         ]);
         $admin = new AdminUser();
         if ($request->filled('id')) {
             $admin = AdminUser::find($request->id);
         }
+
+        $role=$request->role;
         
 
         $admin->username = $request->input('username');
@@ -42,11 +45,11 @@ class StaffController extends Controller
 
         $admin->save();
 
-        $posRoleId = DB::table('admin_roles')->where('slug', 'Partner-Staff')->value('id');
+        $posRoleId = DB::table('admin_roles')->where('slug', $role)->value('id');
         if (!$posRoleId) {
             $posRoleId = DB::table('admin_roles')->insertGetId([
-                'name' => 'Staff',
-                'slug' => 'Partner-Staff'
+                'name' => $role,
+                'slug' => $role
             ]);
         }
 
