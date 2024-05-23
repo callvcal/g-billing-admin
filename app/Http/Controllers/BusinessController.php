@@ -30,7 +30,7 @@ class BusinessController extends Controller
             'username' => ['required'],
             'business_key' => ['required'],
         ]);
-        $business = $request->business;
+        $business = $request->business_key;
 
         $businesss = Business::where('name', $business)->get();
         if (count($businesss) != 0) {
