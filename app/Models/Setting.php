@@ -18,6 +18,6 @@ class Setting extends Model
     ];
     public function business()
     {
-        return $this->belongsTo(Business::class);
+        return $this->belongsTo(Business::class,'id');
     }
 }

@@ -144,7 +144,7 @@ Show::init(function (Show $show) {
       if (!canAllowDelete()) {
         $tools->disableDelete();
       }
-    });;
+    });
   if (isAdministrator()) {
     $show->field('business_id', __('Business ID'));
   }
