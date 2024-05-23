@@ -155,9 +155,9 @@ class BusinessController extends Controller
                 'message' => "Please enter business at least 3 charecter and try again."
             ], 401);
         }
-        if (strlen($business) > 16) {
+        if (strlen($business) > 18) {
             return response([
-                'message' => "Please enter business at max 16 charecter and try again."
+                'message' => "Please enter business at max 18 charecter and try again."
             ], 401);
         }
         $businesss = Business::where('name', $business)->get();
