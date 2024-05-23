@@ -27,7 +27,7 @@ class BusinessController extends Controller
             'mobile' => ['required'],
             'name' => ['required'],
             'username' => ['required'],
-            'business' => ['required'],
+            'business_key' => ['required'],
         ]);
         $business = $request->business;
 
@@ -127,7 +127,7 @@ class BusinessController extends Controller
     function verifyBusiness()
     {
         $user = AdminUser::find(auth()->user()->id);
-        $business = request('business');
+        $business = request('business_key');
 
         if (strpos($business, ' ') !== false) {
             return response([
@@ -150,7 +150,7 @@ class BusinessController extends Controller
             $business = $business .  count($businesss);
         }
         return response([
-            'business' => $business,
+            'business_key' => $business,
 
         ]);
     }
