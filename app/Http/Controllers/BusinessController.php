@@ -128,6 +128,7 @@ class BusinessController extends Controller
     {
         $user = AdminUser::find(auth()->user()->id);
         $business = request('business_key');
+        Log::channel('callvcal')->info(json_encode( request()->all()));
 
         if (strpos($business, ' ') !== false) {
             return response([
