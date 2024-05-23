@@ -52,6 +52,7 @@ class BusinessController extends Controller
             ]
         );
         $user->business_id = $business->id;
+        $user->business_key = $business->name;
 
 
         $mobile = $request->mobile;
@@ -81,6 +82,9 @@ class BusinessController extends Controller
             'json'=>[
                 'mobile'=>$user->mobile??null,
                 'email'=>$user->email??null,
+                'shop_name'=>$business->name,
+                'footer_message'=>"Thank You",
+                
             ]
         ]);
 
