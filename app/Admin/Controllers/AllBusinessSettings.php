@@ -67,7 +67,7 @@ class AllBusinessSettings extends AdminController
 
         $show->field('id', __('Business ID'));
         $show->business("Business information",function ($model) {
-            $model->setResource('/admin/businesses');
+            // $model->setResource('/admin/businesses');
             $model->disableDelete();
             $model->disableEdit();
 
