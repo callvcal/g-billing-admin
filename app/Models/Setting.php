@@ -16,4 +16,8 @@ class Setting extends Model
         'id',
         'json'
     ];
+    public function business()
+    {
+        return $this->belongsTo(Business::class);
+    }
 }
