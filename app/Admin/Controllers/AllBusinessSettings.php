@@ -46,7 +46,7 @@ class AllBusinessSettings extends AdminController
         $grid->column('id', __('Business ID'))->sortable();
         $grid->column('admin_id', __('Admin ID'))->sortable();
         $grid->business()->display(function ($model) {
-            if (!$model) {
+            if ($model==null) {
                 return '';
             }
             return $model->name;
