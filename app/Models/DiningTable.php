@@ -25,7 +25,7 @@ class DiningTable extends Model
     
     public function sell()
     {
-        return $this->belongsTo(Sell::class, 'sell_id');
+        return $this->belongsTo(Sell::class, 'sell_id','uuid');
     }
     
         
