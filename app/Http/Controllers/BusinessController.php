@@ -78,13 +78,13 @@ class BusinessController extends Controller
         }
 
         Setting::create([
-            'id'=>$user->business_id,
-            'json'=>[
-                'mobile'=>$user->mobile??null,
-                'email'=>$user->email??null,
-                'shop_name'=>$business->name,
-                'footer_message'=>"Thank You",
-                
+            'id' => $user->business_id,
+            'json' => [
+                'mobile' => $user->mobile ?? null,
+                'email' => $user->email ?? null,
+                'shop_name' => ucfirst($business->name),
+                'footer_message' => "Thank You",
+
             ]
         ]);
 
@@ -142,7 +142,7 @@ class BusinessController extends Controller
     {
         $user = AdminUser::find(auth()->user()->id);
         $business = request('business_key');
-        Log::channel('callvcal')->info(json_encode( request()->all()));
+        Log::channel('callvcal')->info(json_encode(request()->all()));
 
         if (strpos($business, ' ') !== false) {
             return response([

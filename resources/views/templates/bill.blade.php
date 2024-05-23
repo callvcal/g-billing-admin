@@ -127,7 +127,7 @@
 
             @php
 
-                $isIncluded = $setting['is_gst_included'] == 1;
+                $isIncluded = ($setting['is_gst_included']??0) == 1;
                 if( $isIncluded){
                     $subtotal = $sell->total_amt - $sell->gst_amt - $sell->delivery_charge + $sell->discount_amt;
 
