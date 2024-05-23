@@ -66,7 +66,7 @@ class AllBusinessSettings extends AdminController
         $show = new Show(Setting::findOrFail($id));
 
         $show->field('id', __('Business ID'));
-        $show->business()->display(function ($model) {
+        $show->business("Business information",function ($model) {
             $model->setResource('/admin/businesses');
 
             $model->id();
@@ -74,6 +74,8 @@ class AllBusinessSettings extends AdminController
             $model->plan();
             $model->admin_id();
         });
+        
+        
         $show->field('json', __('Data'))->json();
         $show->panel()
             ->tools(function ($tools) {
