@@ -49,7 +49,7 @@ class AllBusinessSettings extends AdminController
             if ($model==null) {
                 return '';
             }
-            return $model->name;
+            return $model['name'];
         });
 
         return $grid;
