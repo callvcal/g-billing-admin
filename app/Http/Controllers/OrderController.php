@@ -203,7 +203,7 @@ class OrderController extends Controller
         } else
         if (isset(apache_request_headers()['isbilling']) && (apache_request_headers()['isbilling'] == 'true')) {
 
-            $sales = Sell::with(['address', 'user'])->where('business_id',auth()->user()->business_id);
+            $sales = Sell::with(['items'])->where('business_id',auth()->user()->business_id);
 
 
         } else {
