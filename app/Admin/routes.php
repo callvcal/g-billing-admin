@@ -2,7 +2,7 @@
 
 use App\Admin\Controllers\AddressController;
 use App\Admin\Controllers\AdsBannerController;
-use App\Admin\Controllers\AllBusinessSetings;
+use App\Admin\Controllers\AllBusinessSettings;
 use App\Admin\Controllers\AppHomeController;
 use App\Admin\Controllers\BusinessController;
 use App\Admin\Controllers\CategoryController;
@@ -86,7 +86,7 @@ Route::group([
     $router->resource('raw-materials', RawMatrialController::class);
     $router->resource('materials', MaterialController::class);
     $router->resource('businesses', BusinessController::class);
-    $router->resource('all-settings', AllBusinessSetings::class);
+    $router->resource('all-settings', AllBusinessSettings::class);
     $router->resource('working-locations', WorkingLocationController::class);
     $router->resource('staffs', StaffController::class);
 

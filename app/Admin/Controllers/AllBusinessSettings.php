@@ -9,7 +9,7 @@ use OpenAdmin\Admin\Show;
 use \App\Models\Setting;
 use OpenAdmin\Admin\Facades\Admin;
 
-class AllBusinessSetings extends AdminController
+class AllBusinessSettings extends AdminController
 {
     /**
      * Title for current resource.
