@@ -248,18 +248,13 @@ class POSController extends AdminController
     }
     function calculateGSTIncluded($total, $gstRate)
     {
-        // Calculate pre-GST amount
         $gst = $total / (1 + ($gstRate / 100));
 
-
-        return $gst;
+        return ($total-$gst);
     }
     function calculateGSTExcluded($total, $gstRate)
     {
-        // Calculate pre-GST amount
         $gst = $total * ($gstRate / 100);
-
-
         return $gst;
     }
 }
