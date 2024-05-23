@@ -37,6 +37,7 @@ class StaffController extends Controller
 
         $admin->username = $request->input('username');
         $admin->name = $request->input('name');
+        $admin->mobile = $request->input('mobile');
         $admin->admin_id = auth()->user()->id;
         $admin->business_id = auth()->user()->business_id;
 
