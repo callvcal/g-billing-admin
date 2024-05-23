@@ -70,10 +70,7 @@ class HomeController extends Controller
             return response([
                 'categories' => Category::where('business_id', $business_id)->get(),
                 'recentProducts' => Menu::where('business_id', $business_id)->get(),
-                'settings' => Setting::find($business_id) ?? [
-                    'id' => $business_id,
-                    'json' => []
-                ],
+                'settings' => Setting::find($business_id),
                 'app_settings' => Setting::find(1),
                 'sales' => $this->query(Sell::class)->with(['user', 'address', 'items.address'])->whereDate('created_at', today())->where('business_id', $business_id)->get(),
                 'tables' => $this->query(DiningTable::class)->with('sell')->where('business_id', $business_id)->get(),

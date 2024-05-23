@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Business;
 use App\Models\AdminUser;
+use App\Models\Setting;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
@@ -58,6 +59,7 @@ class BusinessController extends Controller
         $username = $request->username;
 
 
+
         $user->mobile = $mobile;
         $user->password = Hash::make($request->password);
         $user->name = $name;
@@ -73,6 +75,14 @@ class BusinessController extends Controller
                 'slug' => 'Partner-Admin'
             ]);
         }
+
+        Setting::create([
+            'id'=>$user->business_id,
+            'json'=>[
+                'mobile'=>$user->mobile??null,
+                'email'=>$user->email??null,
+            ]
+        ]);
 
         // Assign the role to the user
         DB::table('admin_role_users')->insert([
