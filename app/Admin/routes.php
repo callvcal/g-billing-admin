@@ -139,6 +139,7 @@ Route::group([
 
 
     $router->get('/load-subcategories', [ControllersHomeController::class, 'loadSubcategories']);
+    $router->get('/loadBusinesses', [HomeController::class, 'loadBusinesses']);
 
 
 

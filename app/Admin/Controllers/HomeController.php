@@ -6,6 +6,7 @@ use App\Admin\Actions\PrepareOrder;
 use App\Http\Controllers\Controller;
 use App\Models\Address;
 use App\Models\AdminUser;
+use App\Models\Business;
 use App\Models\Category;
 use App\Models\DiningTable;
 use App\Models\Menu;
@@ -274,5 +275,11 @@ class HomeController extends AdminController
         }
 
         return AdminUser::where('business_id', FacadesAdmin::user()->business_id)->count();
+    }
+
+    public function loadBusinesses(Request $request)
+    {
+        $provinceId = $request->get('query');
+        return Business::all(['id', DB::raw('name as text')]);
     }
 }

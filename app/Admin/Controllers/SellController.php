@@ -112,17 +112,18 @@ class SellController extends AdminController
             $grid->disableColumnSelector();
             $grid->disableRowSelector();
             $grid->model()->whereDate('created_at', date("Y-m-d")) // Filter by today's date
-            ->whereNotIn('order_status', ['e_completed', 'g_cancelled', 'f_rejected'])->orderBy('id', 'desc'); // Exclude certain order statuses            
- 
+                ->whereNotIn('order_status', ['e_completed', 'g_cancelled', 'f_rejected'])->orderBy('id', 'desc'); // Exclude certain order statuses            
+
             // $grid->fixHeader();
             // $grid->model()->whereDate('created_at', date("Y-m-d")) // Filter by today's date
             //     ->whereNotIn('order_status', ['e_completed', 'g_cancelled', 'f_rejected'])->orderBy('id', 'desc'); // Exclude certain order statuses            
         }
         $grid->expandFilter();
 
-        $grid->filter(function($filter){
+        $grid->filter(function ($filter) {
             $filter->disableIdFilter();
             $filter->like('created_at')->date();
+            $filter->equal('business_id')->select('admin/loadBusinesses');
         });
 
         $grid->column('serve_type', __('Order Type'))->sortable()->label();
@@ -131,11 +132,11 @@ class SellController extends AdminController
             return "<button onclick='printBill($id)' class='btn btn-primary'>Bill Print</button>";
         });
         $grid->column('kot_bill', 'KOT')->display(function ($modelNull) {
-            $id=$this->getKey();
+            $id = $this->getKey();
             return "<button onclick='printKOT($id)' class='btn btn-warning'>KOT Print</button>";
         });
         $grid->column('stickers', 'Stickers')->display(function ($modelNull) {
-            $id=$this->getKey();
+            $id = $this->getKey();
             return "<button onclick='printSticker($id)' class='btn btn-warning'>Sticker Print</button>";
         });
         $grid->column('id', __('#id'))->expand(function ($model) {
@@ -157,17 +158,16 @@ class SellController extends AdminController
             $items = $model->items()->get()->map(function ($item) {
                 $data = $item->only(['menu_id', 'qty', 'total_amt']);
 
-                $menu=Menu::find($data['menu_id']);
-                if($menu){
+                $menu = Menu::find($data['menu_id']);
+                if ($menu) {
                     $data['menu_id'] = $menu->name;
-
                 }
 
                 return $data;
             });
 
             $t2 = (new Table(['Item name', 'quantity', 'total'], $items->toArray()));
-           
+
             $collapse = new Collapse();
 
             $collapse->add('Details', $t1->render());
@@ -176,7 +176,7 @@ class SellController extends AdminController
             return $collapse->render();
         })->sortable();
         $grid->column('date_time', __('Date time'))->sortable();
-       
+
         $grid->column('order_status', __('Order Status'))->select((new SellController())->orderStatusOptions());
         $grid->column('driver_id', __('Assign Delivery boy'))->select(User::where('is_driver', 1)->where('is_verified_driver', 1)->get()->pluck("name", "id")->toArray());
 

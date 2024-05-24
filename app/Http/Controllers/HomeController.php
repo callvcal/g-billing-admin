@@ -130,6 +130,7 @@ class HomeController extends Controller
         $provinceId = $request->get('query');
         return SubCategory::where('category_id', $provinceId)->get(['id', DB::raw('name as text')]);
     }
+    
 
 
     function query($model)
