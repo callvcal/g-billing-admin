@@ -5,6 +5,7 @@ namespace App\Admin\Controllers;
 use App\Admin\Actions\OrderAction;
 use App\Http\Controllers\RazorPayController;
 use App\Models\Address;
+use App\Models\Business;
 use App\Models\Menu;
 use OpenAdmin\Admin\Controllers\AdminController;
 use OpenAdmin\Admin\Form;
@@ -123,7 +124,7 @@ class SellController extends AdminController
         $grid->filter(function ($filter) {
             $filter->disableIdFilter();
             $filter->like('created_at')->date();
-            $filter->equal('business_id')->select('admin/loadBusinesses');
+            $filter->equal('business_id')->select(Business::all()->pluck('id','name'));
         });
 
         $grid->column('serve_type', __('Order Type'))->sortable()->label();
