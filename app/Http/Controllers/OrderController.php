@@ -331,7 +331,7 @@ class OrderController extends Controller
                 'qty' => $item['qty'],
                 'total_amt' => $item['total_amt'],
                 'menu_id' => $item['menu_id'],
-                'uuid' => $item['menu_id'].$order->uuid,
+                'uuid' => $item['uuid'],
                 'admin_id' => auth()->user()->id,
                 'token_number' => (new KotTokenController())->generateToken(),
                 'sell_id' => $order->uuid,
