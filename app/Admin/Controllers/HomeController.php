@@ -280,6 +280,6 @@ class HomeController extends AdminController
     public function loadBusinesses(Request $request)
     {
         $provinceId = $request->get('query');
-        return Business::all(['id', DB::raw('name as text')]);
+        return Business::where('name','like',"%$provinceId%")->get(['id', DB::raw('name as text')]);
     }
 }
