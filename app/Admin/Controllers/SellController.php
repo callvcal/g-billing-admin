@@ -124,7 +124,7 @@ class SellController extends AdminController
         $grid->filter(function ($filter) {
             $filter->disableIdFilter();
             $filter->like('created_at')->date();
-            $filter->equal('business_id')->select(Business::all()->pluck('id','name'));
+            $filter->equal('business_id')->select(Business::all()->pluck('name','id'));
         });
 
         $grid->column('serve_type', __('Order Type'))->sortable()->label();
