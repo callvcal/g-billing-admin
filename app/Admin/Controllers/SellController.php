@@ -122,7 +122,7 @@ class SellController extends AdminController
 
         $grid->filter(function($filter){
             $filter->disableIdFilter();
-            $filter->equal('created_at')->date();
+            $filter->like('created_at')->date();
         });
 
         $grid->column('serve_type', __('Order Type'))->sortable()->label();
