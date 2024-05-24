@@ -105,7 +105,7 @@ class OrderController extends Controller
                 $orderData['full_address'] = $address->address;
             }
         }
-        $orderData['uuid'] =$orderData['uuid']?? Str::orderedUuid();
+        $orderData['uuid'] = $orderData['uuid'] ?? Str::orderedUuid();
 
         $orderData['customer_mobile'] = $user->mobile;
         $orderData['order_status'] = ($orderData['payment_method'] == 'cash') ? "a_sent" : 'unknown';
@@ -203,9 +203,7 @@ class OrderController extends Controller
         } else
         if (isset(apache_request_headers()['isbilling']) && (apache_request_headers()['isbilling'] == 'true')) {
 
-            $sales = Sell::with(['items'])->where('business_id',auth()->user()->business_id);
-
-
+            $sales = Sell::with(['items'])->where('business_id', auth()->user()->business_id);
         } else {
             $sales = Sell::with(['address', 'driver'])->where('user_id', auth()->user()->id);
         }
@@ -297,23 +295,24 @@ class OrderController extends Controller
     public function placeOrderPOS(Request $request)
     {
         $orderData = $request->toArray();
-        $orderData['uuid'] =$orderData['uuid']?? Str::orderedUuid();
+        $orderData['uuid'] = $orderData['uuid'] ?? Str::orderedUuid();
         $orderData['date_time'] = Carbon::now();
-        $orderData['admin_id'] = auth()->user()->id;
+        $orderData['admin_id'] = $orderData['admin_id'] ?? auth()->user()->id;
         $orderData['business_id'] = auth()->user()->business_id;
-        $orderData['delivery_status'] = "a_unassigned";
-        $orderData['order_status'] = ($request->pos_action == 'BILL') ? "e_completed" : (isset($request->dining_table_id) ? 'KOT' : 'e_completed');
-        if ($request->pos_action == 'BILL') {
-            $orderData['order_status'] = 'e_completed';
+        $orderData['delivery_status'] =$orderData['delivery_status']?? "a_unassigned";
+        if (!isset($orderData['order_status'])) {
+            $orderData['order_status'] = ($request->pos_action == 'BILL') ? "e_completed" : (isset($request->dining_table_id) ? 'KOT' : 'e_completed');
+           
+            
         }
-        $orderData['invoice_id'] = (new KotTokenController())->generateToken(type: 'invoice');
-        // $orderData['gst_amt'] = $request->total_amt * 0.05;
+
+        $orderData['invoice_id'] =$orderData['invoice_id']?? (new KotTokenController())->generateToken(type: 'invoice');
         $orderData['total_amt'] =  (int)($request->total_amt);
-        $orderData['order_id'] = (new OrderController())->generateOrderID(1);
+        $orderData['order_id'] = $orderData['order_id'] ?? (new OrderController())->generateOrderID(1);
 
         if ($orderData['payment_status'] == 'paid') {
             $orderData['due_amt'] =  0;
-            $orderData['paid_amt'] =   $orderData['total_amt'];
+            $orderData['paid_amt'] = $orderData['paid_amt'] ??  $orderData['total_amt'];
         }
 
         $order = Sell::updateOrCreate(
@@ -332,14 +331,15 @@ class OrderController extends Controller
                 'qty' => $item['qty'],
                 'total_amt' => $item['total_amt'],
                 'menu_id' => $item['menu_id'],
+                'uuid' => $item['menu_id'].$order->uuid,
                 'admin_id' => auth()->user()->id,
                 'token_number' => (new KotTokenController())->generateToken(),
                 'sell_id' => $order->uuid,
+                'business_id' => auth()->user()->business_id,
             ];
             $model = SellItem::updateOrCreate([
                 'sell_id' => $order->uuid,
                 'menu_id' => $item['menu_id'],
-
             ], $orderItemData);
 
             $model->load('menu');
@@ -378,7 +378,6 @@ class OrderController extends Controller
         return response(
             [
                 'order' => $order,
-                // 'items' => $items,
                 'table' => $table
             ]
         );
