@@ -340,6 +340,7 @@ class OrderController extends Controller
             $model = SellItem::updateOrCreate([
                 'sell_id' => $order->uuid,
                 'menu_id' => $item['menu_id'],
+                'uuid' => $item['uuid'],
             ], $orderItemData);
 
             $model->load('menu');
