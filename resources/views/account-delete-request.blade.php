@@ -27,8 +27,8 @@
                                 email/mobile used for authentication.
                             </p>
                             <div class="contact-details">
-                                <p><strong>Eatplan8 Pvt. Ltd.</strong></p>
-                                <p><strong>Email:</strong> <a href="mailto:tech@eatinsta.callvcal.com">tech@callvcal.com</a></p>
+                                <p><strong>Callvcal Technology Pvt. Ltd.</strong></p>
+                                <p><strong>Email:</strong> <a href="mailto:tech@callvcal.com">tech@callvcal.com</a></p>
                                 <p><strong>Mobile Number:</strong> <a href="tel:+917033879015">+917033879015</a></p>
                             </div>
                         </div>
