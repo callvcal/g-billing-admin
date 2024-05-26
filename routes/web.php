@@ -99,5 +99,31 @@ Route::get('/download-src', function () {
     }
 });
 
+Route::get('/account-delete-request', function () {
+    return view('account-delete-request');
+});
+
+Route::get('/app-ads.txt', function () {
+    return file('app-ads.txt');
+});
+Route::get('/about', function () {
+    return view('about');
+});
+
+
+Route::get('/privacy', function () {
+    return view('privacy');
+});
+
+Route::get('/terms', function () {
+    return view('terms');
+});
+
+
+Route::get('/refunds-policy', function () {
+    return view('refunds-policy');
+});
+
+
 require __DIR__.'/auth.php';
 
