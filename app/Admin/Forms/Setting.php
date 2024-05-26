@@ -36,7 +36,7 @@ class Setting extends Form
         //     $data[$value]=$data[$value.'_cb']??$data[$value];
         // }
 
-        ModelsSetting::updateOrCreate(['id' =>isAdministrator()?1:Admin::user()->business_id], [
+        ModelsSetting::updateOrCreate(['id' => isAdministrator() ? 1 : Admin::user()->business_id], [
             'json' => $data
         ]);
 
@@ -79,25 +79,6 @@ class Setting extends Form
      */
     public function form()
     {
-        $this->text('shop_name', 'Shop Name')->rules('required');
-        $this->text('address', 'Address')->rules('required');
-        $this->text('mobile', 'Mobile Number')->rules('required');
-        $this->email('email', 'Email Address')->rules('required|email');
-        $this->url('map_link', 'Google Map Link')->rules('required');
-        $this->text('latitude', 'Shop Location Latitude')->rules('required');
-        $this->text('longitude', 'Shop Location  Longitude')->rules('required');
-
-        $states = [
-            0 => "No",
-            1 => "Yes",
-        ];
-
-        $this->select('allow_breakfast', 'Allow Breakfast')->options($states)->default(1);
-        $this->select('allow_lunch', 'Allow Lunch')->options($states)->default(1);
-        $this->select('allow_dinner', 'Allow Dinner')->options($states)->default(1);
-        $this->select('print_gst', 'Print GST')->options($states)->default(1);
-        $this->select('is_gst_included', 'Is GST Included')->options($states)->default(1);
-        $this->number('gst_rate', 'Enter GST Rate(0-100)%')->default(10)->rules('required');
         // $this->text('price_per_km', 'Delivery Charge Per KM')->rules('required');
         // $this->image('refer_earn_image', 'Refer & Earn Image');
         // $this->number('refer_earn_new_user_rewards', 'Refere & Earn New user rewards')->default(200)->rules('required');
@@ -111,7 +92,7 @@ class Setting extends Form
         $this->text('printer_port', 'Printer Port');
         $this->text('footer_message', 'Footer Message')->default("Thank You");
         $this->text('gstin', 'GSTIN');
-        if(isAdministrator()){
+        if (isAdministrator()) {
             $this->number('invoice_id_label_width', 'invoice_id_label_width')->default(4);
             $this->number('invoice_id_value_width', 'invoice_id_value_width')->default(8);
             $this->number('customer_name_label_width', 'customer_name_label_width')->default(4);
@@ -120,11 +101,38 @@ class Setting extends Form
             $this->number('qty_width', 'qty_width')->default(2);
             $this->number('rate_width', 'rate_width')->default(2);
             $this->number('total_width', 'total_width')->default(6);
+            $this->text('mid', 'Paytm MID')->rules('required');
+            $this->url('whatsapp_link', 'Whatsapp Group Link')->rules('required');
+            $this->email('email', 'Email Address')->rules('required|email');
+            $this->number('show_ads', 'Show Ads in Free Plan')->default(1);
+            $this->number('show_int_ads', 'Show Interstitial Ads in Free Plan')->default(1);
+            $this->number('service_charge_rate', 'Service charge rate')->default(2);
+            $this->number('gst_rate', 'Gst rate')->default(18);
+            $this->number('monthly_charge_in_rs', 'Monthly Charge in Rs')->default(100);
+            $this->number('monthly_charge_in_doller', 'Monthly Charge in doller')->default(3);
+            $this->number('annual_charge_in_rs', 'Annual Charge in Rs')->default(1000);
+            $this->number('annual_charge_in_doller', 'Annual Charge in doller')->default(15);
+        } else {
+            $this->text('shop_name', 'Shop Name')->rules('required');
+            $this->text('address', 'Address')->rules('required');
+            $this->text('mobile', 'Mobile Number')->rules('required');
+            $this->email('email', 'Email Address')->rules('required|email');
+            $this->url('map_link', 'Google Map Link')->rules('required');
+            $this->text('latitude', 'Shop Location Latitude')->rules('required');
+            $this->text('longitude', 'Shop Location  Longitude')->rules('required');
+
+            $states = [
+                0 => "No",
+                1 => "Yes",
+            ];
+
+            $this->select('allow_breakfast', 'Allow Breakfast')->options($states)->default(1);
+            $this->select('allow_lunch', 'Allow Lunch')->options($states)->default(1);
+            $this->select('allow_dinner', 'Allow Dinner')->options($states)->default(1);
+            $this->select('print_gst', 'Print GST')->options($states)->default(1);
+            $this->select('is_gst_included', 'Is GST Included')->options($states)->default(1);
+            $this->number('gst_rate', 'Enter GST Rate(0-100)%')->default(10)->rules('required');
         }
-        
-
-
-
     }
 
     /**
@@ -134,11 +142,11 @@ class Setting extends Form
      */
     public function data()
     {
-        $data = ModelsSetting::find(isAdministrator()?1:Admin::user()->business_id);
+        $data = ModelsSetting::find(isAdministrator() ? 1 : Admin::user()->business_id);
 
-        if(!$data){
+        if (!$data) {
             ModelsSetting::create([
-                'id'=>isAdministrator()?1:Admin::user()->business_id
+                'id' => isAdministrator() ? 1 : Admin::user()->business_id
             ]);
         }
 
@@ -147,16 +155,16 @@ class Setting extends Form
         }
 
         return [
-            'refer_earn_new_user_rewards'=>200,
-            'refer_earn_old_user_rewards'=>0,
-            'refer_earn_referer_discount'=>10,
-            'refer_earn_refered_discount_first_order'=>50,
-            'refer_earn_refered_discount_second_order'=>25,
-            'refer_earn_refered_discount_third_order'=>10,
-            'rewardConvertRate'=>"0.25",
-            'allow_breakfast'=>1,
-            'allow_lunch'=>1,
-            'allow_dinner'=>1,
+            'refer_earn_new_user_rewards' => 200,
+            'refer_earn_old_user_rewards' => 0,
+            'refer_earn_referer_discount' => 10,
+            'refer_earn_refered_discount_first_order' => 50,
+            'refer_earn_refered_discount_second_order' => 25,
+            'refer_earn_refered_discount_third_order' => 10,
+            'rewardConvertRate' => "0.25",
+            'allow_breakfast' => 1,
+            'allow_lunch' => 1,
+            'allow_dinner' => 1,
         ];
     }
 }
