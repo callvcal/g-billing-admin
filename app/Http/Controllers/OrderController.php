@@ -108,7 +108,7 @@ class OrderController extends Controller
         $orderData['uuid'] = $orderData['uuid'] ?? Str::orderedUuid();
 
         $orderData['customer_mobile'] = $user->mobile;
-        $orderData['order_status'] = ($orderData['payment_method'] == 'cash') ? "a_sent" : 'unknown';
+        $orderData['order_status'] = ($orderData['payment_status'] == 'pending') ? "a_sent" : 'e_completed';
         $orderData['invoice_id'] = (new KotTokenController())->generateToken(type: 'invoice');
         // $orderData['gst_amt'] = $orderData['total_amt'] * 0.05;
         $orderData['total_amt'] = (int) $orderData['total_amt'];
@@ -299,14 +299,12 @@ class OrderController extends Controller
         $orderData['date_time'] = Carbon::now();
         $orderData['admin_id'] = $orderData['admin_id'] ?? auth()->user()->id;
         $orderData['business_id'] = auth()->user()->business_id;
-        $orderData['delivery_status'] =$orderData['delivery_status']?? "a_unassigned";
+        $orderData['delivery_status'] = $orderData['delivery_status'] ?? "a_unassigned";
         if (!isset($orderData['order_status'])) {
             $orderData['order_status'] = ($request->pos_action == 'BILL') ? "e_completed" : (isset($request->dining_table_id) ? 'KOT' : 'e_completed');
-           
-            
         }
 
-        $orderData['invoice_id'] =$orderData['invoice_id']?? (new KotTokenController())->generateToken(type: 'invoice');
+        $orderData['invoice_id'] = $orderData['invoice_id'] ?? (new KotTokenController())->generateToken(type: 'invoice');
         $orderData['total_amt'] =  (int)($request->total_amt);
         $orderData['order_id'] = $orderData['order_id'] ?? (new OrderController())->generateOrderID(1);
 

@@ -23,6 +23,7 @@
         "open-admin-ext/reporter": "dev-main",
         "open-admin-ext/scheduling": "^1.0",
         "open-admin-org/open-admin": "^1.0",
+        "paytm/paytmchecksum": "^1.1",
         "php-ffmpeg/php-ffmpeg": "^1.1",
         "pusher/pusher-php-server": "^7.2",
         "ramsey/uuid": "^4.7",

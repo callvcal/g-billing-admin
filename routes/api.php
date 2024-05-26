@@ -16,6 +16,8 @@ use App\Http\Controllers\WalletTransactionController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CategorySubcategoryItemController;
+use App\Http\Controllers\InAppPurchaseController;
+use App\Http\Controllers\ManagePaymentController;
 use App\Http\Controllers\SettingController;
 
 /*
@@ -89,6 +91,7 @@ Route::group(['middleware' => ['security', 'auth:sanctum']], function () {
     Route::post('/location/search', [LocationController::class, 'search']);
     Route::post('/location/decodeLatLng', [LocationController::class, 'decodeLatLng']);
 
+    Route::post('paytm/callback', [ManagePaymentController::class, 'onCallback']);
 
 
     //-----------------------COUPONS-API-------------------------------
@@ -174,6 +177,14 @@ Route::group(['middleware' => ['security', 'auth:sanctum']], function () {
 
     Route::post('/business/set', [BusinessController::class, 'setBusiness']);
     Route::get('/business/verify', [BusinessController::class, 'verifyBusiness']);
+
+    Route::post('/business/pay', [ManagePaymentController::class, 'buyPlan']);
+    Route::post('/business/payment/success', [ManagePaymentController::class, 'paymentSuccess']);
+
+
+    Route::post('/purchase/valid', [InAppPurchaseController::class, 'validPurchase']);
+    Route::post('/purchase/invalid', [InAppPurchaseController::class, 'invalidPurchase']);
+   
 
 
 });
