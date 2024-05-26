@@ -12,7 +12,7 @@ class StaffController extends Controller
 {
     function all()
     {
-        return response(AdminUser::where('business_id',auth()->user()->business_id)->get());
+        return response(AdminUser::with('roles')->where('business_id',auth()->user()->business_id)->get());
     }
     function delete($id)
     {
