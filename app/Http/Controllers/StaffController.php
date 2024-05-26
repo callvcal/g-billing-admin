@@ -40,6 +40,7 @@ class StaffController extends Controller
         $admin->mobile = $request->input('mobile');
         $admin->admin_id = auth()->user()->id;
         $admin->business_id = auth()->user()->business_id;
+        $admin->business_key = auth()->user()->business_key;
 
         if ($request->filled('password')) {
             $admin->password = Hash::make($request->input('password'));
