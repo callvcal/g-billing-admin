@@ -88,10 +88,7 @@ class Setting extends Form
         // $this->number('refer_earn_refered_discount_second_order', 'Refered user discount for 2nd order(0-100)%')->default(25)->rules('required');
         // $this->number('refer_earn_refered_discount_third_order', 'Refered user discount for 3rd order(0-100)%')->default(10)->rules('required');
         // $this->text('rewardConvertRate', 'Reward convert rate')->rules('required');
-        $this->text('printer_network_address', 'Printer Network address');
-        $this->text('printer_port', 'Printer Port');
-        $this->text('footer_message', 'Footer Message')->default("Thank You");
-        $this->text('gstin', 'GSTIN');
+       
         if (isAdministrator()) {
             $this->number('invoice_id_label_width', 'invoice_id_label_width')->default(4);
             $this->number('invoice_id_value_width', 'invoice_id_value_width')->default(8);
@@ -125,7 +122,10 @@ class Setting extends Form
                 0 => "No",
                 1 => "Yes",
             ];
-
+            $this->text('printer_network_address', 'Printer Network address');
+            $this->text('printer_port', 'Printer Port');
+            $this->text('footer_message', 'Footer Message')->default("Thank You");
+            $this->text('gstin', 'GSTIN');
             $this->select('allow_breakfast', 'Allow Breakfast')->options($states)->default(1);
             $this->select('allow_lunch', 'Allow Lunch')->options($states)->default(1);
             $this->select('allow_dinner', 'Allow Dinner')->options($states)->default(1);
