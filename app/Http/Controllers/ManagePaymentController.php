@@ -26,7 +26,7 @@ class ManagePaymentController extends Controller
 
     protected $mid = 'VGPkMx36117629022922';
     protected $key = '5ZnAu3EpiaDJpeev';
-    protected $callbackUrl = 'https://parking.callvcal.com/api/paytm/callback';
+    protected $callbackUrl = 'https://eatinsta.callvcal.com/api/paytm/callback';
 
 
     function buyPlan(Request $request)
