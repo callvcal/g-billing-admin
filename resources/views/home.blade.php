@@ -418,11 +418,10 @@ Because your business deserves the best. EatInsta POS Billing is more than just 
                         <button class="btn btn-hover" herf="https://play.google.com/store/apps/details?id=org.callvcal.eatinsta.billing">download Now</a></button>
                     </div>
 
-                    <figure class="cta-banner">
-                        <img src="{{ asset('img/apps.png') }}" width="500" height="380" loading="lazy"
-                            alt="callvcal" class="w-60 cta-img">
-                       
+                    <figure class="cta-banner" style="text-align: center;">
+                      <img src="{{ asset('img/apps.png') }}" width="500" height="500" loading="lazy" alt="callvcal" class="w-60 cta-img" style="width: 60%; max-width: 500px; height: auto;">
                     </figure>
+
 
                 </div>
             </section>
