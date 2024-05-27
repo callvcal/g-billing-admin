@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" href="{{ asset('img/logo.jpg') }}" type="image/x-icon">
+    <link rel="shortcut icon" href="{{ asset('public/img/logo.jpg') }}" type="image/x-icon">
     <title>EatInsta POS Billing - Elevate Your Business, Simplify Your Life</title>
 
     <!--
@@ -64,18 +64,18 @@
                     </li>
 
                     <li class="nav-item">
-                        <a href="www.callvcal.com" class="navbar-link" data-nav-link>Callvcal</a>
+                        <a href="https://www.callvcal.com" class="navbar-link" data-nav-link>Callvcal</a>
                     </li>
 
                 </ul>
             </nav>
 
 
-            <!--<button class="btn btn-hover" onclick="redirectToApp()">Login</button>-->
+            
 
-            <a href="/" >
+            <a href="https://wa.me/+918309900330" target="_blank" >
            
-              <button class="btn" >Login</button>
+              <button class="btn" >Book a Demo</button>
             </a>
 
 
@@ -110,7 +110,7 @@
 
                     <div class="hero-content">
 
-                        <p class="hero-subtitle" style="color: #ff5722;">EATINSTA</p>
+                        <p class="hero-subtitle" style="color: #ff5722; font:poppin; ">EATINSTA</p>
 
                         <h2 class="h1 hero-title" style="color: white;">Pos Billing Software</h2>
 
@@ -119,7 +119,7 @@
 
 
 
-                        <a href="/" >
+                        <a href="https://play.google.com/store/apps/details?id=org.callvcal.eatinsta.billing" >
                             <button class="btn" >Download</button>
                         </a>
 
@@ -166,7 +166,7 @@ Because your business deserves the best. EatInsta POS Billing is more than just 
 </p>
 
 
-            <button class="btn btn-hover"><a href="#">Download Now</a></button>
+            <button class="btn btn-hover"><a href="https://play.google.com/store/apps/details?id=org.callvcal.eatinsta.billing">Download Now</a></button>
           </div>
 
           <figure class="cta-banner">
@@ -375,6 +375,11 @@ Because your business deserves the best. EatInsta POS Billing is more than just 
 
 
 
+
+
+
+
+
             <!--
         - #FOOD MENU
       -->
@@ -404,18 +409,18 @@ Because your business deserves the best. EatInsta POS Billing is more than just 
                         <p class="section-text" style=" color: #666;">
 
                         Access your business data anytime, anywhere with our app, website, 
-                        or desktop software for seamless and efficient management.
+                        and desktop software for seamless and efficient management.
 
                         </p>
 
 
 
-                        <button class="btn btn-hover" onclick="redirectToApp()">Order Now</a></button>
+                        <button class="btn btn-hover" herf="https://play.google.com/store/apps/details?id=org.callvcal.eatinsta.billing">download Now</a></button>
                     </div>
 
                     <figure class="cta-banner">
-                        <img src="{{ asset('img/1.jpg') }}" width="500" height="380" loading="lazy"
-                            alt="Burger" class="w-60 cta-img">
+                        <img src="{{ asset('img/apps.png') }}" width="500" height="380" loading="lazy"
+                            alt="callvcal" class="w-60 cta-img">
                        
                     </figure>
 
@@ -770,6 +775,10 @@ setInterval(() => {
   images[currentImageIndex].classList.add("active");
 }, 3000);
 });
+
+
+
+
 
 
 

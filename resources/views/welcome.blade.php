@@ -5,12 +5,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="shortcut icon" href="{{ asset('public/img/logo.jpg') }}" type="image/x-icon">
+    <link rel="shortcut icon" href="{{ asset('img/logo.jpg') }}" type="image/x-icon">
     <title>EatInsta POS Billing - Elevate Your Business, Simplify Your Life! </title>
 
   <meta property="og:title" content="EatInsta POS Billing - Elevate Your Business, Simplify Your Life!">
   <meta property="og:description" content="Download Now and Experience the Future of Business Management!.">
-  <meta property="og:image" content="https://eatinsta.callvcal.com/public/img/heroi.png">
+  <meta property="og:image" content="https://eatinsta.callvcal.com/img/heroi.png">
   <meta property="og:url" content="https://www.callvcal.com">
   <meta property="og:type" content="website">
 
