@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" href="{{ asset('public/img/logo.jpg') }}" type="image/x-icon">
+    <link rel="shortcut icon" href="{{ asset('img/logo.jpg') }}" type="image/x-icon">
     <title>EatInsta POS Billing - Elevate Your Business, Simplify Your Life</title>
 
     <!--
@@ -51,7 +51,7 @@
 
            
     <a href="/" class="logo">
-    <img src="{{ asset('public/img/icon.png') }}" alt="Eatinsta" style="width: 100px; height: auto;">
+    <img src="{{ asset('img/icon.png') }}" alt="Eatinsta" style="width: 100px; height: auto;">
 </a>
 
 
@@ -103,7 +103,7 @@
 
             <section class="hero" id="home" style="#">
                 <div class="hero-image">
-                    <img src="{{ asset('public/img/hero4.jpg') }}" alt="Background">
+                    <img src="{{ asset('img/hero4.jpg') }}" alt="Background">
                 </div>
 
                 <div class="container">
@@ -119,7 +119,7 @@
 
 
 
-                        <a href="/menu" >
+                        <a href="/" >
                             <button class="btn" >Download</button>
                         </a>
 
@@ -127,10 +127,10 @@
                     </div>
 
                     <figure class="hero-banner">
-                    <img src="{{ asset('public/img/hero-banner-bg.png') }}" width="820" height="716" alt="" aria-hidden="true"
+                    <img src="{{ asset('img/hero-banner-bg.png') }}" width="820" height="716" alt="" aria-hidden="true"
                          class="w-100 hero-img-bg">
 
-                    <img src="{{ asset('public/img/heroi.png') }}" width="700" height="637" loading="lazy" alt="img"
+                    <img src="{{ asset('img/heroi.png') }}" width="700" height="637" loading="lazy" alt="img"
                          class="w-100 hero-img">
                    
                     </figure>
@@ -172,15 +172,15 @@ Because your business deserves the best. EatInsta POS Billing is more than just 
           <figure class="cta-banner">
 
           <div class="banner-images">
-            <img src="{{asset('public/img/1.jpg')}}" alt="Eatinsta" class="active">
-            <img src="{{asset('public/img/2.jpg')}}" alt="Eatinsta">
-            <img src="{{asset('public/img/3.jpg')}}" alt="Eatinsta">
-            <img src="{{asset('public/img/4.jpg')}}" alt="Eatinsta">
-            <img src="{{asset('public/img/5.jpg')}}" alt="Eatinsta">
-            <img src="{{asset('public/img/6.jpg')}}" alt="Eatinsta">
-            <img src="{{asset('public/img/7.jpg')}}" alt="Eatinsta">
-            <img src="{{asset('public/img/8.jpg')}}" alt="Eatinsta">
-            <img src="{{asset('public/img/9.jpg')}}" alt="Eatinsta">
+            <img src="{{asset('img/1.jpg')}}" alt="Eatinsta" class="active">
+            <img src="{{asset('img/2.jpg')}}" alt="Eatinsta">
+            <img src="{{asset('img/3.jpg')}}" alt="Eatinsta">
+            <img src="{{asset('img/4.jpg')}}" alt="Eatinsta">
+            <img src="{{asset('img/5.jpg')}}" alt="Eatinsta">
+            <img src="{{asset('img/6.jpg')}}" alt="Eatinsta">
+            <img src="{{asset('img/7.jpg')}}" alt="Eatinsta">
+            <img src="{{asset('img/8.jpg')}}" alt="Eatinsta">
+            <img src="{{asset('img/9.jpg')}}" alt="Eatinsta">
             
             
           </div> 

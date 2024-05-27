@@ -525,6 +525,61 @@ body.active { overflow: hidden; }
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+.banner-images {
+	position: relative;
+	width: 500px;
+	height: 600px;
+	overflow: hidden;
+  }
+  
+  .banner-images img {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 500px;
+	height:500px;
+	opacity: 0;
+	transition: opacity 1s ease-in-out;
+  }
+  
+  .banner-images img.active {
+	opacity: 1;
+  }
+  
+  @media screen and (max-width: 768px) {
+    .banner-images {
+      width: 100%;
+      height: auto;
+      padding: 20px;
+      box-sizing: border-box; /* Ensures padding is included in the element's total width */
+    }
+  
+    .banner-images img {
+      width: 100%;
+      height: auto; /* Maintain aspect ratio */
+      display: block; /* Removes any gap below the image */
+    }
+  }
+  
+
+
+
+
+
+
+
+
 /*-----------------------------------*\
   #PROMO
 \*-----------------------------------*/
