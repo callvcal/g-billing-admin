@@ -541,6 +541,7 @@ body.active { overflow: hidden; }
 	width: 500px;
 	height: 500px;
 	overflow: hidden;
+  border-radius: 30px;
   }
   
   .banner-images img {
@@ -551,6 +552,7 @@ body.active { overflow: hidden; }
 	height:500px;
 	opacity: 0;
 	transition: opacity 1s ease-in-out;
+  border-radius: 30px;
   }
   
   .banner-images img.active {
@@ -564,12 +566,14 @@ body.active { overflow: hidden; }
       height: auto;
       padding: 20px;
       box-sizing: border-box; /* Ensures padding is included in the element's total width */
+      border-radius: 20px;
     }
   
     .banner-images img {
       width: 100%;
       height: auto; /* Maintain aspect ratio */
       display: block; /* Removes any gap below the image */
+      border-radius: 20px;
     }
   }
   

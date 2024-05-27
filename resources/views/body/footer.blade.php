@@ -6,7 +6,7 @@
 
   <footer class="footer">
 
-    <div class="footer-top" style="{{ asset('public/img/footer.png') }}">
+    <div class="footer-top" style="{{ asset('img/footer.png') }}">
       <div class="container">
 
         <div class="footer-brand">
@@ -14,7 +14,7 @@
          
 
         <a href="" class="logo">
-       <img src="{{ asset('public/img/icon.png') }}" alt="Eatinsta Logo" style="width: 150px; height: auto;">
+       <img src="{{ asset('img/icon.png') }}" alt="Eatinsta Logo" style="width: 150px; height: auto;">
         </a>
  
 
