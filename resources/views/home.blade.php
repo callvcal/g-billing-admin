@@ -42,55 +42,7 @@
 
 <body id="top">
 
-    <!--
-    - #HEADER
-  -->
-
-    <header class="header" data-header>
-        <div class="container">
-
-           
-    <a href="/" class="logo">
-    <img src="{{ asset('img/icon.png') }}" alt="Eatinsta" style="width: 100px; height: auto;">
-</a>
-
-
-
-            <nav class="navbar" data-navbar>
-                <ul class="navbar-list">
-
-                    <li class="nav-item">
-                        <a href="/" class="navbar-link" data-nav-link>Home</a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a href="https://www.callvcal.com" class="navbar-link" data-nav-link>Callvcal</a>
-                    </li>
-
-                </ul>
-            </nav>
-
-
-            
-
-            <a href="https://wa.me/+918309900330" target="_blank" >
-           
-              <button class="btn" >Book a Demo</button>
-            </a>
-
-
-
-            <button class="nav-toggle-btn" aria-label="Toggle Menu" data-menu-toggle-btn>
-                <span class="line top"></span>
-                <span class="line middle"></span>
-                <span class="line bottom"></span>
-            </button>
-        </div>
-
-        </div>
-    </header>
-
-   
+ @include('body.header')
 
 
 
@@ -248,7 +200,7 @@ Because your business deserves the best. EatInsta POS Billing is more than just 
                     <span style="color: red;">✔</span> Ads will be shown
                </p>
   
-        <a href="your-subscribe-link-here" style="background-color: #FF5733; color: white; border: 1px; padding: 15px 32px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; margin: 4px 2px; cursor: pointer; border-radius: 12px;">
+        <a href="https://play.google.com/store/apps/details?id=org.callvcal.eatinsta.billing" style="background-color: #FF5733; color: white; border: 1px; padding: 15px 32px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; margin: 4px 2px; cursor: pointer; border-radius: 12px;">
          Subscribe
         </a>
   </div>
@@ -276,7 +228,7 @@ Because your business deserves the best. EatInsta POS Billing is more than just 
                     <span style="color: red;">✖</span> Ads will be shown
                </p>
   
-        <a href="your-subscribe-link-here" style="background-color: #FF5733; color: white; border: 1px; padding: 15px 32px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; margin: 4px 2px; cursor: pointer; border-radius: 12px;">
+        <a href="https://play.google.com/store/apps/details?id=org.callvcal.eatinsta.billing" style="background-color: #FF5733; color: white; border: 1px; padding: 15px 32px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; margin: 4px 2px; cursor: pointer; border-radius: 12px;">
          Subscribe
         </a>
   </div>
@@ -304,7 +256,7 @@ Because your business deserves the best. EatInsta POS Billing is more than just 
                     <span style="color: red;">✖</span> Ads will be shown
                </p>
   
-        <a href="your-subscribe-link-here" style="background-color: #FF5733; color: white; border: 1px; padding: 15px 32px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; margin: 4px 2px; cursor: pointer; border-radius: 12px;">
+        <a href="https://play.google.com/store/apps/details?id=org.callvcal.eatinsta.billing" style="background-color: #FF5733; color: white; border: 1px; padding: 15px 32px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; margin: 4px 2px; cursor: pointer; border-radius: 12px;">
          Subscribe
         </a>
   </div>
@@ -330,7 +282,7 @@ Because your business deserves the best. EatInsta POS Billing is more than just 
                     <span style="color: red;">✖</span> Ads will be shown
                </p>
   
-        <a href="your-subscribe-link-here" style="background-color: #FF5733; color: white; border: 1px; padding: 15px 32px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; margin: 4px 2px; cursor: pointer; border-radius: 12px;">
+        <a href="https://play.google.com/store/apps/details?id=org.callvcal.eatinsta.billing" style="background-color: #FF5733; color: white; border: 1px; padding: 15px 32px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; margin: 4px 2px; cursor: pointer; border-radius: 12px;">
          Subscribe
         </a>
   </div>
@@ -357,7 +309,7 @@ Because your business deserves the best. EatInsta POS Billing is more than just 
                     <span style="color: red;">✔</span> Get Custom dashboard
                </p>
   
-        <a href="your-subscribe-link-here" style="background-color: #FF5733; color: white; border: 1px; padding: 15px 32px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; margin: 4px 2px; cursor: pointer; border-radius: 12px;">
+        <a href="https://play.google.com/store/apps/details?id=org.callvcal.eatinsta.billing" style="background-color: #FF5733; color: white; border: 1px; padding: 15px 32px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; margin: 4px 2px; cursor: pointer; border-radius: 12px;">
          Subscribe
         </a>
   </div>
