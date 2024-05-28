@@ -187,13 +187,20 @@ Roles
 
 
 
-
 function isAdministrator()
 {
+  if(!Admin::user()){
+    return false;
+  }
+
   return Admin::user()->isAdministrator();
 }
 function is($role)
 {
+  if(!Admin::user()){
+    return false;
+  }
+
   return Admin::user()->isRole($role);
 }
 
@@ -282,3 +289,5 @@ function checkRole($adminId, $role)
   // Use the 'contains' method to check if any role has the matching slug
   return $user->roles->contains('slug', $role);
 }
+
+// auth()->logout();

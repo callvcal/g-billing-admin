@@ -99,6 +99,10 @@ class Setting extends Form
             $this->number('qty_width', 'qty_width')->default(2);
             $this->number('rate_width', 'rate_width')->default(2);
             $this->number('total_width', 'total_width')->default(6);
+            $this->number('payment_label_width', 'payment_label_width')->default(6);
+            $this->number('payment_value_width', 'payment_value_width')->default(6);
+            $this->number('table_label_width', 'table_label_width')->default(6);
+            $this->number('table_value_width', 'table_value_width')->default(6);
             $this->number('line_char_len_diff', 'line_char_len_diff')->default(8);
             $this->text('line_char', 'line_char')->default('-');
             $this->text('mid', 'Paytm MID')->rules('required');
