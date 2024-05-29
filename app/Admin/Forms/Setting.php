@@ -106,6 +106,7 @@ class Setting extends Form
             $this->number('line_char_len_diff', 'line_char_len_diff')->default(8);
             $this->text('line_char', 'line_char')->default('-');
             $this->text('mid', 'Paytm MID')->rules('required');
+            $this->number('is_font_a', 'is_font_a')->default(1);
             $this->url('whatsapp_link', 'Whatsapp Group Link')->rules('required');
             $this->email('email', 'Email Address')->rules('required|email');
             $this->number('show_ads', 'Show Ads in Free Plan')->default(1);
