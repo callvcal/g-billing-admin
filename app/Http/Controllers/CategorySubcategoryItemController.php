@@ -261,4 +261,14 @@ class CategorySubcategoryItemController extends Controller
         $unit->delete();
         return response(['message' => 'Transaction deleted successfully']);
     }
+    public function updateStock($id)
+    {
+        $unit = Menu::findOrFail($id);
+        if($unit){
+            $active=$unit->active;
+            $unit->active=$active==1 ?0:1;
+            $unit->save();
+        }
+        return response(['message' => 'Transaction deleted successfully']);
+    }
 }

@@ -184,6 +184,7 @@ Route::group(['middleware' => ['security', 'auth:sanctum']], function () {
 
     Route::post('/purchase/valid', [InAppPurchaseController::class, 'validPurchase']);
     Route::post('/purchase/invalid', [InAppPurchaseController::class, 'invalidPurchase']);
+    Route::get('/product/stock/update/{menuId}', [CategorySubcategoryItemController::class, 'updateStock']);
    
 
 
