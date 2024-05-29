@@ -45,6 +45,9 @@ class HomeController extends AdminController
         $users_total = 0;
         if (isAdministrator()) {
             $users_total = User::count();
+            $businesses=Business::count();
+            $free_businesses=Business::where('plan','free')->count();
+            $paid_businesses=Business::where('plan','!=','free')->count();
         }
 
         $activeOrders = $this->query(Sell::class)->whereDate('created_at', now()->toDateString())->whereNotIN('order_status', [
@@ -70,10 +73,7 @@ class HomeController extends AdminController
                     'name' => "Dining Requests",
                     'count' => $this->query(TableRequest::class)->count(),
                 ],
-                [
-                    'name' => "Admins",
-                    'count' => $admins,
-                ],
+                
 
 
                 [
@@ -153,9 +153,25 @@ class HomeController extends AdminController
                 'name' => "Customers",
                 'count' => $users_total,
             ],);
+            array_unshift($data['counts'], [
+                'name' => "Businesses",
+                'count' => $businesses,
+            ],);
+            array_unshift($data['counts'], [
+                'name' => "Free",
+                'count' => $free_businesses,
+            ],);
+            array_unshift($data['counts'], [
+                'name' => "Subscribed",
+                'count' => $paid_businesses,
+            ],);
         }
 
-
+       
+        array_unshift($data['counts'], [
+            'name' => "Admins",
+            'count' => $admins,
+        ],);
 
 
         return $content
