@@ -268,7 +268,8 @@ class CategorySubcategoryItemController extends Controller
             $active=$unit->active;
             $unit->active=$active==1 ?0:1;
             $unit->save();
+            return response(['message' => 'Stock Status changed','active'=>$unit->active]);
         }
-        return response(['message' => 'Transaction deleted successfully']);
+        return response(['message' => 'Stock Status not changed','active'=>null]);
     }
 }
