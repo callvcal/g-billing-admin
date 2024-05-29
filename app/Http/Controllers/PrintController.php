@@ -55,7 +55,7 @@ class PrintController extends Controller
 
 
         // Print shop name and address
-        $printer->text("Eatplan8\n");
+        $printer->text("Eatinsta\n");
         $printer->text("GAYATRI PLACE, WEST PATEL NAGAR, ADARSH, L.B.S NAGAR PHULWARI PATNA, BIHAR 800023 INDIA\n");
         $printer->text("+91 97211 84773\n");
         $printer->text("BILL RECEIPT\n\n");
@@ -137,7 +137,7 @@ class PrintController extends Controller
 
 
             // Print shop name and address
-            $printer->text("Eatplan8\n");
+            $printer->text("Eatinsta\n");
             $printer->text("KOT\n\n");
 
             $printer->setJustification(Printer::JUSTIFY_LEFT);

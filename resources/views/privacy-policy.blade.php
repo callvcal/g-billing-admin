@@ -147,7 +147,7 @@
             >Download and use<bdt class="block-component"></bdt> our mobile
             application<bdt class="block-component"></bdt> (<bdt
               class="question"
-              >Eatplan8)<span style="color: #595959; font-size: 15px;"
+              >Eatinsta)<span style="color: #595959; font-size: 15px;"
                 ><span style="color: #595959; font-size: 15px;"
                   ><span data-custom-class="body_text"
                     ><span style="font-size: 15px;"
@@ -176,7 +176,7 @@
                       ><bdt class="statement-end-if-in-editor"
                         ><bdt class="block-component"></bdt> our Facebook
                         application<bdt class="block-component">&nbsp;</bdt
-                        >(<bdt class="question">Eatplan8)</bdt
+                        >(<bdt class="question">Eatinsta)</bdt
                         ><bdt class="statement-end-if-in-editor">,</bdt
                         ><bdt class="statement-end-if-in-editor">
                           or any other application of ours that links to this

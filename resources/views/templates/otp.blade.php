@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Eatplan8</title>
+    <title>Eatinsta</title>
     <style>
         /* Define your desired styles here */
         body {
@@ -88,7 +88,7 @@
 <body>
     <div class="container">
         <div class="header">
-            <h2 class="company-name">Eatplan8</h2>
+            <h2 class="company-name">Eatinsta</h2>
         </div>
 
         <div class="message">

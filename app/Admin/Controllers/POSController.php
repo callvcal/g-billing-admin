@@ -119,7 +119,7 @@ class POSController extends AdminController
         $gstRate = 0;
         $orderData['gst_amt'] = 0;
 
-        if ((isset($setting['gst_rate']))&&($setting['print_gst'] === 1)) {
+        if ((isset($setting['print_gst']))&&(isset($setting['gst_rate']))&&($setting['print_gst'] === 1)) {
             $gstRate = $setting['gst_rate'];
             $isIncluded = $setting['is_gst_included'] == 1;
 

@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>Eatplan8 POS Food Items Bill</title>
+    <title>Eatinsta POS Food Items Bill</title>
     <style>
         @page {
             size: 78mm {{ $height }}mm;
@@ -138,7 +138,7 @@
                 </div>
                 <hr>
 
-                <span class="shop-name">Eatplan8</span>
+                <span class="shop-name">Eatinsta</span>
 
 
             </div>
