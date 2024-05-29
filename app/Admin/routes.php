@@ -6,6 +6,7 @@ use App\Admin\Controllers\AllBusinessSettings;
 use App\Admin\Controllers\AppHomeController;
 use App\Admin\Controllers\BusinessController;
 use App\Admin\Controllers\CategoryController;
+use App\Admin\Controllers\ClientReviewController;
 use App\Admin\Controllers\CouponController;
 use App\Admin\Controllers\CustomerEventController;
 use App\Admin\Controllers\DiningTableController;
@@ -102,7 +103,9 @@ Route::group([
     $router->get('sells-summary/{value}', [HomeController::class, 'getSalesByDateRangeRequest']);
     $router->get('offline-transaction-summary/{value}', [HomeController::class, 'getOfflineTrnByDateRangeRequest']);
 
-    
+    $router->resource('client-reviews', ClientReviewController::class);
+
+
 
     
     $router->get('pusher/events', [HomeController::class, function () {

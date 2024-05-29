@@ -5,6 +5,7 @@ namespace App\Http\Middleware;
 use App\Models\AdminUser;
 use Closure;
 use Illuminate\Http\Request;
+use OpenAdmin\Admin\Facades\Admin;
 use Symfony\Component\HttpFoundation\Response;
 
 class PremiumPlan
@@ -17,7 +18,7 @@ class PremiumPlan
     public function handle(Request $request, Closure $next): Response
     {
     
-        if(!isAdministrator())
+        if((Admin::user()!=null)&&!isAdministrator())
         {
             $user=AdminUser::with('business')->find(auth()->user()->id);
             if($user->business->plan=='free')
