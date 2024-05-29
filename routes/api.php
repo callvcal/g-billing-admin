@@ -53,6 +53,7 @@ Route::post('/auth/reset/password', [AuthController::class, 'resetPassword']);
 Route::post('/auth/admin/login', [AuthController::class, 'adminLogin'])->middleware('security');
 
 
+Route::post('paytm/callback', [ManagePaymentController::class, 'onCallback']);
 
 ///public apis
 
@@ -91,7 +92,6 @@ Route::group(['middleware' => ['security', 'auth:sanctum']], function () {
     Route::post('/location/search', [LocationController::class, 'search']);
     Route::post('/location/decodeLatLng', [LocationController::class, 'decodeLatLng']);
 
-    Route::post('paytm/callback', [ManagePaymentController::class, 'onCallback']);
 
 
     //-----------------------COUPONS-API-------------------------------
