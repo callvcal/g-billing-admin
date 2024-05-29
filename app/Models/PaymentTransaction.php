@@ -30,10 +30,10 @@ class PaymentTransaction extends Model
     ];
 
     function user()  {
-        return $this->belongsTo(User::class,'user_id');
+        return $this->belongsTo(AdminUser::class,'user_id');
     }
     function business()  {
-        return $this->belongsTo(Location::class,'business_id');
+        return $this->belongsTo(Business::class,'business_id');
     }
     protected static function booted()
     {
@@ -44,9 +44,7 @@ class PaymentTransaction extends Model
 
         static::updated(function ($model) {
             
-
-            // Dispatch job immediately without queuing
-            SendMessage::dispatch($model->id, "order_update", 'order')->afterResponse();
+            SendMessage::dispatch($model->id, "plan", 'PaymentTransaction')->afterResponse();
         });
     }
 }

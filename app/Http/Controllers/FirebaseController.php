@@ -99,10 +99,6 @@ class FirebaseController extends Controller
             $factory = (new Factory)->withServiceAccount(storage_path("app/fcm.json"));
             $messaging = $factory->createMessaging();
 
-
-            
-
-
             $message=CloudMessage::fromArray([
                 'notification'=>$notification,
                 'topic'=>$topic,

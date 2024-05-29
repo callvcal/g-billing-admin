@@ -5,7 +5,9 @@ namespace App\Jobs;
 use App\Admin\Controllers\SellController;
 use App\Events\OrderEvent;
 use App\Http\Controllers\FirebaseController;
+use App\Models\AdminUser;
 use App\Models\OrderStatusUpdate;
+use App\Models\PaymentTransaction;
 use App\Models\Sell;
 use App\Models\TableRequest;
 use App\Models\User;
@@ -152,6 +154,35 @@ class SendMessage implements ShouldQueue
                 $user = User::find($item->user_id);
                 $controller->sendFcmMessage($user->fcm_token, $data, $notification);
             }
+
+            if($this->signal=='plan'){
+                $order = PaymentTransaction::find($this->orderID);
+                if (!$order) return;
+                
+                $user = AdminUser::find($order->user_id);
+                if (!$user) return;
+                
+                if (!isset($user->business_key)) return;
+                
+                $controller = new FirebaseController();
+                $data = [
+                    "body" => $order->json['body'] ,
+                    "title" => $order->json['title'] ,
+                    "imageUrl" => null,
+                    'order_id' => $order->id,
+                    'type' => "plan",
+                ];
+
+                $notification = [
+                    "title" => $data['title'],
+                    "body" => $data['body'],
+                    "imageUrl" => $data['imageUrl'],
+                    "sound" => "default",
+                ];
+                $controller->sendFcmToTopic('business-'.$user->business_key, $data, $notification);
+            }
+
+
         } catch (Exception $e) {
             // Log error details
             Log::channel('callvcal')->error("Error in SendMessage.handle: " . $e->getMessage());
