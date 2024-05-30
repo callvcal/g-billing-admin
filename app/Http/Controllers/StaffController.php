@@ -27,6 +27,7 @@ class StaffController extends Controller
             'username' => ['required', 'string', 'max:255', Rule::unique('admin_users')->ignore($request->id)],
             'role' => ['required'],
         ]);
+
         $admin = new AdminUser();
         if ($request->filled('id')) {
             $admin = AdminUser::find($request->id);
@@ -34,8 +35,9 @@ class StaffController extends Controller
 
         $role=$request->role;
         
+        $username = str_replace(' ', '',$request->input('username'));
 
-        $admin->username = $request->input('username');
+        $admin->username = $username;
         $admin->name = $request->input('name');
         $admin->mobile = $request->input('mobile');
         $admin->admin_id = auth()->user()->id;
