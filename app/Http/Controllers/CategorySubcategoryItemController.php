@@ -147,7 +147,7 @@ class CategorySubcategoryItemController extends Controller
         if(isset($data['active'])){
             $data['active'] = (($data['active'] == 1) || ($data['active'] == true) || ($data['active'] == 'true')) ? 1 : 0;
         }else{
-            $data['active']
+            $data['active']=0;
         }
 
 
