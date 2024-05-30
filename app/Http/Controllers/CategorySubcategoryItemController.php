@@ -12,6 +12,7 @@ use App\Models\OfflineTransaction;
 use App\Models\RawMatrial;
 use App\Models\Unit;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class CategorySubcategoryItemController extends Controller
 {
@@ -143,6 +144,7 @@ class CategorySubcategoryItemController extends Controller
         $data = $request->all();
         $data['admin_id'] = auth()->user()->id;
         $data['business_id'] = auth()->user()->business_id;
+
 
         if(isset($data['active'])){
             $data['active'] = (($data['active'] == 1) || ($data['active'] == true) || ($data['active'] == 'true')) ? 1 : 0;
