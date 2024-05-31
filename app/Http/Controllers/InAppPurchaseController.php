@@ -18,7 +18,7 @@ class InAppPurchaseController extends Controller
 
         if ($purchases) {
             foreach ($purchases as $model) {
-                if ($model->user_id !=  auth()->user()->id) {
+                if ($model->admin_id !=  auth()->user()->id) {
                     return response([
                         'message' => 'Invalid purchase'
                     ],302);
@@ -28,7 +28,7 @@ class InAppPurchaseController extends Controller
 
 
         InAppPurchaseModel::create([
-            'user_id' => auth()->user()->id,
+            'admin_id' => auth()->user()->id,
             'business_id' => auth()->user()->business_id,
             'status' => $request->purchaseDetails['status'],
             'json' => $request->purchaseDetails,
@@ -79,7 +79,7 @@ class InAppPurchaseController extends Controller
 
         if ($purchases) {
             foreach ($purchases as $model) {
-                if ($model->user_id !=  auth()->user()->id) {
+                if ($model->admin_id !=  auth()->user()->id) {
                     return response([
                         'message' => 'Invalid purchase'
                     ],302);
@@ -88,7 +88,7 @@ class InAppPurchaseController extends Controller
         }
 
         InAppPurchaseModel::create([
-            'user_id' => auth()->user()->id,
+            'admin_id' => auth()->user()->id,
             'business_id' => auth()->user()->business_id,
             'status' => $request->purchaseDetails['status'],
             'json' => $request->purchaseDetails,

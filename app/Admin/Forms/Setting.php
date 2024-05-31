@@ -88,7 +88,10 @@ class Setting extends Form
         // $this->number('refer_earn_refered_discount_second_order', 'Refered user discount for 2nd order(0-100)%')->default(25)->rules('required');
         // $this->number('refer_earn_refered_discount_third_order', 'Refered user discount for 3rd order(0-100)%')->default(10)->rules('required');
         // $this->text('rewardConvertRate', 'Reward convert rate')->rules('required');
-       
+        $states = [
+            0 => "No",
+            1 => "Yes",
+        ];
         if (isAdministrator()) {
             $this->number('invoice_id_label_width', 'invoice_id_label_width')->default(4);
             $this->number('invoice_id_value_width', 'invoice_id_value_width')->default(8);
@@ -104,6 +107,7 @@ class Setting extends Form
             $this->number('table_label_width', 'table_label_width')->default(6);
             $this->number('table_value_width', 'table_value_width')->default(6);
             $this->number('line_char_len_diff', 'line_char_len_diff')->default(8);
+            $this->number('empty_lines_after_kot', 'empty_lines_after_kot')->default(1);
             $this->text('line_char', 'line_char')->default('-');
             $this->text('mid', 'Paytm MID')->rules('required');
             $this->number('is_font_a', 'is_font_a')->default(1);
@@ -117,19 +121,21 @@ class Setting extends Form
             $this->number('monthly_charge_in_doller', 'Monthly Charge in doller')->default(3);
             $this->number('annual_charge_in_rs', 'Annual Charge in Rs')->default(1000);
             $this->number('annual_charge_in_doller', 'Annual Charge in doller')->default(15);
+            $this->select('print_new_line', 'print_new_line')->options($states)->default(1);
+            $this->select('reset_bluetooth', 'reset_bluetooth')->options($states)->default(1);
+            $this->select('show_line_above_total', 'show_line_above_total')->options($states)->default(1);
+            $this->select('show_line_below_total', 'show_line_below_total')->options($states)->default(1);
+            $this->select('is_font_a_all', 'is_font_a_all')->options($states)->default(1);
         } else {
             $this->text('shop_name', 'Shop Name')->rules('required');
-            $this->text('address', 'Address')->rules('required');
+            $this->text('address', 'Address');
             $this->text('mobile', 'Mobile Number')->rules('required');
-            $this->email('email', 'Email Address')->rules('required|email');
-            $this->url('map_link', 'Google Map Link')->rules('required');
-            $this->text('latitude', 'Shop Location Latitude')->rules('required');
-            $this->text('longitude', 'Shop Location  Longitude')->rules('required');
+            $this->email('email', 'Email Address');
+            $this->url('map_link', 'Google Map Link');
+            $this->text('latitude', 'Shop Location Latitude');
+            $this->text('longitude', 'Shop Location  Longitude');
 
-            $states = [
-                0 => "No",
-                1 => "Yes",
-            ];
+           
             $this->text('printer_network_address', 'Printer Network address');
             $this->text('printer_port', 'Printer Port');
             $this->text('footer_message', 'Footer Message')->default("Thank You");

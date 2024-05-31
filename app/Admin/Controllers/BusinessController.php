@@ -62,6 +62,14 @@ class BusinessController extends AdminController
         $show->field('created_at', __('Created at'));
         $show->field('updated_at', __('Updated at'));
         $show->field('deleting_date', __('deleted at'));
+        $show->admin('Admin information', function ($model) {
+            $model->setResource('/admin/auth/users');
+            $model->id();
+            $model->name();
+            $model->mobile();
+            $model->email();
+            $model->business_key();
+        });
 
         return $show;
     }

@@ -73,18 +73,19 @@ class SendMessage implements ShouldQueue
                     "imageUrl" => null,
                     'order_id' => $order->id,
                     'type' => "order",
+
                 ];
-                $pusher = new Pusher(auth_key: env('PUSHER_APP_KEY'), secret: env('PUSHER_APP_SECRET'), app_id: env('PUSHER_APP_ID'), options: [
-                    'cluster' => env('PUSHER_APP_CLUSTER')
-                ]);
-                $pusher->trigger('eatinsta', event: 'orders', data: [
-                    'message' => $data['body'],
-                    'body' => $data['body'],
-                    'order_id' => $order->id,
-                    'title' => $order->order_id,
-                    'order_status' => $order->order_status,
-                    'delivery_status' => $order->delivery_status,
-                ]);
+                // $pusher = new Pusher(auth_key: env('PUSHER_APP_KEY'), secret: env('PUSHER_APP_SECRET'), app_id: env('PUSHER_APP_ID'), options: [
+                //     'cluster' => env('PUSHER_APP_CLUSTER')
+                // ]);
+                // $pusher->trigger('eatinsta', event: 'orders', data: [
+                //     'message' => $data['body'],
+                //     'body' => $data['body'],
+                //     'order_id' => $order->id,
+                //     'title' => $order->order_id,
+                //     'order_status' => $order->order_status,
+                //     'delivery_status' => $order->delivery_status,
+                // ]);
                 $notification = [
                     "title" => $data['title'],
                     "body" => $data['body'],

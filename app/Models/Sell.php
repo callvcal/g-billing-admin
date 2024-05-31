@@ -128,6 +128,7 @@ class Sell extends Model
 
 
 
+
             // Dispatch job immediately without queuing
             SendMessage::dispatch($model->id, "order_create", 'order')->afterResponse();
         });
@@ -167,7 +168,8 @@ class Sell extends Model
                 }
             }
 
-            if (!isset($model->dining_table_id)) {
+            // if (!isset($model->dining_table_id)) 
+            {
                 SendMessage::dispatch($model->id, "order_update", 'order')->afterResponse();
             }
 
