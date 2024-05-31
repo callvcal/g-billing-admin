@@ -50,7 +50,7 @@
         <article>
 
             <!--
-        - #HERO
+        - #HERO 
       -->
 
             <section class="hero" id="home" style="#">
