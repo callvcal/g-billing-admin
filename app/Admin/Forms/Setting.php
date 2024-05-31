@@ -124,12 +124,12 @@ class Setting extends Form
             $this->select('reset_bluetooth', 'reset_bluetooth')->options($states)->default(1);
         } else {
             $this->text('shop_name', 'Shop Name')->rules('required');
-            $this->text('address', 'Address')->rules('required');
+            $this->text('address', 'Address');
             $this->text('mobile', 'Mobile Number')->rules('required');
-            $this->email('email', 'Email Address')->rules('required|email');
-            $this->url('map_link', 'Google Map Link')->rules('required');
-            $this->text('latitude', 'Shop Location Latitude')->rules('required');
-            $this->text('longitude', 'Shop Location  Longitude')->rules('required');
+            $this->email('email', 'Email Address');
+            $this->url('map_link', 'Google Map Link');
+            $this->text('latitude', 'Shop Location Latitude');
+            $this->text('longitude', 'Shop Location  Longitude');
 
            
             $this->text('printer_network_address', 'Printer Network address');
