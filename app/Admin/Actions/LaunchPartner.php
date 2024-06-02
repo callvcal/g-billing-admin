@@ -21,7 +21,10 @@ class LaunchPartner extends RowAction
         $user->business_key=$model->name;
         $user->save();
 
-        return $this->response()->success('Success message.')->refresh();
+        // return $this->response()->success('Success message.')->refresh();
+
+        return redirect('/admin');
+
     }
     // public function href()
     // {
