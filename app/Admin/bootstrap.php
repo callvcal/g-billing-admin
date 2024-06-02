@@ -56,6 +56,7 @@ Admin::html('<div class="toast-container position-fixed bottom-0 end-0 p-3">
 
 Admin::js("js/pusher.js",);
 Admin::js("js/print.js",);
+Admin::js("js/overlay.js",);
 Admin::script("
 document.addEventListener('DOMContentLoaded', function() {
   const sidebar = document.getElementById('menu'); // Ensure the correct ID of your sidebar menu

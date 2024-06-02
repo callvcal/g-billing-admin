@@ -256,6 +256,15 @@ class HomeController extends AdminController
     }
 
 
+    function switchBackBusiness()  {
+        $user=AdminUser::find(FacadesAdmin::user()->id);
+        $user->business_id=null;
+        $user->business_key=null;
+        $user->save();
+
+        return redirect('/admin/businesses');
+    }
+
 
     public function pusher()
     {

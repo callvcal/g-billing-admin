@@ -44,6 +44,7 @@ use App\Admin\Controllers\UnitController;
 use App\Admin\Controllers\UserController;
 use App\Admin\Controllers\UserCouponController;
 use App\Admin\Controllers\WorkingLocationController;
+use App\Http\Controllers\BusinessController as ControllersBusinessController;
 use App\Http\Controllers\HomeController as ControllersHomeController;
 use App\Http\Controllers\PrintController;
 use App\Http\Controllers\SettingController;
@@ -102,6 +103,7 @@ Route::group([
     $router->get('print/stickers/{id}', [PrintController::class, 'stickersPrint']);
     $router->get('sells-summary/{value}', [HomeController::class, 'getSalesByDateRangeRequest']);
     $router->get('offline-transaction-summary/{value}', [HomeController::class, 'getOfflineTrnByDateRangeRequest']);
+    $router->get('business/switch', [HomeController::class, 'switchBackBusiness']);
 
     $router->resource('client-reviews', ClientReviewController::class);
 
