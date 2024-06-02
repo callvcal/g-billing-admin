@@ -42,11 +42,11 @@ function showFloatingButton() {
         })
         .then(response => response.json())
         .then(data => {
-            if (data.status === 200) {
+            if (data.message === 'success') {
                 // Reload the page to reflect changes
                 window.location.reload();
             } else {
-                alert('Failed to switch business');
+                alert('Failed to switch business'+data.message);
             }
         })
         .catch(error => {
