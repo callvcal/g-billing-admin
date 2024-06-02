@@ -38,10 +38,17 @@ class BusinessController extends AdminController
         $grid->column('on_board_date', __('On board date'));
         $grid->column('purchase_date', __('Purchase date'));
         $grid->column('last_subscription_date', __('Last subscription date'));
-        $grid->column('admin_id', __('User admin id'));
+        $grid->admin('admin_id', __('User admin id'));
         $grid->column('expiry_date', __('Expiry Date'));
         $grid->column('deleting_date', __('Deleted Date'));
+        $grid->admin()->display(function ($model) {
+            if ($model == null) {
+                return  "N/A";
+            }
+            return $model['mobile'];
+        })->sortable();
 
+        
 
         return $grid;
     }
