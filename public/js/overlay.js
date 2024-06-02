@@ -42,7 +42,7 @@ function showFloatingButton() {
         })
         .then(response => response.json())
         .then(data => {
-            if (data.status === 'success') {
+            if (data.status === 200) {
                 // Reload the page to reflect changes
                 window.location.reload();
             } else {
