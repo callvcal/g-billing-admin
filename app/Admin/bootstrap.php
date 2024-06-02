@@ -84,7 +84,15 @@ Grid::init(function (Grid $grid) {
 
 
   if (!isAdministrator()) {
-    $grid->model()->where('business_id', Admin::user()->business_id)->orderBy('id', 'DESC');
+
+    if (is('CALLVCAL-STAFF')) {
+
+      if (isset(Admin::user()->business_id)) {
+        $grid->model()->where('business_id', Admin::user()->business_id)->orderBy('id', 'DESC');
+      }
+    } else {
+      $grid->model()->where('business_id', Admin::user()->business_id)->orderBy('id', 'DESC');
+    }
   } else {
     $grid->orderBy('id', 'DESC');
   }
@@ -189,7 +197,7 @@ Roles
 
 function isAdministrator()
 {
-  if(!Admin::user()){
+  if (!Admin::user()) {
     return false;
   }
 
@@ -197,7 +205,7 @@ function isAdministrator()
 }
 function is($role)
 {
-  if(!Admin::user()){
+  if (!Admin::user()) {
     return false;
   }
 
@@ -215,7 +223,8 @@ function canAllowDelete()
   return false;
 }
 
-function isOwner(){
+function isOwner()
+{
   if (is('Partner-Admin')) {
     return true;
   }
@@ -224,7 +233,8 @@ function isOwner(){
 
 
 
-function isAdmin(){
+function isAdmin()
+{
   if (is('Partner-Admin-Access-Only')) {
     return true;
   }
