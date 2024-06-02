@@ -91,15 +91,15 @@
 
         
         <li>
-            <a href="/privacy-policy" class="footer-list-item">Privacy & Policy</a>
+            <a href="/privacy" class="footer-list-item">Privacy & Policy</a>
         </li>
 
         <li>
-            <a href="/terms-and-conditions" class="footer-list-item">Terms and Conditions</a>
+            <a href="/terms" class="footer-list-item">Terms and Conditions</a>
         </li>
 
         <li>
-            <a href="/refund" class="footer-list-item">Refund Policy</a>
+            <a href="/refunds-policy" class="footer-list-item">Refund Policy</a>
         </li>
           
 
@@ -136,7 +136,7 @@
     <div class="footer-bottom">
       <div class="container">
         <p class="copyright-text">
-          &copy; 2024 <a href="/" class="copyright-link">CALLVCAL TECHNOLOGY PRIVATE LIMITED</a> All Rights Reserved.
+          &copy; 2023 <a href="/" class="copyright-link">CALLVCAL TECHNOLOGY PRIVATE LIMITED</a> All Rights Reserved.
         </p>
         <p class="copyright-text">
          Powered by <a href="https://www.callvcal.com/" target="_blank" class="copyright-link">CALLVCAL CONSULTANCY</a> .

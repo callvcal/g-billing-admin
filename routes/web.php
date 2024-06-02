@@ -127,3 +127,8 @@ Route::get('/refunds-policy', function () {
 
 require __DIR__.'/auth.php';
 
+
+Route::get('/software-download', function () {
+    return view('software-download');
+});
+

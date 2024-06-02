@@ -19,6 +19,12 @@
                         <a href="/" class="navbar-link" data-nav-link>Home</a>
                     </li>
 
+                    
+                    <li class="nav-item">
+                        <a href="/software-download" class="navbar-link" data-nav-link>Software download</a>
+                    </li>
+
+
                     <li class="nav-item">
                         <a href="https://www.callvcal.com" class="navbar-link" data-nav-link>Callvcal</a>
                     </li>
