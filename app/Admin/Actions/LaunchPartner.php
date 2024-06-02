@@ -24,7 +24,7 @@ class LaunchPartner extends RowAction
 
 
 
-    return $this->response()->success('Success message.')->redirect('/admin');
+    return $this->response()->success('Success message.')->redirect('/admin/pos');
 
         // return redirect('/admin');
 
