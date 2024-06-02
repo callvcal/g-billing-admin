@@ -30,17 +30,17 @@ class BusinessController extends AdminController
         $grid = new Grid(new Business());
 
         $grid->model()->orderBy('id', "DESC");
-        $grid->column('id', __('Id'));
-        $grid->column('name', __('Name'));
-        $grid->column('plan', __('Plan'));
-        $grid->column('active', __('active'))->switch();
+        $grid->column('id', __('Id'))->sortable();
+        $grid->column('name', __('Name'))->sortable();
+        $grid->column('plan', __('Plan'))->sortable();
+        $grid->column('active', __('active'))->switch()->sortable();
         // $grid->column('deleted', __('deleted'))->switch();
-        $grid->column('on_board_way', __('On board way'));
-        $grid->column('on_board_date', __('On board date'));
-        $grid->column('purchase_date', __('Purchase date'));
-        $grid->column('last_subscription_date', __('Last subscription date'));
-        $grid->column('expiry_date', __('Expiry Date'));
-        $grid->column('deleting_date', __('Deleted Date'));
+        $grid->column('on_board_way', __('On board way'))->sortable();
+        $grid->column('on_board_date', __('On board date'))->sortable();
+        $grid->column('purchase_date', __('Purchase date'))->sortable();
+        $grid->column('last_subscription_date', __('Last subscription date'))->sortable();
+        $grid->column('expiry_date', __('Expiry Date'))->sortable();
+        $grid->column('deleting_date', __('Deleted Date'))->sortable();
         $grid->column('admin', __('Admin Mobile'))->display(function ($model) {
 
             if ($model == null || $model['mobile'] == null) {
