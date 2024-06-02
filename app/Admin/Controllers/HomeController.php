@@ -262,7 +262,9 @@ class HomeController extends AdminController
         $user->business_key=null;
         $user->save();
 
-        return redirect('/admin/businesses');
+        return response([
+            'message'=>'success'
+        ]);
     }
 
 

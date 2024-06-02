@@ -31,7 +31,28 @@ function showFloatingButton() {
 
     // Add an event listener for the button click (if needed)
     button.addEventListener('click', function() {
-        window.location.href = '/admin/business/switch';
+        // window.location.href = '/admin/business/switch';
+
+        fetch('/admin/business/switch', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'success') {
+                // Reload the page to reflect changes
+                window.location.reload();
+            } else {
+                alert('Failed to switch business');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+
 
     });
 
