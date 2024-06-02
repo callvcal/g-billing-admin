@@ -39,7 +39,7 @@ class AddressController extends AdminController
 
         $grid->column('id', __('Id'))->sortable();
         $this->controller()->gridUser($grid);
-        (new RelationController())->gridActions($grid);
+        //(new RelationController())->gridActions($grid);
         $grid->column('name', __('Name'))->sortable();
         $grid->column('pincode', __('Pincode'))->sortable();
         $grid->column('city', __('City'))->sortable();

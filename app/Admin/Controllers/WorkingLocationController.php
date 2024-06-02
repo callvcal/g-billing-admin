@@ -26,7 +26,7 @@ class WorkingLocationController extends AdminController
     protected function grid()
     {
         $grid = new Grid(new WorkingLocation());
-        (new RelationController())->gridActions($grid);
+        //(new RelationController())->gridActions($grid);
 
         $grid->column('id', __('Id'))->sortable();
         $grid->column('country', __('Country'))->sortable();

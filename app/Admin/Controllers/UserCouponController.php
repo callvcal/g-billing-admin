@@ -26,7 +26,7 @@ class UserCouponController extends AdminController
     protected function grid()
     {
         $grid = new Grid(new UserCoupon());
-        (new RelationController())->gridActions($grid);
+        //(new RelationController())->gridActions($grid);
         $grid->model()->orderBy('updated_at',"desc");
 
         $grid->column('id', __('Id'));

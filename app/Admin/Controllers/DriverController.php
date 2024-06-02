@@ -27,7 +27,7 @@ class DriverController extends AdminController
     {
         $grid = new Grid(new User());
         $grid->model()->orderBy('updated_at',"desc");
-        (new RelationController())->gridActions($grid);
+        //(new RelationController())->gridActions($grid);
 
         $grid->model()->where('is_driver',1);
         $grid->column('id', __('Id'))->sortable();

@@ -28,7 +28,7 @@ class TableRequestController extends AdminController
     protected function grid()
     {
         $grid = new Grid(new TableRequest());
-        (new RelationController())->gridActions($grid);
+        //(new RelationController())->gridActions($grid);
         $grid->model()->orderBy('updated_at',"desc");
         (new RelationController())->gridTable($grid);
         (new RelationController())->gridUser($grid);

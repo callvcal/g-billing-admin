@@ -27,7 +27,7 @@ class DiningTableController extends AdminController
     {
         $grid = new Grid(new DiningTable());
         $grid->model()->orderBy('updated_at', "desc");
-        (new RelationController())->gridActions($grid);
+        //(new RelationController())->gridActions($grid);
         $grid->quickCreate(function (Grid\Tools\QuickCreate $form) {
             $form->text('name', __('Name'));
             $form->number('capacity', __('Capacity'));

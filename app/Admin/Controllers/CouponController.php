@@ -28,7 +28,7 @@ class CouponController extends AdminController
         $grid = new Grid(new Coupon());
         $grid->model()->orderBy('updated_at',"desc");
         $grid->enableHotKeys();
-        (new RelationController())->gridActions($grid);
+        //(new RelationController())->gridActions($grid);
 
         $grid->column('id', __('Id'))->sortable();
         $grid->column('name', __('Name'))->sortable();
