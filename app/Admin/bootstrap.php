@@ -225,7 +225,7 @@ function canAllowDelete()
   if (isAdministrator()) {
     return true;
   }
-  if (is('Partner-Admin') || is('Partner-Admin-Access-Only')) {
+  if (is('Partner-Admin') || is('Partner-Admin-Access-Only')|| is('CALLVCAL-STAFF')) {
     return true;
   }
   return false;
@@ -254,7 +254,7 @@ function canAllowCreate()
   if (isAdministrator()) {
     return true;
   }
-  if (is('Partner-Admin') || is('Partner-Admin-Access-Only')) {
+  if (is('Partner-Admin') || is('Partner-Admin-Access-Only')|| is('CALLVCAL-STAFF')) {
     return true;
   }
   if (is('Partner-Manager')) {
@@ -270,7 +270,7 @@ function canAllowEdit()
   if (isAdministrator()) {
     return true;
   }
-  if (is('Partner-Admin') || is('Partner-Admin-Access-Only')) {
+  if (is('Partner-Admin') || is('Partner-Admin-Access-Only')|| is('CALLVCAL-STAFF')) {
     return true;
   }
   if (is('Partner-Manager')) {
@@ -285,7 +285,7 @@ function canAllowView()
   if (isAdministrator()) {
     return true;
   }
-  if (is('Partner-Admin') || is('Partner-Admin-Access-Only')) {
+  if (is('Partner-Admin') || is('Partner-Admin-Access-Only')|| is('CALLVCAL-STAFF')) {
     return true;
   }
   if (is('Partner-Manager')) {
