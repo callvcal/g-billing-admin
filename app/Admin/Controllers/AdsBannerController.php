@@ -32,7 +32,7 @@ class AdsBannerController extends AdminController
         $grid->column('title', __('Title'))->sortable();
         $grid->column('banner_type', __('banner_type'))->sortable();
         (new RelationController())->gridSubCategory($grid);
-        (new RelationController())->gridActions($grid);
+        //(new RelationController())->gridActions($grid);
 
         return $grid;
     }

@@ -216,7 +216,7 @@ class SellController extends AdminController
         (new RelationController())->detailsDriver($show);
         (new RelationController())->detailsAddress($show);
         (new RelationController())->detailsSellItems($show);
-        (new RelationController())->showTools($show);
+        //(new RelationController())->showTools($show);
 
 
         $show->field('transaction_id', __('Razorpay Details'))->as(function ($id) {

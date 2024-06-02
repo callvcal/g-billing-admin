@@ -31,7 +31,7 @@ class CategoryController extends AdminController
         $grid = new Grid(new Category());
         $grid->model()->orderBy('updated_at',"desc");
         $grid->enableHotKeys();
-        (new RelationController())->gridActions($grid);
+        //(new RelationController())->gridActions($grid);
         $grid->quickCreate(function (Grid\Tools\QuickCreate $form) {
             $form->text('name', __('Name'));
             $form->image('image', __('Image'));

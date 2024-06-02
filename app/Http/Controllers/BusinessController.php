@@ -17,6 +17,8 @@ class BusinessController extends Controller
 {
 
 
+    
+
 
     function setBusiness(Request $request)
     {

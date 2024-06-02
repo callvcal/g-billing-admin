@@ -56,6 +56,14 @@ Admin::html('<div class="toast-container position-fixed bottom-0 end-0 p-3">
 
 Admin::js("js/pusher.js",);
 Admin::js("js/print.js",);
+
+
+if (is('CALLVCAL-STAFF')) {
+  if (isset(Admin::user()->business_id)) {
+    Admin::js("js/overlay.js",);
+  }
+}
+
 Admin::script("
 document.addEventListener('DOMContentLoaded', function() {
   const sidebar = document.getElementById('menu'); // Ensure the correct ID of your sidebar menu
@@ -84,7 +92,15 @@ Grid::init(function (Grid $grid) {
 
 
   if (!isAdministrator()) {
-    $grid->model()->where('business_id', Admin::user()->business_id)->orderBy('id', 'DESC');
+
+    if (is('CALLVCAL-STAFF')) {
+
+      if (isset(Admin::user()->business_id)) {
+        $grid->model()->where('business_id', Admin::user()->business_id)->orderBy('id', 'DESC');
+      }
+    } else {
+      $grid->model()->where('business_id', Admin::user()->business_id)->orderBy('id', 'DESC');
+    }
   } else {
     $grid->orderBy('id', 'DESC');
   }
@@ -189,7 +205,7 @@ Roles
 
 function isAdministrator()
 {
-  if(!Admin::user()){
+  if (!Admin::user()) {
     return false;
   }
 
@@ -197,7 +213,7 @@ function isAdministrator()
 }
 function is($role)
 {
-  if(!Admin::user()){
+  if (!Admin::user()) {
     return false;
   }
 
@@ -209,13 +225,14 @@ function canAllowDelete()
   if (isAdministrator()) {
     return true;
   }
-  if (is('Partner-Admin') || is('Partner-Admin-Access-Only')) {
+  if (is('Partner-Admin') || is('Partner-Admin-Access-Only')|| is('CALLVCAL-STAFF')) {
     return true;
   }
   return false;
 }
 
-function isOwner(){
+function isOwner()
+{
   if (is('Partner-Admin')) {
     return true;
   }
@@ -224,7 +241,8 @@ function isOwner(){
 
 
 
-function isAdmin(){
+function isAdmin()
+{
   if (is('Partner-Admin-Access-Only')) {
     return true;
   }
@@ -236,7 +254,7 @@ function canAllowCreate()
   if (isAdministrator()) {
     return true;
   }
-  if (is('Partner-Admin') || is('Partner-Admin-Access-Only')) {
+  if (is('Partner-Admin') || is('Partner-Admin-Access-Only')|| is('CALLVCAL-STAFF')) {
     return true;
   }
   if (is('Partner-Manager')) {
@@ -252,7 +270,7 @@ function canAllowEdit()
   if (isAdministrator()) {
     return true;
   }
-  if (is('Partner-Admin') || is('Partner-Admin-Access-Only')) {
+  if (is('Partner-Admin') || is('Partner-Admin-Access-Only')|| is('CALLVCAL-STAFF')) {
     return true;
   }
   if (is('Partner-Manager')) {
@@ -267,7 +285,7 @@ function canAllowView()
   if (isAdministrator()) {
     return true;
   }
-  if (is('Partner-Admin') || is('Partner-Admin-Access-Only')) {
+  if (is('Partner-Admin') || is('Partner-Admin-Access-Only')|| is('CALLVCAL-STAFF')) {
     return true;
   }
   if (is('Partner-Manager')) {

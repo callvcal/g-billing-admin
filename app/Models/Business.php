@@ -19,4 +19,11 @@ class Business extends Model
         'deleting_date',
         'deleted'
     ];
+
+
+    public function admin()
+    {
+        return $this->belongsTo(AdminUser::class, 'admin_id');
+    }
+
 }

@@ -27,7 +27,7 @@ class KitchenController extends AdminController
     {
         $grid = new Grid(new Kitchen());
         $grid->enableHotKeys();
-        (new RelationController())->gridActions($grid);
+        //(new RelationController())->gridActions($grid);
         $grid->quickCreate(function (Grid\Tools\QuickCreate $form) {
             $form->text('name', __('Name'));
             $form->hidden('business_id', __('Business id'))->default(Admin::user()->business_id);

@@ -33,7 +33,7 @@ class AppHomeController extends AdminController
     protected function grid()
     {
         $grid = new Grid(new AppHome());
-        (new RelationController())->gridActions($grid);
+        //(new RelationController())->gridActions($grid);
 
 
         $grid->column('id', __('Id'));

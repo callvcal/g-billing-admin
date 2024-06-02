@@ -29,7 +29,7 @@ class SubCategoryController extends AdminController
     {
         $grid = new Grid(new SubCategory());
         $grid->enableHotKeys();
-        (new RelationController())->gridActions($grid);
+        //(new RelationController())->gridActions($grid);
         
         
         $grid->column('id', __('Id'));

@@ -28,7 +28,7 @@ class UserController extends AdminController
     {
         $grid = new Grid(new User());
         $grid->model()->orderBy('updated_at', "desc");
-        (new RelationController())->gridActions($grid);
+        //(new RelationController())->gridActions($grid);
 
         $grid->column('id', __('Id'))->sortable();
         $grid->column('image', __('Thumbnail'))->image("", 64, 64);

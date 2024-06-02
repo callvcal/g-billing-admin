@@ -30,7 +30,7 @@ class MenuController extends AdminController
     {
         $grid = new Grid(new Menu());
         $grid->enableHotKeys();
-        (new RelationController())->gridActions($grid);
+        //(new RelationController())->gridActions($grid);
         $states = [
             'on' => ['value' => 1, 'text' => 'open', 'color' => 'primary'],
             'off' => ['value' => 2, 'text' => 'close', 'color' => 'default'],

@@ -27,7 +27,7 @@ class AllBusinessSettings extends AdminController
     {
         $grid = new Grid(new Setting());
         $grid->enableHotKeys();
-        (new RelationController())->gridActions($grid);
+        //(new RelationController())->gridActions($grid);
 
         $grid->disableCreateButton();
 

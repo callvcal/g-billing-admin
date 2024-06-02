@@ -18,7 +18,7 @@ class PremiumPlan
     public function handle(Request $request, Closure $next): Response
     {
     
-        if((Admin::user()!=null)&&!isAdministrator())
+        if((Admin::user()!=null)&&!isAdministrator()&&(!is('CALLVCAL-STAFF')))
         {
             $user=AdminUser::with('business')->find(auth()->user()->id);
             if($user->business->plan=='free')
