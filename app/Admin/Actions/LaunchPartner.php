@@ -3,6 +3,7 @@
 namespace App\Admin\Actions;
 
 use App\Models\AdminUser;
+use App\Models\Business;
 use Illuminate\Database\Eloquent\Model;
 use OpenAdmin\Admin\Actions\RowAction;
 use OpenAdmin\Admin\Facades\Admin;
@@ -21,15 +22,12 @@ class LaunchPartner extends RowAction
         $user->business_key=$model->name;
         $user->save();
 
-        // return $this->response()->success('Success message.')->refresh();
 
-        return redirect('/admin');
+
+    return $this->response()->success('Success message.')->redirect('/admin');
+
+        // return redirect('/admin');
 
     }
-    // public function href()
-    // {
-        
-
-    //     return "/admin";
-    // }
+    
 }
