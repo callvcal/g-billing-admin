@@ -2,6 +2,7 @@
 
 namespace App\Admin\Controllers;
 
+use App\Admin\Actions\LaunchPartner;
 use App\Models\AdminUser;
 use App\Models\Business;
 use OpenAdmin\Admin\Controllers\AdminController;
@@ -28,7 +29,7 @@ class BusinessController extends AdminController
     {
         $grid = new Grid(new Business());
 
-        $grid->model()->orderBy('id',"DESC");
+        $grid->model()->orderBy('id', "DESC");
         $grid->column('id', __('Id'));
         $grid->column('name', __('Name'));
         $grid->column('plan', __('Plan'));
@@ -38,18 +39,18 @@ class BusinessController extends AdminController
         $grid->column('on_board_date', __('On board date'));
         $grid->column('purchase_date', __('Purchase date'));
         $grid->column('last_subscription_date', __('Last subscription date'));
-        $grid->admin('admin_id', __('User admin id'));
         $grid->column('expiry_date', __('Expiry Date'));
         $grid->column('deleting_date', __('Deleted Date'));
-        $grid->admin()->display(function ($model) {
-            if ($model == null) {
-                return  "N/A";
+        $grid->column('admin', __('Admin Mobile'))->display(function ($model) {
+
+            if ($model == null || $model['mobile'] == null) {
+                return "N/A";
             }
             return $model['mobile'];
         })->sortable();
-
-        
-
+        $grid->actions(function ($actions) {
+            $actions->add(new LaunchPartner());
+        });
         return $grid;
     }
 
@@ -77,7 +78,7 @@ class BusinessController extends AdminController
             $model->email();
             $model->business_key();
         });
-
+        // $show->admin()->json();
         return $show;
     }
 
