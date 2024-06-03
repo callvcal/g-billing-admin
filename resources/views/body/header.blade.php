@@ -24,6 +24,9 @@
                         <a href="/software-download" class="navbar-link" data-nav-link>Software download</a>
                     </li>
 
+                    <li class="nav-item">
+                        <a href="/admin" class="navbar-link" data-nav-link>Admin Panel</a>
+                    </li>
 
                     <li class="nav-item">
                         <a href="https://www.callvcal.com" class="navbar-link" data-nav-link>Callvcal</a>
