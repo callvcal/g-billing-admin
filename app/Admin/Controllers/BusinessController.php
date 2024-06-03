@@ -41,7 +41,7 @@ class BusinessController extends AdminController
                 return "N/A";
             }
             return $model['mobile'];
-        })->label()->sortable();
+        })->sortable();
         $grid->column('on_board_way', __('On board way'))->sortable();
         $grid->column('on_board_date', __('On board date'))->sortable();
         $grid->column('purchase_date', __('Purchase date'))->sortable();
