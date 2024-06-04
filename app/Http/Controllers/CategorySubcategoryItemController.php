@@ -399,6 +399,7 @@ class CategorySubcategoryItemController extends Controller
     
             $newMenu->save();
         }
+        return (new HomeController())->home();
     }
 
     private function duplicateImage($originalImagePath)

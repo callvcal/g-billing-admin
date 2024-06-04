@@ -186,6 +186,7 @@ Route::group(['middleware' => ['security', 'auth:sanctum']], function () {
     Route::post('/purchase/invalid', [InAppPurchaseController::class, 'invalidPurchase']);
     Route::get('/product/stock/update/{menuId}', [CategorySubcategoryItemController::class, 'updateStock']);
    
+    Route::get('/eatinsta/data/default', [CategorySubcategoryItemController::class, 'importDefaultData']);
 
 
 });
