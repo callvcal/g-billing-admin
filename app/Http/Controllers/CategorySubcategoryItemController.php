@@ -13,6 +13,8 @@ use App\Models\RawMatrial;
 use App\Models\Unit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class CategorySubcategoryItemController extends Controller
 {
@@ -113,7 +115,7 @@ class CategorySubcategoryItemController extends Controller
         $kitchen = OfflineTransaction::updateOrCreate(
             ['id' => $request->id],
             [
-                'amount' =>(int) $request->amount,
+                'amount' => (int) $request->amount,
                 'type' => $request->type,
                 'cause' => $request->cause,
                 'business_id' => auth()->user()->business_id,
@@ -146,10 +148,10 @@ class CategorySubcategoryItemController extends Controller
         $data['business_id'] = auth()->user()->business_id;
 
 
-        if(isset($data['active'])){
+        if (isset($data['active'])) {
             $data['active'] = (($data['active'] == 1) || ($data['active'] == true) || ($data['active'] == 'true')) ? 1 : 0;
-        }else{
-            $data['active']=0;
+        } else {
+            $data['active'] = 0;
         }
 
 
@@ -272,12 +274,144 @@ class CategorySubcategoryItemController extends Controller
     public function updateStock($id)
     {
         $unit = Menu::findOrFail($id);
-        if($unit){
-            $active=$unit->active;
-            $unit->active=$active==1 ?0:1;
+        if ($unit) {
+            $active = $unit->active;
+            $unit->active = $active == 1 ? 0 : 1;
             $unit->save();
-            return response(['message' => 'Stock Status changed','active'=>$unit->active]);
+            return response(['message' => 'Stock Status changed', 'active' => $unit->active]);
         }
-        return response(['message' => 'Stock Status not changed','active'=>null]);
+        return response(['message' => 'Stock Status not changed', 'active' => null]);
+    }
+
+    public function importDefaultData()
+    {
+        $adminId = auth()->user()->id;
+        $businessId = auth()->user()->business_id;
+        // We will not change admin id, so we can delete default data easily.
+        // Also, to avoid image related errors, we can make duplicate images.
+    
+        // 03/06/24
+        // Menu is linked to category and subcategory
+        // Subcategory is linked to kitchen and category
+    
+        // Models to duplicate
+        $models = [
+            Category::class,
+            Kitchen::class,
+            SubCategory::class,
+            DiningTable::class,
+            Menu::class,
+        ];
+    
+        $menus = Menu::with('category', 'subcategory.kitchen', 'subcategory.category')
+            ->whereNull('business_id')
+            ->get();
+    
+        $addedCategories = [];
+        $addedSubcategories = [];
+        $addedKitchens = [];
+    
+        foreach ($menus as $menu) {
+            // Duplicate the menu
+            $newMenu = $menu->replicate();
+            $newMenu->business_id = $businessId;
+    
+            $subcategory = $menu->subcategory;
+            $category = $menu->category;
+    
+            if ($category) {
+                $categoryFound = collect($addedCategories)->firstWhere('old_id', $category->id);
+                if (!$categoryFound) {
+                    $newCategory = $category->replicate();
+                    $newCategory->business_id = $businessId;
+                    if ($newCategory->image) {
+                        $newImageName = $this->duplicateImage($newCategory->image);
+                        $newCategory->image = $newImageName;
+                    }
+                    $newCategory->save();
+                    $addedCategories[] = [
+                        'old_id' => $category->id,
+                        'new_id' => $newCategory->id
+                    ];
+                    $categoryId = $newCategory->id;
+                } else {
+                    $categoryId = $categoryFound['new_id'];
+                }
+            }
+    
+            if ($subcategory) {
+                $subcategoryFound = collect($addedSubcategories)->firstWhere('old_id', $subcategory->id);
+                if (!$subcategoryFound) {
+                    $newSubcategory = $subcategory->replicate();
+                    $newSubcategory->business_id = $businessId;
+                    if ($newSubcategory->image) {
+                        $newImageName = $this->duplicateImage($newSubcategory->image);
+                        $newSubcategory->image = $newImageName;
+                    }
+                    $kitchen = $subcategory->kitchen;
+                    if ($kitchen) {
+                        $kitchenFound = collect($addedKitchens)->firstWhere('old_id', $kitchen->id);
+                        if (!$kitchenFound) {
+                            $newKitchen = $kitchen->replicate();
+                            $newKitchen->business_id = $businessId;
+                            $newKitchen->save();
+                            $addedKitchens[] = [
+                                'old_id' => $kitchen->id,
+                                'new_id' => $newKitchen->id
+                            ];
+                            $kitchenId = $newKitchen->id;
+                        } else {
+                            $kitchenId = $kitchenFound['new_id'];
+                        }
+                    }
+                    if (isset($kitchenId)) {
+                        $newSubcategory->kitchen_id = $kitchenId;
+                    }
+    
+                    if (isset($categoryId)) {
+                        $newSubcategory->category_id = $categoryId;
+                    }
+    
+                    $newSubcategory->save();
+                    $addedSubcategories[] = [
+                        'old_id' => $subcategory->id,
+                        'new_id' => $newSubcategory->id
+                    ];
+                    $subcategoryId = $newSubcategory->id;
+                } else {
+                    $subcategoryId = $subcategoryFound['new_id'];
+                }
+            }
+    
+            // Copy image if it exists
+            if ($menu->image) {
+                $newImageName = $this->duplicateImage($menu->image);
+                $newMenu->image = $newImageName;
+            }
+    
+            // Update category and subcategory IDs
+            if (isset($categoryId)) {
+                $newMenu->category_id = $categoryId;
+            }
+            if (isset($subcategoryId)) {
+                $newMenu->subcategory_id = $subcategoryId;
+            }
+    
+            $newMenu->save();
+        }
+    }
+
+    private function duplicateImage($originalImagePath)
+    {
+        $disk = Storage::disk('s3');
+
+        $pathInfo = pathinfo($originalImagePath);
+        $newImageName = $pathInfo['filename'] . '-' . Str::uuid() . '.' . $pathInfo['extension'];
+        $newImagePath = $pathInfo['dirname'] . '/' . $newImageName;
+
+        // Copy the file in S3
+        $disk->copy($originalImagePath, $newImagePath);
+
+        return $newImagePath;
     }
 }
