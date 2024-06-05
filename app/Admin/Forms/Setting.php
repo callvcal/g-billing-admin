@@ -98,7 +98,7 @@ class Setting extends Form
             $this->number('customer_name_label_width', 'customer_name_label_width')->default(4);
             $this->number('customer_name_value_width', 'customer_name_value_width')->default(8);
             $this->number('item_name_width', 'item_name_width')->default(2);
-            
+            $this->number('image_quality', 'image_quality')->default(15);  
             $this->number('qty_width', 'qty_width')->default(2);
             $this->number('rate_width', 'rate_width')->default(2);
             $this->number('total_width', 'total_width')->default(6);

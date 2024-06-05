@@ -33,14 +33,8 @@ class BusinessController extends AdminController
         $grid->column('id', __('Id'))->sortable();
         $grid->column('name', __('Name'))->sortable();
         $grid->column('plan', __('Plan'))->sortable();
-        $grid->column('active', __('active'))->switch()->sortable();
-        // $grid->column('deleted', __('deleted'))->switch();
-        $grid->column('on_board_way', __('On board way'))->sortable();
-        $grid->column('on_board_date', __('On board date'))->sortable();
-        $grid->column('purchase_date', __('Purchase date'))->sortable();
-        $grid->column('last_subscription_date', __('Last subscription date'))->sortable();
-        $grid->column('expiry_date', __('Expiry Date'))->sortable();
-        $grid->column('deleting_date', __('Deleted Date'))->sortable();
+        // $grid->column('active', __('active'))->switch()->sortable();
+
         $grid->column('admin', __('Admin Mobile'))->display(function ($model) {
 
             if ($model == null || $model['mobile'] == null) {
@@ -48,6 +42,12 @@ class BusinessController extends AdminController
             }
             return $model['mobile'];
         })->sortable();
+        $grid->column('on_board_way', __('On board way'))->sortable();
+        $grid->column('on_board_date', __('On board date'))->sortable();
+        $grid->column('purchase_date', __('Purchase date'))->sortable();
+        $grid->column('last_subscription_date', __('Last subscription date'))->sortable();
+        $grid->column('expiry_date', __('Expiry Date'))->sortable();
+        $grid->column('deleting_date', __('Deleted Date'))->sortable();
         $grid->actions(function ($actions) {
             $actions->add(new LaunchPartner());
         });
