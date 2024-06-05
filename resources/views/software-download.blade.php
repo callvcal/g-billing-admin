@@ -78,8 +78,8 @@
 
 
 
-                        <a href="https://play.google.com/store/apps/details?id=org.callvcal.eatinsta.billing" >
-                            <button class="btn" >Download</button>
+                        <a href="https://drive.google.com/file/d/1kLbJ6FA5sJEtFJEpxSTjDHWyeMCX3QLW/view?usp=sharing" >
+                            <button class="btn hover" >Download</button>
                         </a>
 
 
@@ -89,7 +89,7 @@
                     <img src="{{ asset('img/hero-banner-bg.png') }}" width="820" height="716" alt="" aria-hidden="true"
                          class="w-100 hero-img-bg">
 
-                    <img src="{{ asset('img/desktop.png') }}" width="700" height="637" loading="lazy" alt="img"
+                    <img src="{{ asset('img/desktop.png') }}" width="600" height="537" loading="lazy" alt="img"
                          class="w-100 hero-img">
                    
                     </figure>
@@ -98,6 +98,16 @@
 
                 </div>
             </section>
+
+
+
+
+
+
+
+
+
+
 
 
 
