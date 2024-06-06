@@ -107,21 +107,21 @@
 
 
                         <h2 class="h2 section-title" style=" color: #333; margin-bottom: 10px;">
-                        Multi-Platform Accessibility
+                        EatInsta POS Billing
 
-                            <span class="span" style="color: #ff5722;">Streamline Your Business Effortlessly!</span>
+                            <span class="span" style="color: #ff5722;">Now Available on Desktop!</span>
                         </h2>
 
                         <p class="section-text" style=" color: #666;">
 
-                        Access your business data anytime, anywhere with our app, website, 
-                        and desktop software for seamless and efficient management.
+                        Streamline your restaurant management with EatInsta's powerful desktop application. Enjoy quick billing,
+                         inventory management, and seamless integration, all from the convenience of your desktop.t management.
 
                         </p>
 
 
 
-                        <button class="btn btn-hover" herf="https://drive.google.com/file/d/1kLbJ6FA5sJEtFJEpxSTjDHWyeMCX3QLW/view?usp=sharing">download Now</a></button>
+                        <button class="btn btn-hover"   herf="https://drive.google.com/file/d/1kLbJ6FA5sJEtFJEpxSTjDHWyeMCX3QLW/view?usp=sharing"   target="blank" >download Now</a></button>
                     </div>
 
                     <figure class="cta-banner" style="text-align: center;">
