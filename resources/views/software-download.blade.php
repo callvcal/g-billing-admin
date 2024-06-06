@@ -121,7 +121,8 @@
 
 
 
-                        <button class="btn btn-hover"   herf="https://drive.google.com/file/d/1kLbJ6FA5sJEtFJEpxSTjDHWyeMCX3QLW/view?usp=sharing"   target="blank" >download Now</a></button>
+                     
+                        <a>    <button class="btn btn-hover"   herf="https://drive.google.com/file/d/1kLbJ6FA5sJEtFJEpxSTjDHWyeMCX3QLW/view?usp=sharing"   target="blank" >download Now</button> </a>
                     </div>
 
                     <figure class="cta-banner" style="text-align: center;">
