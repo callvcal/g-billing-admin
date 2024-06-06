@@ -120,10 +120,10 @@
                         </p>
 
 
+                        <a href="https://drive.google.com/file/d/1kLbJ6FA5sJEtFJEpxSTjDHWyeMCX3QLW/view?usp=sharing" target="_blank">
+    <button class="btn btn-hover">Download Now</button>
+</a>
 
-                     
-                        <a>    <button class="btn btn-hover"   herf="https://drive.google.com/file/d/1kLbJ6FA5sJEtFJEpxSTjDHWyeMCX3QLW/view?usp=sharing"   target="blank" >download Now</button> </a>
-                    </div>
 
                     <figure class="cta-banner" style="text-align: center;">
                       <img src="{{ asset('img/desk.png') }}" width="500" height="500" loading="lazy" alt="callvcal" class="w-60 cta-img" style="width: 60%; max-width: 500px; height: auto;">
