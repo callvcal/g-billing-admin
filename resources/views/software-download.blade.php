@@ -78,9 +78,6 @@
 
 
 
-                        <a href="https://drive.google.com/file/d/1kLbJ6FA5sJEtFJEpxSTjDHWyeMCX3QLW/view?usp=sharing" >
-                            <button class="btn hover" >Download</button>
-                        </a>
 
 
                     </div>
@@ -98,6 +95,43 @@
 
                 </div>
             </section>
+
+
+
+            
+            <section class="section section-divider white cta"
+                style="background-image: url('./assets/images/hero-bg.jpg')">
+                <div class="container">
+
+                    <div class="cta-content">
+
+
+                        <h2 class="h2 section-title" style=" color: #333; margin-bottom: 10px;">
+                        Multi-Platform Accessibility
+
+                            <span class="span" style="color: #ff5722;">Streamline Your Business Effortlessly!</span>
+                        </h2>
+
+                        <p class="section-text" style=" color: #666;">
+
+                        Access your business data anytime, anywhere with our app, website, 
+                        and desktop software for seamless and efficient management.
+
+                        </p>
+
+
+
+                        <button class="btn btn-hover" herf="https://drive.google.com/file/d/1kLbJ6FA5sJEtFJEpxSTjDHWyeMCX3QLW/view?usp=sharing">download Now</a></button>
+                    </div>
+
+                    <figure class="cta-banner" style="text-align: center;">
+                      <img src="{{ asset('img/desk.png') }}" width="500" height="500" loading="lazy" alt="callvcal" class="w-60 cta-img" style="width: 60%; max-width: 500px; height: auto;">
+                    </figure>
+
+
+                </div>
+            </section>
+
 
 
 
