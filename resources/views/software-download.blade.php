@@ -78,9 +78,6 @@
 
 
 
-                        <a href="https://play.google.com/store/apps/details?id=org.callvcal.eatinsta.billing" >
-                            <button class="btn" >Download</button>
-                        </a>
 
 
                     </div>
@@ -89,7 +86,7 @@
                     <img src="{{ asset('img/hero-banner-bg.png') }}" width="820" height="716" alt="" aria-hidden="true"
                          class="w-100 hero-img-bg">
 
-                    <img src="{{ asset('img/desktop.png') }}" width="700" height="637" loading="lazy" alt="img"
+                    <img src="{{ asset('img/desktop.png') }}" width="600" height="537" loading="lazy" alt="img"
                          class="w-100 hero-img">
                    
                     </figure>
@@ -98,6 +95,56 @@
 
                 </div>
             </section>
+
+
+
+            
+            <section class="section section-divider white cta"
+                style="background-image: url('./assets/images/hero-bg.jpg')">
+                <div class="container">
+
+                    <div class="cta-content">
+
+
+                        <h2 class="h2 section-title" style=" color: #333; margin-bottom: 10px;">
+                        EatInsta POS Billing
+
+                            <span class="span" style="color: #ff5722;">Now Available on Desktop!</span>
+                        </h2>
+
+                        <p class="section-text" style=" color: #666;">
+
+                        Streamline your restaurant management with EatInsta's powerful desktop application. Enjoy quick billing,
+                         inventory management, and seamless integration, all from the convenience of your desktop.t management.
+
+                        </p>
+
+                        <a href="https://drive.google.com/file/d/1kLbJ6FA5sJEtFJEpxSTjDHWyeMCX3QLW/view?usp=sharing" target="_blank">
+    <button class="btn btn-hover">Download Now</button>
+</a>
+
+
+                     
+                    </div>
+
+                    <figure class="cta-banner" style="text-align: center;">
+                      <img src="{{ asset('img/desk.png') }}" width="500" height="500" loading="lazy" alt="callvcal" class="w-60 cta-img" style="width: 60%; max-width: 500px; height: auto;">
+                    </figure>
+
+
+                </div>
+            </section>
+
+
+
+
+
+
+
+
+
+
+
 
 
 
