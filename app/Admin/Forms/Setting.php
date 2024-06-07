@@ -126,6 +126,7 @@ class Setting extends Form
             $this->select('show_line_above_total', 'show_line_above_total')->options($states)->default(1);
             $this->select('show_line_below_total', 'show_line_below_total')->options($states)->default(1);
             $this->select('is_font_a_all', 'is_font_a_all')->options($states)->default(1);
+            $this->select('bill_disable_hf', 'bill_disable_hf')->options($states)->default(1);
         } else {
             $this->text('shop_name', 'Shop Name')->rules('required');
             $this->text('address', 'Address');
