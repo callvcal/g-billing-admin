@@ -713,6 +713,13 @@ Because your business deserves the best. EatInsta POS Billing is more than just 
 
 
 
+<!-- chatbot -->
+
+
+    <script>window.$zoho=window.$zoho || {};$zoho.salesiq=$zoho.salesiq||{ready:function(){}}</script><script id="zsiqscript" src="https://salesiq.zohopublic.in/widget?wc=siq93e744a7b98fd0867a3567440aa3848229dd931ae339a0c31e0f43803c00f417e3e57a6ffc0f4149c87ed41c9660fac3" defer></script>
+
+
+
     <script>
 
 
