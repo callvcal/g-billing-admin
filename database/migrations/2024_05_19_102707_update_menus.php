@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::table('menus', function (Blueprint $table) {
             $table->integer('alert_stocks')->default(0)->nullable();
+            $table->double('extra_charge')->default(0)->nullable();
         });
     }
 

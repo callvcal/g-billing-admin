@@ -28,7 +28,7 @@ class CreateSellsTable extends Migration
             $table->string('payment_method')->comment('cash,online')->nullable();
             $table->integer('total_amt')->nullable();
             $table->integer('delivery_charge')->nullable();
-            $table->integer('paid_amt')->nullable();
+            $table->double('paid_amt')->nullable();
             $table->integer('gst_amt')->nullable();
             $table->string('gst_type')->nullable();
             $table->integer('discount_amt')->nullable();

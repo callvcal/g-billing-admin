@@ -17,6 +17,10 @@ return new class extends Migration
         });
         Schema::table('sells', function (Blueprint $table) {
             $table->double('total_amt')->nullable()->change();
+            $table->double('extra_charge_value')->nullable();
+            $table->double('discount_value')->nullable();
+            $table->string('discount_type')->nullable();
+            $table->string('extra_charge_type')->nullable();
         });
         Schema::table('cart_items', function (Blueprint $table) {
             $table->double('qty')->nullable()->change();
