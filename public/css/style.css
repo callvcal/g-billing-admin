@@ -562,18 +562,19 @@ body.active { overflow: hidden; }
 
   @media screen and (max-width: 768px) {
     .banner-images {
-      width: 100%;
-      height: auto;
+      margin-top: 10px;
+      width: 300px;
+      height: 300px; ;
       padding: 20px;
       box-sizing: border-box; /* Ensures padding is included in the element's total width */
-      border-radius: 20px;
+      border-radius: 10px;
     }
   
     .banner-images img {
-      width: 100%;
-      height: auto; /* Maintain aspect ratio */
+      width: 300px;
+      height: 300px; /* Maintain aspect ratio */
       display: block; /* Removes any gap below the image */
-      border-radius: 20px;
+      border-radius: 10px;
     }
   }
   
