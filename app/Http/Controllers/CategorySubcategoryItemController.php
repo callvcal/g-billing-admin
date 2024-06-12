@@ -8,6 +8,7 @@ use App\Models\SubCategory;
 use App\Models\Menu;
 use App\Models\Kitchen;
 use App\Models\Material;
+use App\Models\MenuStock;
 use App\Models\OfflineTransaction;
 use App\Models\RawMatrial;
 use App\Models\Unit;
@@ -172,6 +173,27 @@ class CategorySubcategoryItemController extends Controller
         );
         return response($unit);
     }
+    public function adjustStock(Request $request)
+    {
+        $model = MenuStock::create(
+            [
+                'note' => $request->note,
+                'qty' => ($request->type == 'add') ? $request->qty : (-(int)$request->qty),
+                'type' => $request->type,
+                'menu_id' => $request->menu_id,
+                'datetime'=>now(),
+                'business_id' => auth()->user()->business_id,
+                'admin_id' => auth()->user()->id,
+            ]
+        );
+        return response($model);
+    }
+    public function stocks($menuId)
+    {
+        $list = MenuStock::where('business_id',auth()->user()->business_id)->where('menu_id',$menuId)->latest()->get();
+        return response($list);
+    }
+
 
 
     public function createDinTable(Request $request)
@@ -289,11 +311,11 @@ class CategorySubcategoryItemController extends Controller
         $businessId = auth()->user()->business_id;
         // We will not change admin id, so we can delete default data easily.
         // Also, to avoid image related errors, we can make duplicate images.
-    
+
         // 03/06/24
         // Menu is linked to category and subcategory
         // Subcategory is linked to kitchen and category
-    
+
         // Models to duplicate
         $models = [
             Category::class,
@@ -302,23 +324,23 @@ class CategorySubcategoryItemController extends Controller
             DiningTable::class,
             Menu::class,
         ];
-    
+
         $menus = Menu::with('category', 'subcategory.kitchen', 'subcategory.category')
             ->whereNull('business_id')
             ->get();
-    
+
         $addedCategories = [];
         $addedSubcategories = [];
         $addedKitchens = [];
-    
+
         foreach ($menus as $menu) {
             // Duplicate the menu
             $newMenu = $menu->replicate();
             $newMenu->business_id = $businessId;
-    
+
             $subcategory = $menu->subcategory;
             $category = $menu->category;
-    
+
             if ($category) {
                 $categoryFound = collect($addedCategories)->firstWhere('old_id', $category->id);
                 if (!$categoryFound) {
@@ -338,7 +360,7 @@ class CategorySubcategoryItemController extends Controller
                     $categoryId = $categoryFound['new_id'];
                 }
             }
-    
+
             if ($subcategory) {
                 $subcategoryFound = collect($addedSubcategories)->firstWhere('old_id', $subcategory->id);
                 if (!$subcategoryFound) {
@@ -367,11 +389,11 @@ class CategorySubcategoryItemController extends Controller
                     if (isset($kitchenId)) {
                         $newSubcategory->kitchen_id = $kitchenId;
                     }
-    
+
                     if (isset($categoryId)) {
                         $newSubcategory->category_id = $categoryId;
                     }
-    
+
                     $newSubcategory->save();
                     $addedSubcategories[] = [
                         'old_id' => $subcategory->id,
@@ -382,13 +404,13 @@ class CategorySubcategoryItemController extends Controller
                     $subcategoryId = $subcategoryFound['new_id'];
                 }
             }
-    
+
             // Copy image if it exists
             if ($menu->image) {
                 $newImageName = $this->duplicateImage($menu->image);
                 $newMenu->image = $newImageName;
             }
-    
+
             // Update category and subcategory IDs
             if (isset($categoryId)) {
                 $newMenu->category_id = $categoryId;
@@ -396,7 +418,7 @@ class CategorySubcategoryItemController extends Controller
             if (isset($subcategoryId)) {
                 $newMenu->subcategory_id = $subcategoryId;
             }
-    
+
             $newMenu->save();
         }
         return (new HomeController())->home();

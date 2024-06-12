@@ -14,7 +14,7 @@ class CreateClientReviewsTable extends Migration
     public function up()
     {
         Schema::create('client_reviews', function (Blueprint $table) {
-            $table->increments('id');
+            $table->id();
             $table->string('name')->nullable();
             $table->text('address')->nullable();
             $table->string('city')->nullable();

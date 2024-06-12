@@ -20,6 +20,7 @@ use App\Admin\Controllers\HomeController;
 use App\Admin\Controllers\KitchenController;
 use App\Admin\Controllers\MaterialController;
 use App\Admin\Controllers\MenuController;
+use App\Admin\Controllers\MenuStockController;
 use App\Admin\Controllers\OfflineTransactionController;
 use App\Admin\Controllers\OrdersController;
 use App\Admin\Controllers\OrderStatusUpdateController;
@@ -107,6 +108,8 @@ Route::group([
 
     $router->resource('client-reviews', ClientReviewController::class);
 
+
+    $router->resource('menu-stocks', MenuStockController::class);
 
 
     
