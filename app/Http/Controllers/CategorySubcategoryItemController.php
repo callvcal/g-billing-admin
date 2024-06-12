@@ -175,22 +175,40 @@ class CategorySubcategoryItemController extends Controller
     }
     public function adjustStock(Request $request)
     {
-        $model = MenuStock::create(
-            [
-                'note' => $request->note,
-                'qty' => ($request->type == 'add') ? $request->qty : (-(int)$request->qty),
-                'type' => $request->type,
-                'menu_id' => $request->menu_id,
-                'datetime'=>now(),
-                'business_id' => auth()->user()->business_id,
-                'admin_id' => auth()->user()->id,
-            ]
-        );
-        return response($model);
+        $qty = (int)(($request->type == 'add') ? $request->qty : (-(int)$request->qty));
+        $stock = $qty;
+        $menu = Menu::find($request->menu_id);
+
+        if ($menu) {
+            $stock = $menu->stocks ?? 0;
+            $stock = $stock + $qty;
+            $menu->stocks = $stock;
+            $menu->save();
+            $model = MenuStock::create(
+                [
+                    'note' => $request->note,
+                    'qty' => $qty,
+                    'type' => $request->type,
+                    'menu_id' => $request->menu_id,
+                    'datetime' => now(),
+                    'stock'=>$stock,
+                    'business_id' => auth()->user()->business_id,
+                    'admin_id' => auth()->user()->id,
+                ]
+            );
+            $model->load('admin');
+            return response([
+                'stock' => $model,
+                'menu' => $menu
+            ]);
+        }
+        return response([
+            'menssage' => 'menu does not exist',
+        ], 401);
     }
     public function stocks($menuId)
     {
-        $list = MenuStock::where('business_id',auth()->user()->business_id)->where('menu_id',$menuId)->latest()->get();
+        $list = MenuStock::with('admin')->where('business_id', auth()->user()->business_id)->where('menu_id', $menuId)->latest()->get();
         return response($list);
     }
 
