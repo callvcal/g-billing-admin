@@ -28,6 +28,7 @@ class Sell extends Model
         'due_amt',
         'full_address',
         'user_type',
+        'extra_charge',
         'dining_table_id',
         'items_count',
         'sell_type',
