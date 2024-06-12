@@ -188,7 +188,7 @@ Route::group(['middleware' => ['security', 'auth:sanctum']], function () {
    
     Route::get('/eatinsta/data/default', [CategorySubcategoryItemController::class, 'importDefaultData']);
     Route::get('/menu/stock/fetch/{menuId}', [CategorySubcategoryItemController::class, 'stocks']);
-    Route::get('/menu/stock/adjust', [CategorySubcategoryItemController::class, 'adjustStock']);
+    Route::post('/menu/stock/adjust', [CategorySubcategoryItemController::class, 'adjustStock']);
 
 
 });
