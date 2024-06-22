@@ -118,9 +118,8 @@ class Setting extends Form
             $this->number('service_charge_rate', 'Service charge rate')->default(2);
             $this->number('gst_rate', 'Gst rate')->default(18);
             $this->number('monthly_charge_in_rs', 'Monthly Charge in Rs')->default(100);
-            $this->number('monthly_charge_in_doller', 'Monthly Charge in doller')->default(3);
             $this->number('annual_charge_in_rs', 'Annual Charge in Rs')->default(1000);
-            $this->number('annual_charge_in_doller', 'Annual Charge in doller')->default(15);
+            $this->number('lifetime_charge_in_rs', 'Lifetime Charge')->default(15);
             $this->select('print_new_line', 'print_new_line')->options($states)->default(1);
             $this->select('reset_bluetooth', 'reset_bluetooth')->options($states)->default(1);
             $this->select('show_line_above_total', 'show_line_above_total')->options($states)->default(1);
