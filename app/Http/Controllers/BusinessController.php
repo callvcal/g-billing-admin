@@ -26,7 +26,7 @@ class BusinessController extends Controller
         $user = AdminUser::find(auth()->user()->id);
 
         $request->validate([
-            'password' => ['required', 'string', 'max:20'],
+            // 'password' => ['required', 'string', 'max:20'],
             'mobile' => ['required'],
             'name' => ['required'],
             'username' => ['required'],
