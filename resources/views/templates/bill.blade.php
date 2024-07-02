@@ -127,25 +127,29 @@
 
             @php
 
-                $isIncluded = ($setting['is_gst_included']??0) == 1;
-                if( $isIncluded){
+                $isIncluded = ($setting['is_gst_included'] ?? 0) == 1;
+                if ($isIncluded) {
                     $subtotal = $sell->total_amt - $sell->gst_amt - $sell->delivery_charge + $sell->discount_amt;
-
-                }else{
+                } else {
                     $subtotal = $sell->total_amt - $sell->gst_amt - $sell->delivery_charge + $sell->discount_amt;
                 }
 
             @endphp
 
+            @isset($setting['shop_name'])
+                <div class="shop-name">{{ $setting['shop_name'] ?? '' }}</div>
+            @endisset
+            @isset($setting['address'])
+                <div class="address">{{ $setting['address'] ?? '' }}<br>
+                    {{ $setting['mobile'] ?? '' }} <br>
+                    <p>Invoice</p>
 
-            <div class="shop-name">{{ $setting['shop_name'] }}</div>
-            <div class="address">{{ $setting['address'] }}<br>
-                {{ $setting['mobile'] }} <br>
-                <p>Invoice</p>
+                    <p>{{ $sell->serve_type }}</p>
 
-                <p>{{ $sell->serve_type }}</p>
+                </div>
+            @endisset
 
-            </div>
+
             <hr>
         </div>
         <div class="receipt-info">

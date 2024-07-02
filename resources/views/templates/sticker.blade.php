@@ -129,7 +129,9 @@
 
         @foreach ($items as $item)
             <div class="container">
-
+                @isset($setting['shop_name'])
+                <div class="shop-name">{{$setting['shop_name']}}</div>
+                @endisset
                 <div class="address">Order: {{ $item->order_id }}</div>
                 <hr>
                 <div class="receipt-info">
@@ -138,8 +140,7 @@
                 </div>
                 <hr>
 
-                <span class="shop-name">Eatinsta</span>
-
+              
 
             </div>
         @endforeach

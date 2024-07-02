@@ -32,6 +32,7 @@ use App\Admin\Controllers\PageDesignerTextController;
 use App\Admin\Controllers\PageDesignerVideoController;
 use App\Admin\Controllers\PizzaKDSController;
 use App\Admin\Controllers\POSController;
+use App\Admin\Controllers\PremiumPlanController;
 use App\Admin\Controllers\PushNotificationController;
 use App\Admin\Controllers\RawMatrialController;
 use App\Admin\Controllers\SellController;
@@ -111,6 +112,7 @@ Route::group([
 
     $router->resource('menu-stocks', MenuStockController::class);
 
+    $router->resource('premium-plans', PremiumPlanController::class);
 
     
     $router->get('pusher/events', [HomeController::class, function () {
