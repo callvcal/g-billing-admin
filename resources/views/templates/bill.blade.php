@@ -221,7 +221,8 @@
         <hr>
 
         <div class="thank-message">
-            <i class="fas fa-star text-warning icon"></i> {{ $setting['footer_message'] }} <i
+
+            <i class="fas fa-star text-warning icon"></i> {{ $setting['footer_message']??'' }} <i
                 class="fas fa-star text-warning icon"></i>
         </div>
 
