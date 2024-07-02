@@ -1,62 +1,52 @@
-function printBill(id) {
-  // Send AJAX request to the bill printing route
-  fetch('print/bill/' + id, {
+function showToast(message) {
+  // Create a div element for the toast
+  const toast = document.createElement('div');
+  toast.className = 'toast'; // Add any class for styling
+  toast.textContent = message;
+
+  // Append the toast to the body
+  document.body.appendChild(toast);
+
+  // Remove the toast after a few seconds
+  setTimeout(() => {
+    toast.remove();
+  }, 3000);
+}
+
+function handlePrintResponse(response) {
+  console.log(response);
+  if (!response.ok) {
+    showToast('Failed to print. Response code: ' + response.status);
+    throw new Error('Network response was not ok.');
+  }
+  return response.json();
+}
+
+function printContent(url) {
+  fetch(url, {
     method: 'GET',
   })
-    .then(response => response.json())
-    .then(data => {
-      // Open a new window and write the received HTML content
-      let printWindow = window.open('');
-      printWindow.document.write(data.html);
-      printWindow.document.close();
+  .then(handlePrintResponse)
+  .then(data => {
+    let printWindow = window.open('');
+    printWindow.document.write(data.html);
+    printWindow.document.close();
+    printWindow.onload = function () {
+      printWindow.print();
+      printWindow.close();
+    };
+  })
+  .catch(error => console.error('Error:', error));
+}
 
-      // Wait for the new window to load before printing
-      printWindow.onload = function () {
-        printWindow.print();
-        printWindow.close();
-      };
-    })
-    .catch(error => console.error('Error:', error));
+function printBill(id) {
+  printContent('print/bill/' + id);
 }
 
 function printKOT(id) {
-  // Send AJAX request to the KOT printing route
-  fetch('print/kot/' + id, {
-    method: 'GET',
-  })
-  .then(response => response.json())
-  .then(data => {
-    // Open a new window and write the received HTML content
-    let printWindow = window.open('');
-    printWindow.document.write(data.html);
-    printWindow.document.close();
-
-    // Wait for the new window to load before printing
-    printWindow.onload = function () {
-      printWindow.print();
-      printWindow.close();
-    };
-  })
-    .catch(error => console.error('Error:', error));
+  printContent('print/kot/' + id);
 }
 
 function printSticker(id) {
-  // Send AJAX request to the sticker printing route
-  fetch('print/stickers/' + id, {
-    method: 'GET',
-  })
-  .then(response => response.json())
-  .then(data => {
-    // Open a new window and write the received HTML content
-    let printWindow = window.open('');
-    printWindow.document.write(data.html);
-    printWindow.document.close();
-
-    // Wait for the new window to load before printing
-    printWindow.onload = function () {
-      printWindow.print();
-      printWindow.close();
-    };
-  })
-    .catch(error => console.error('Error:', error));
+  printContent('print/stickers/' + id);
 }
