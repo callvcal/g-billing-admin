@@ -42,7 +42,7 @@
 
 <body id="top">
 
- @include('body.header')
+    @include('body.header')
 
 
 
@@ -50,7 +50,7 @@
         <article>
 
             <!--
-        - #HERO 
+        - #HERO
       -->
 
             <section class="hero" id="home" style="#">
@@ -66,28 +66,29 @@
 
                         <h2 class="h1 hero-title" style="color: white;">Pos Billing Software</h2>
 
-                        <p class="hero-text" style="color: grey;">Effortless Billing & Management for Restaurants, Sweet Shops, Groceries & More </p>
+                        <p class="hero-text" style="color: grey;">Effortless Billing & Management for Restaurants, Sweet
+                            Shops, Groceries & More </p>
 
 
 
 
-                        <a href="https://play.google.com/store/apps/details?id=org.callvcal.eatinsta.billing" >
-                            <button class="btn" >Download</button>
+                        <a href="https://play.google.com/store/apps/details?id=org.callvcal.eatinsta.billing">
+                            <button class="btn">Download</button>
                         </a>
 
 
                     </div>
 
                     <figure class="hero-banner">
-                    <img src="{{ asset('img/hero-banner-bg.png') }}" width="820" height="716" alt="" aria-hidden="true"
-                         class="w-100 hero-img-bg">
+                        <img src="{{ asset('img/hero-banner-bg.png') }}" width="820" height="716" alt=""
+                            aria-hidden="true" class="w-100 hero-img-bg">
 
-                    <img src="{{ asset('img/heroi.png') }}" width="700" height="637" loading="lazy" alt="img"
-                         class="w-100 hero-img">
-                   
+                        <img src="{{ asset('img/heroi.png') }}" width="700" height="637" loading="lazy"
+                            alt="img" class="w-100 hero-img">
+
                     </figure>
 
-                    
+
 
                 </div>
             </section>
@@ -95,63 +96,61 @@
 
 
 
-  <!-- 
+            <!--
         - #CTA
       -->
 
-      <section class="section section-divider white cta" style="background-image: url('./assets/images/hero-bg.jpg')">
-        <div class="container">
+            <section class="section section-divider white cta"
+                style="background-image: url('./assets/images/hero-bg.jpg')">
+                <div class="container">
 
-          <div class="cta-content">
-
-
-          <h2 class="h2 section-title" style=" color: #333; margin-bottom: 10px;">
-          Effortless Billing & Management 
-
-  <span class="span" style="color: #ff5722;">for Restaurants, Sweet Shops, Groceries & More.</span>
-</h2>
-
-<p class="section-text" style=" color: #666;">
+                    <div class="cta-content">
 
 
-Because your business deserves the best. EatInsta POS Billing is more than just software; it's a partner in your success. Let us help you provide exceptional service, streamline your operations, and grow your business.
-</p>
+                        <h2 class="h2 section-title" style=" color: #333; margin-bottom: 10px;">
+                            Effortless Billing & Management
+
+                            <span class="span" style="color: #ff5722;">for Restaurants, Sweet Shops, Groceries &
+                                More.</span>
+                        </h2>
+
+                        <p class="section-text" style=" color: #666;">
 
 
-            <button class="btn btn-hover"><a href="https://play.google.com/store/apps/details?id=org.callvcal.eatinsta.billing">Download Now</a></button>
-          </div>
-
-          <figure class="cta-banner">
-
-          <div class="banner-images">
-            <img src="{{asset('img/1.jpg')}}" alt="Eatinsta" class="active">
-            <img src="{{asset('img/2.jpg')}}" alt="Eatinsta">
-            <img src="{{asset('img/3.jpg')}}" alt="Eatinsta">
-            <img src="{{asset('img/4.jpg')}}" alt="Eatinsta">
-            <img src="{{asset('img/5.jpg')}}" alt="Eatinsta">
-            <img src="{{asset('img/6.jpg')}}" alt="Eatinsta">
-            <img src="{{asset('img/7.jpg')}}" alt="Eatinsta">
-            <img src="{{asset('img/8.jpg')}}" alt="Eatinsta">
-            <img src="{{asset('img/9.jpg')}}" alt="Eatinsta">
-            
-            
-          </div> 
+                            Because your business deserves the best. EatInsta POS Billing is more than just software;
+                            it's a partner in your success. Let us help you provide exceptional service, streamline your
+                            operations, and grow your business.
+                        </p>
 
 
+                        <button class="btn btn-hover"><a
+                                href="https://play.google.com/store/apps/details?id=org.callvcal.eatinsta.billing">Download
+                                Now</a></button>
+                    </div>
 
-            
-          </figure>
+                    <figure class="cta-banner">
 
-        </div>
-      </section>
+                        <div class="banner-images">
+                            <img src="{{ asset('img/1.jpg') }}" alt="Eatinsta" class="active">
+                            <img src="{{ asset('img/2.jpg') }}" alt="Eatinsta">
+                            <img src="{{ asset('img/3.jpg') }}" alt="Eatinsta">
+                            <img src="{{ asset('img/4.jpg') }}" alt="Eatinsta">
+                            <img src="{{ asset('img/5.jpg') }}" alt="Eatinsta">
+                            <img src="{{ asset('img/6.jpg') }}" alt="Eatinsta">
+                            <img src="{{ asset('img/7.jpg') }}" alt="Eatinsta">
+                            <img src="{{ asset('img/8.jpg') }}" alt="Eatinsta">
+                            <img src="{{ asset('img/9.jpg') }}" alt="Eatinsta">
+
+
+                        </div>
 
 
 
 
+                    </figure>
 
-
-
-
+                </div>
+            </section>
 
 
 
@@ -171,155 +170,173 @@ Because your business deserves the best. EatInsta POS Billing is more than just 
 
 
 
-      <!-- 
+
+
+
+
+
+
+
+
+            <!--
         - #PROMO
       -->
 
-      <section class="section section-divider white promo">
-        <div class="container">
+            <section class="section section-divider white promo">
+                <div class="container">
 
-          <ul class="promo-list has-scrollbar">
-
-
-          <li class="promo-item">
-          <div class="promo-card">
-              <h3 class="h3 card-title">Free</h3>
-
-               <div class="card-icon">
-                 <h1 style="color: #4CAF50; font-size: 1.5em; font-weight: bold;">Price: ₹0</h1>
-                 <h1 style="color: #4CAF50; font-size: 1em; font-weight: light;">Price: ₹0 for Other Country</h1>
-               </div>
-
-               <p class="card-text">
-                   <span style="color: green;">✔</span> Full Access
-               </p>
-               <p class="card-text">
-                   <span style="color: green;">✔</span> Customer support
-               </p>
-               <p class="card-text">
-                    <span style="color: red;">✔</span> Ads will be shown
-               </p>
-  
-        <a href="https://play.google.com/store/apps/details?id=org.callvcal.eatinsta.billing" style="background-color: #FF5733; color: white; border: 1px; padding: 15px 32px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; margin: 4px 2px; cursor: pointer; border-radius: 12px;">
-         Subscribe
-        </a>
-  </div>
-</li>
+                    <ul class="promo-list has-scrollbar">
 
 
+                        <li class="promo-item">
+                            <div class="promo-card">
+                                <h3 class="h3 card-title">Free</h3>
 
-           
-          <li class="promo-item">
-          <div class="promo-card">
-              <h3 class="h3 card-title">Monthly</h3>
+                                <div class="card-icon">
+                                    <h1 style="color: #4CAF50; font-size: 1.5em; font-weight: bold;">Price: ₹0</h1>
+                                    <h1 style="color: #4CAF50; font-size: 1em; font-weight: light;">Price: ₹0 for Other
+                                        Country</h1>
+                                </div>
 
-               <div class="card-icon">
-                 <h1 style="color: #4CAF50; font-size: 1.5em; font-weight: bold;">Price: ₹300</h1>
-                 <h1 style="color: #4CAF50; font-size: 1em; font-weight: light;">Price: $5 for Other Country</h1>
-               </div>
+                                <p class="card-text">
+                                    <span style="color: green;">✔</span> Full Access
+                                </p>
+                                <p class="card-text">
+                                    <span style="color: green;">✔</span> Customer support
+                                </p>
+                                <p class="card-text">
+                                    <span style="color: red;">✔</span> Ads will be shown
+                                </p>
 
-               <p class="card-text">
-                   <span style="color: green;">✔</span> Full Access
-               </p>
-               <p class="card-text">
-                   <span style="color: green;">✔</span> Pro Customer support
-               </p>
-               <p class="card-text">
-                    <span style="color: red;">✖</span> Ads will be shown
-               </p>
-  
-        <a href="https://play.google.com/store/apps/details?id=org.callvcal.eatinsta.billing" style="background-color: #FF5733; color: white; border: 1px; padding: 15px 32px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; margin: 4px 2px; cursor: pointer; border-radius: 12px;">
-         Subscribe
-        </a>
-  </div>
-</li>
+                                <a href="https://play.google.com/store/apps/details?id=org.callvcal.eatinsta.billing"
+                                    style="background-color: #FF5733; color: white; border: 1px; padding: 15px 32px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; margin: 4px 2px; cursor: pointer; border-radius: 12px;">
+                                    Subscribe
+                                </a>
+                            </div>
+                        </li>
 
 
 
 
-<li class="promo-item">
-          <div class="promo-card">
-              <h3 class="h3 card-title">Anually</h3>
+                        <li class="promo-item">
+                            <div class="promo-card">
+                                <h3 class="h3 card-title">Monthly</h3>
 
-               <div class="card-icon">
-                 <h1 style="color: #4CAF50; font-size: 1.5em; font-weight: bold;">Price: ₹3500</h1>
-                 <h1 style="color: #4CAF50; font-size: 1em; font-weight: light;">Price: $50 for Other Country</h1>
-               </div>
+                                <div class="card-icon">
+                                    <h1 style="color: #4CAF50; font-size: 1.5em; font-weight: bold;">Price: ₹300</h1>
+                                    <h1 style="color: #4CAF50; font-size: 1em; font-weight: light;">Price: $5 for Other
+                                        Country</h1>
+                                </div>
 
-               <p class="card-text">
-                   <span style="color: green;">✔</span> Full Access
-               </p>
-               <p class="card-text">
-                   <span style="color: green;">✔</span>Pro Customer support
-               </p>
-               <p class="card-text">
-                    <span style="color: red;">✖</span> Ads will be shown
-               </p>
-  
-        <a href="https://play.google.com/store/apps/details?id=org.callvcal.eatinsta.billing" style="background-color: #FF5733; color: white; border: 1px; padding: 15px 32px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; margin: 4px 2px; cursor: pointer; border-radius: 12px;">
-         Subscribe
-        </a>
-  </div>
-</li>
+                                <p class="card-text">
+                                    <span style="color: green;">✔</span> Full Access
+                                </p>
+                                <p class="card-text">
+                                    <span style="color: green;">✔</span> Pro Customer support
+                                </p>
+                                <p class="card-text">
+                                    <span style="color: red;">✖</span> Ads will be shown
+                                </p>
 
-
-<li class="promo-item">
-          <div class="promo-card">
-              <h3 class="h3 card-title">3 Years</h3>
-
-               <div class="card-icon">
-                 <h1 style="color: #4CAF50; font-size: 1.5em; font-weight: bold;">Price: ₹10000</h1>
-                 <h1 style="color: #4CAF50; font-size: 1em; font-weight: light;">Price: $120 for Other Country</h1>
-               </div>
-
-               <p class="card-text">
-                   <span style="color: green;">✔</span> Full Access
-               </p>
-               <p class="card-text">
-                   <span style="color: green;">✔</span>Pro Customer support
-               </p>
-               <p class="card-text">
-                    <span style="color: red;">✖</span> Ads will be shown
-               </p>
-  
-        <a href="https://play.google.com/store/apps/details?id=org.callvcal.eatinsta.billing" style="background-color: #FF5733; color: white; border: 1px; padding: 15px 32px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; margin: 4px 2px; cursor: pointer; border-radius: 12px;">
-         Subscribe
-        </a>
-  </div>
-</li>
+                                <a href="https://play.google.com/store/apps/details?id=org.callvcal.eatinsta.billing"
+                                    style="background-color: #FF5733; color: white; border: 1px; padding: 15px 32px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; margin: 4px 2px; cursor: pointer; border-radius: 12px;">
+                                    Subscribe
+                                </a>
+                            </div>
+                        </li>
 
 
 
-<li class="promo-item">
-          <div class="promo-card">
-              <h3 class="h3 card-title">Partnership </h3>
 
-               <div class="card-icon">
-                 <h1 style="color: #4CAF50; font-size: 1.5em; font-weight: bold;">Price: ₹20000</h1>
-                 <h1 style="color: #4CAF50; font-size: 1em; font-weight: light;">Price: $300 for Other Country</h1>
-               </div>
+                        <li class="promo-item">
+                            <div class="promo-card">
+                                <h3 class="h3 card-title">Anually</h3>
 
-               <p class="card-text">
-                   <span style="color: green;">✔</span> Full Access on your server
-               </p>
-               <p class="card-text">
-                   <span style="color: green;">✔</span> Customer support
-               </p>
-               <p class="card-text">
-                    <span style="color: red;">✔</span> Get Custom dashboard
-               </p>
-  
-        <a href="https://play.google.com/store/apps/details?id=org.callvcal.eatinsta.billing" style="background-color: #FF5733; color: white; border: 1px; padding: 15px 32px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; margin: 4px 2px; cursor: pointer; border-radius: 12px;">
-         Subscribe
-        </a>
-  </div>
-</li>
+                                <div class="card-icon">
+                                    <h1 style="color: #4CAF50; font-size: 1.5em; font-weight: bold;">Price: ₹3500</h1>
+                                    <h1 style="color: #4CAF50; font-size: 1em; font-weight: light;">Price: $50 for
+                                        Other Country</h1>
+                                </div>
+
+                                <p class="card-text">
+                                    <span style="color: green;">✔</span> Full Access
+                                </p>
+                                <p class="card-text">
+                                    <span style="color: green;">✔</span>Pro Customer support
+                                </p>
+                                <p class="card-text">
+                                    <span style="color: red;">✖</span> Ads will be shown
+                                </p>
+
+                                <a href="https://play.google.com/store/apps/details?id=org.callvcal.eatinsta.billing"
+                                    style="background-color: #FF5733; color: white; border: 1px; padding: 15px 32px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; margin: 4px 2px; cursor: pointer; border-radius: 12px;">
+                                    Subscribe
+                                </a>
+                            </div>
+                        </li>
 
 
-          </ul>
+                        <li class="promo-item">
+                            <div class="promo-card">
+                                <h3 class="h3 card-title">3 Years</h3>
 
-        </div>
-      </section>
+                                <div class="card-icon">
+                                    <h1 style="color: #4CAF50; font-size: 1.5em; font-weight: bold;">Price: ₹10000</h1>
+                                    <h1 style="color: #4CAF50; font-size: 1em; font-weight: light;">Price: $120 for
+                                        Other Country</h1>
+                                </div>
+
+                                <p class="card-text">
+                                    <span style="color: green;">✔</span> Full Access
+                                </p>
+                                <p class="card-text">
+                                    <span style="color: green;">✔</span>Pro Customer support
+                                </p>
+                                <p class="card-text">
+                                    <span style="color: red;">✖</span> Ads will be shown
+                                </p>
+
+                                <a href="https://play.google.com/store/apps/details?id=org.callvcal.eatinsta.billing"
+                                    style="background-color: #FF5733; color: white; border: 1px; padding: 15px 32px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; margin: 4px 2px; cursor: pointer; border-radius: 12px;">
+                                    Subscribe
+                                </a>
+                            </div>
+                        </li>
+
+
+
+                        <li class="promo-item">
+                            <div class="promo-card">
+                                <h3 class="h3 card-title">Partnership </h3>
+
+                                <div class="card-icon">
+                                    <h1 style="color: #4CAF50; font-size: 1.5em; font-weight: bold;">Price: ₹20000</h1>
+                                    <h1 style="color: #4CAF50; font-size: 1em; font-weight: light;">Price: $300 for
+                                        Other Country</h1>
+                                </div>
+
+                                <p class="card-text">
+                                    <span style="color: green;">✔</span> Full Access on your server
+                                </p>
+                                <p class="card-text">
+                                    <span style="color: green;">✔</span> Customer support
+                                </p>
+                                <p class="card-text">
+                                    <span style="color: red;">✔</span> Get Custom dashboard
+                                </p>
+
+                                <a href="https://play.google.com/store/apps/details?id=org.callvcal.eatinsta.billing"
+                                    style="background-color: #FF5733; color: white; border: 1px; padding: 15px 32px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; margin: 4px 2px; cursor: pointer; border-radius: 12px;">
+                                    Subscribe
+                                </a>
+                            </div>
+                        </li>
+
+
+                    </ul>
+
+                </div>
+            </section>
 
 
 
@@ -353,25 +370,28 @@ Because your business deserves the best. EatInsta POS Billing is more than just 
 
 
                         <h2 class="h2 section-title" style=" color: #333; margin-bottom: 10px;">
-                        Multi-Platform Accessibility
+                            Multi-Platform Accessibility
 
                             <span class="span" style="color: #ff5722;">Streamline Your Business Effortlessly!</span>
                         </h2>
 
                         <p class="section-text" style=" color: #666;">
 
-                        Access your business data anytime, anywhere with our app, website, 
-                        and desktop software for seamless and efficient management.
+                            Access your business data anytime, anywhere with our app, website,
+                            and desktop software for seamless and efficient management.
 
                         </p>
 
 
 
-                        <button class="btn btn-hover" herf="https://play.google.com/store/apps/details?id=org.callvcal.eatinsta.billing">download Now</a></button>
+                        <button class="btn btn-hover"
+                            herf="https://play.google.com/store/apps/details?id=org.callvcal.eatinsta.billing">download
+                            Now</a></button>
                     </div>
 
                     <figure class="cta-banner" style="text-align: center;">
-                      <img src="{{ asset('img/apps.png') }}" width="500" height="500" loading="lazy" alt="callvcal" class="w-60 cta-img" style="width: 60%; max-width: 500px; height: auto;">
+                        <img src="{{ asset('img/apps.png') }}" width="500" height="500" loading="lazy"
+                            alt="callvcal" class="w-60 cta-img" style="width: 60%; max-width: 500px; height: auto;">
                     </figure>
 
 
@@ -713,34 +733,33 @@ Because your business deserves the best. EatInsta POS Billing is more than just 
 
 
 
-<!-- chatbot -->
+    <!-- chatbot -->
 
 
-    <script>window.$zoho=window.$zoho || {};$zoho.salesiq=$zoho.salesiq||{ready:function(){}}</script><script id="zsiqscript" src="https://salesiq.zohopublic.in/widget?wc=siq93e744a7b98fd0867a3567440aa3848229dd931ae339a0c31e0f43803c00f417e3e57a6ffc0f4149c87ed41c9660fac3" defer></script>
+    <script>
+        window.$zoho = window.$zoho || {};
+        $zoho.salesiq = $zoho.salesiq || {
+            ready: function() {}
+        }
+    </script>
+    <script id="zsiqscript"
+        src="https://salesiq.zohopublic.in/widget?wc=siq93e744a7b98fd0867a3567440aa3848229dd931ae339a0c31e0f43803c00f417e3e57a6ffc0f4149c87ed41c9660fac3"
+        defer></script>
 
 
 
     <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const images = document.querySelectorAll(".banner-images img");
+            let currentImageIndex = 0;
 
-
-document.addEventListener("DOMContentLoaded", function() {
-const images = document.querySelectorAll(".banner-images img");
-let currentImageIndex = 0;
-
-setInterval(() => {
-  images[currentImageIndex].classList.remove("active");
-  currentImageIndex = (currentImageIndex + 1) % images.length;
-  images[currentImageIndex].classList.add("active");
-}, 3000);
-});
-
-
-
-
-
-
-
-</script>
+            setInterval(() => {
+                images[currentImageIndex].classList.remove("active");
+                currentImageIndex = (currentImageIndex + 1) % images.length;
+                images[currentImageIndex].classList.add("active");
+            }, 3000);
+        });
+    </script>
 
 
 
