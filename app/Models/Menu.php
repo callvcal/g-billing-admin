@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Http\Controllers\BarcodeController;
 use Illuminate\Database\Eloquent\Model;
 
 class Menu extends Model
@@ -19,7 +20,7 @@ class Menu extends Model
         return $this->belongsTo(Category::class, 'category_id');
     }
     protected $fillable = [
-        'name','business_id',
+        'name', 'business_id',
         'image',
         'subtitle',
         'code',
@@ -44,4 +45,16 @@ class Menu extends Model
         'proteins_count',
         'qty',
     ];
+    protected static function booted()
+    {
+        static::created(function ($model) {
+            (new BarcodeController())->genBarcode($model);
+        });
+
+        static::deleted(function ($model) {
+        });
+
+        static::updated(function ($model) {
+        });
+    }
 }
