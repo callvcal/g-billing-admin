@@ -21,9 +21,10 @@ class BarcodeController extends Controller
 
         $barcode=MyBarcode::create();
         $barcode->barcode_id=$barcode->id;
+        $barcode->barcode=(string)$barcode->id;
         if(($menu)!=null){
             $barcode->menu_id=$menu->id??null;
-            $menu->code=(string)$barcode->id;
+            $menu->code=$barcode->barcode;
             $menu->save();
         }
         $barcode->save();

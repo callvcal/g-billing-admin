@@ -11,5 +11,5 @@ class MyBarcode extends Model
 
     use HasFactory;
     protected $fillable=[
-        'barcode_id','menu_id'
+        'barcode_id','menu_id','barcode'
     ];}
