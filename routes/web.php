@@ -1,8 +1,10 @@
 <?php
 
+use App\Http\Controllers\BarcodeController;
 use App\Http\Controllers\FoodProductController;
 use App\Http\Controllers\PageDesignerController;
 use App\Http\Controllers\ProfileController;
+use App\Models\Menu;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\File;
@@ -132,3 +134,9 @@ Route::get('/software-download', function () {
     return view('software-download');
 });
 
+
+Route::get('/dev',function ()  {
+    foreach (Menu::all() as $item) {
+        echo "$item->id : ".(new BarcodeController())->genBarcode($item);
+    }
+});
