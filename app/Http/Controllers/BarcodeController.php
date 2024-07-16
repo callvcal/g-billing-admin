@@ -17,6 +17,8 @@ class BarcodeController extends Controller
                 return false;
             }
         }
+        
+
         $barcode=Barcode::create();
         $barcode->barcode_id=$barcode->id;
         if(($menu)!=null){
