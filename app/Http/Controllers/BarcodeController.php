@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StorebarcodeRequest;
 use App\Http\Requests\UpdatebarcodeRequest;
-use App\Models\Barcode;
 use App\Models\Menu;
+use App\Models\MyBarcode;
 use PhpParser\Node\Expr\Cast\String_;
 
 class BarcodeController extends Controller
@@ -19,7 +19,7 @@ class BarcodeController extends Controller
         }
         
 
-        $barcode=Barcode::create();
+        $barcode=MyBarcode::create();
         $barcode->barcode_id=$barcode->id;
         if(($menu)!=null){
             $barcode->menu_id=$menu->id??null;
