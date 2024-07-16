@@ -599,7 +599,7 @@
                     menuContainer.insertAdjacentHTML('beforeend', menuItem);
                 }
 
-            } else if ("{{ $menu->name }}".toLowerCase().includes(query)) {
+            } else if ("{{ $menu->name }}".toLowerCase().includes(query)||("{{ $menu->code }}".toLowerCase().includes(query))) {
                 var menuItem = `
                     <div class="menu-item btn btn-outline-primary m-1" onclick="addToCart({{ $menu->id }})">
                         <img class="card-img-top" src="{{ asset($menu->image) }}" alt="" style="width: 64px; height:64px">

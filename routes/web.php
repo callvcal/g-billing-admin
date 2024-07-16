@@ -136,7 +136,7 @@ Route::get('/software-download', function () {
 
 
 Route::get('/dev',function ()  {
-    foreach (Menu::all() as $item) {
-        echo "$item->id : ".(new BarcodeController())->genBarcode($item);
-    }
+    // foreach (Menu::all() as $item) {
+    //     echo "$item->id : ".(new BarcodeController())->genBarcode($item);
+    // }
 });

@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('barcodes', function (Blueprint $table) {
             $table->id();
-            $table->string('barcode')->unique();
+            $table->string('barcode')->unique()->nullable();
             $table->integer('barcode_id')->nullable();
             $table->unsignedBigInteger('menu_id')->nullable();
             $table->foreign('menu_id')->references('id')->on('menus')->nullOnDelete();
