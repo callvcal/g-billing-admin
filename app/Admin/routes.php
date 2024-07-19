@@ -46,6 +46,7 @@ use App\Admin\Controllers\UnitController;
 use App\Admin\Controllers\UserController;
 use App\Admin\Controllers\UserCouponController;
 use App\Admin\Controllers\WorkingLocationController;
+use App\Http\Controllers\BarcodeController;
 use App\Http\Controllers\BusinessController as ControllersBusinessController;
 use App\Http\Controllers\HomeController as ControllersHomeController;
 use App\Http\Controllers\PrintController;
@@ -68,7 +69,10 @@ Route::group([
     $router->resource('sub-categories', SubCategoryController::class);
     $router->resource('kitchens', KitchenController::class);
     $router->resource('units', UnitController::class);
+    
     $router->resource('menus', MenuController::class);
+    $router->post('menus/barcodes/print', [BarcodeController::class,'printBarcodes']);
+
     $router->resource('sells', SellController::class);
     $router->resource('sell-items', SellItemController::class);
     $router->resource('pos', POSController::class);

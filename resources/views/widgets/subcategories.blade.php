@@ -566,7 +566,6 @@
 
 
     function showMenus(subcategoryId, query) {
-    console.log('showMenus',subcategoryId,query);
 
     if (subcategoryId != null) {
             selectedSubcategoryId = subcategoryId;
@@ -575,15 +574,11 @@
         var menuContainer = document.getElementById('menuContainer');
         menuContainer.innerHTML = ''; // Clear existing menus
 
-        console.log("query: " + query);
-        console.log("subcategoryId: " + subcategoryId);
-        console.log("selectedSubcategoryId: " + selectedSubcategoryId);
         // Render menus for the selected subcategory
         @foreach ($menus as $menu)
 
 
             if (query == '') {
-                console.log('showMenu','foreach',"{{$menu->id}}","{{$menu->subcategory_id}}",subcategoryId);
 
                 if ((subcategoryId+"") === "{{ $menu->subcategory_id }}") {
                     var menuItem = `

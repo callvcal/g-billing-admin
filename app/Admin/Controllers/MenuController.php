@@ -52,6 +52,7 @@ class MenuController extends AdminController
         });
 
         $grid->column('id', __('Id'))->sortable();
+        $grid->column('code', __('barcode'))->sortable();
         $grid->column('name', __('Name'))->sortable();
         $grid->column('image', __('Image'))->image("", 64, 64);
         $grid->column('price', __('Counter Price'))->sortable();
@@ -59,11 +60,16 @@ class MenuController extends AdminController
         $grid->column('price_with_delivery', __('Price with delivery'))->sortable();
         $grid->column('price_take_away', __('Price take away'))->sortable();
         (new RelationController())->gridSubCategory($grid);
-
+        $grid->batchActions(function ($batch) {
+            $batch->add('Print Barcodes', new \App\Admin\Extensions\Tools\BatchBarcode());
+        });
 
 
         return $grid;
     }
+
+   
+
 
     /**
      * Make a show builder.
