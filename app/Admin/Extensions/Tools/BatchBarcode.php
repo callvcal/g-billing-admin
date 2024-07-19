@@ -30,7 +30,6 @@ class BatchBarcode extends BatchAction
             let data = { ids: selectedIds };
         
             admin.ajax.post(url, data, function(response) {
-                console.log('Full response object:', response);
 
                 let res;
                 try {
@@ -60,6 +59,8 @@ class BatchBarcode extends BatchAction
                     console.error('Failed to process server response:', error);
                     admin.toastr.error('Failed to process server response');
                 }
+                admin.ajax.reload();
+                e.preventDefault();
             });
         });
 EOT;
