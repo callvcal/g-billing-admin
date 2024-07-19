@@ -53,7 +53,7 @@ class POSController extends AdminController
     {
 
 
-        $subcategories = $this->query(SubCategory::class)->get();
+        $subcategories = $this->query(SubCategory::class)->where('menus','>',0)->get();
 
         // return json_encode([
         //     'sql'=>$this->query(Menu::class)->where('price', ">", 0)->toSql(),
