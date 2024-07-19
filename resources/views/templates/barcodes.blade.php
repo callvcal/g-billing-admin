@@ -3,7 +3,8 @@
 
 <head>
     <title>Eatinsta POS Barcodes</title>
-    <link href='https://fonts.googleapis.com/css?family=Libre+Barcode+39' rel='stylesheet'>
+    <link rel="preload" href="https://fonts.googleapis.com/css?family=Libre+Barcode+39" as="style">
+    <link href="https://fonts.googleapis.com/css?family=Libre+Barcode+39" rel="stylesheet">
     <style>
         @page {
             size: 78mm {{ $height }}mm;

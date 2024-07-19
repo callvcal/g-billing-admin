@@ -27,6 +27,9 @@ use OpenAdmin\Admin\Show;
 
 OpenAdmin\Admin\Form::forget(['editor']);
 Admin::css('https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css');
+Admin::css('https://fonts.googleapis.com/css?family=Libre+Barcode+39');
+
+
 // Admin::css('https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css');
 Admin::js('https://js.pusher.com/8.2.0/pusher.min.js');
 // Admin::js('vendor/chartjs/dist/chart.js');

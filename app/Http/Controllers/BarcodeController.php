@@ -17,7 +17,7 @@ class BarcodeController extends Controller
     {
         // Check if the menu already has a barcode code
         if ($menu != null && isset($menu->code)) {
-            // return false;
+            return false;
         }
 
         // Generate a barcode using the next auto-increment ID from the MyBarcode table
