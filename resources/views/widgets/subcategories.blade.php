@@ -340,6 +340,8 @@
 
     {{--  renderSubcategories();  --}}
     showMenus(selectedSubcategoryId, '');
+
+
     renderCart();
     update();
 
@@ -564,7 +566,9 @@
 
 
     function showMenus(subcategoryId, query) {
-        if (subcategoryId != null) {
+    console.log('showMenus',subcategoryId,query);
+
+    if (subcategoryId != null) {
             selectedSubcategoryId = subcategoryId;
         }
 
@@ -579,8 +583,9 @@
 
 
             if (query == '') {
+                console.log('showMenu','foreach',"{{$menu->id}}","{{$menu->subcategory_id}}",subcategoryId);
 
-                if ({{ $menu->subcategory_id }} === subcategoryId) {
+                if ((subcategoryId+"") === "{{ $menu->subcategory_id }}") {
                     var menuItem = `
                         <div class="menu-item btn btn-outline-primary m-1" onclick="addToCart({{ $menu->id }})">
                             <img class="card-img-top" src="{{ asset($menu->image) }}" alt="" style="width: 64px; height:64px">
