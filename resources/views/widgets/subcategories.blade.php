@@ -248,17 +248,10 @@
 </form>
 
 <script type="text/javascript" data-navigate-once defer>
-    var pageReloaded = localStorage.getItem('pageReloaded') === 'true';
 
     console.log('localStorage:'+localStorage.getItem('pageReloaded'));
-    {{--  reloadPageOnce();  --}}
-    function reloadPageOnce() {
-        if (!pageReloaded) {
-            window.location.reload(true); // Reload the page only if not already reloaded
-            localStorage.setItem('pageReloaded', 'true'); // Set the flag in localStorage
-        }
-    }
-
+    
+    
     var selectedSubcategoryId = null;
     let searchInput = document.getElementById('searchInput');
 
@@ -276,7 +269,7 @@
     let totalAmt = {{ $sell->total_amt ?? 100 }};
 
     // Calculate discount based on discountAmt and totalAmt
-    let discount = (discountAmt === 0) ? 0 : 100 - (totalAmt / discountAmt);
+    let discount = (discountAmt == 0) ? 0 : 100 - (totalAmt / discountAmt);
 
     // Retrieve DOM elements
     let customerNameElement = document.getElementById('customer_name');
