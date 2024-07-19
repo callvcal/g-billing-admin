@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Http\Controllers\BarcodeController;
+use App\Jobs\MenuJob;
 use Illuminate\Database\Eloquent\Model;
 
 class Menu extends Model
@@ -49,6 +50,7 @@ class Menu extends Model
     {
         static::created(function ($model) {
             (new BarcodeController())->genBarcode($model);
+            dispatch(new MenuJob(menu:$model));
         });
 
         static::deleted(function ($model) {

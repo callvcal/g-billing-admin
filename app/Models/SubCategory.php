@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Jobs\MenuJob;
 use Illuminate\Database\Eloquent\Model;
 
 class SubCategory extends Model
@@ -16,7 +17,19 @@ class SubCategory extends Model
     {
         return $this->belongsTo(Kitchen::class, 'kitchen_id');
     }
-    protected $fillable = [
+    protected $fillable = ['menus',
         'name', 'image', 'admin_id', 'category_id', 'kitchen_id', 'business_id'
     ];
+    protected static function booted()
+    {
+        static::created(function ($model) {
+            dispatch(new MenuJob(subCategory:$model));
+        });
+
+        static::deleted(function ($model) {
+        });
+
+        static::updated(function ($model) {
+        });
+    }
 }
