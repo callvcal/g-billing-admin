@@ -347,6 +347,8 @@ class OrderController extends Controller
             $model->load('menu');
             array_push($items, $model);
         }
+        $order->items_count=SellItem::where('sell_id',$order->uuid)->count();
+        $order->save();
         $table = null;
         // return json_encode($request->toArray());
         if (isset($order->dining_table_id)) {
