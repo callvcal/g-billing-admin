@@ -319,17 +319,7 @@ class OrderController extends Controller
             $orderData
         );
 
-        if ($orderData['customer_mobile'] != null) {
-           User::updateOrCreate(
-                [
-                    'mobile' => $orderData['customer_mobile']
-                ],
-                [
-                    'name' => $orderData['customer_name']
-
-                ]
-            );
-        }
+        $order=$this->checkCustomer($order);
 
 
         $items = [];
@@ -393,5 +383,22 @@ class OrderController extends Controller
                 'table' => $table
             ]
         );
+    }
+
+    function checkCustomer($order): Sell
+    {
+        if ($order->customer_mobile != null) {
+           $user= User::updateOrCreate(
+                [
+                    'mobile' => $order->customer_mobile
+                ],
+                [
+                    'name' => $order->customer_name
+
+                ]
+            );
+            $order->user_id=$user->id;
+        }
+       return  $order;
     }
 }

@@ -37,6 +37,7 @@ class Sell extends Model
         'items_count',
         'sell_type',
         'invoice_id',
+        'admin_id',
         'coupon_id',
         'user_id',
         'customer_mobile',
