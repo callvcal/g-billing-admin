@@ -8,6 +8,7 @@ use App\Models\DiningTable;
 use App\Models\OrderStatusUpdate;
 use App\Models\Sell;
 use App\Models\SellItem;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -317,6 +318,18 @@ class OrderController extends Controller
             ['uuid' =>  $orderData['uuid']],
             $orderData
         );
+
+        if ($orderData['customer_mobile'] != null) {
+           User::updateOrCreate(
+                [
+                    'mobile' => $orderData['customer_mobile']
+                ],
+                [
+                    'name' => $orderData['customer_name']
+
+                ]
+            );
+        }
 
 
         $items = [];

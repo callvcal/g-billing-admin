@@ -32,6 +32,7 @@ use App\Admin\Controllers\PageDesignerTextController;
 use App\Admin\Controllers\PageDesignerVideoController;
 use App\Admin\Controllers\PizzaKDSController;
 use App\Admin\Controllers\POSController;
+use App\Admin\Controllers\PremiumPermissionController;
 use App\Admin\Controllers\PremiumPlanController;
 use App\Admin\Controllers\PushNotificationController;
 use App\Admin\Controllers\RawMatrialController;
@@ -154,6 +155,8 @@ Route::group([
 
     $router->get('/load-subcategories', [ControllersHomeController::class, 'loadSubcategories']);
     $router->get('/loadBusinesses', [HomeController::class, 'loadBusinesses']);
+
+    $router->resource('premium-permissions', PremiumPermissionController::class);
 
 
 
