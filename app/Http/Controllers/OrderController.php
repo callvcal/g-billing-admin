@@ -326,7 +326,9 @@ class OrderController extends Controller
 
         $itemsJson = ($request->items);
         $itemUuids = array_filter(array_column($itemsJson, 'uuid')); // Collect UUIDs, filtering out null values
-
+        // SellItem::where('sell_id', $order->uuid)
+        // ->whereNotIn('uuid', $itemUuids)
+        // ->delete();
 
         foreach ($itemsJson as $key => $item) {
 
@@ -350,9 +352,7 @@ class OrderController extends Controller
             $model->load('menu');
             array_push($items, $model);
         }
-        SellItem::where('sell_id', $order->uuid)
-        ->whereNotIn('uuid', $itemUuids)
-        ->delete();
+       
         $order->items_count=SellItem::where('sell_id',$order->uuid)->count();
         $order->save();
         $table = null;
