@@ -350,11 +350,11 @@ class OrderController extends Controller
             $model->load('menu');
             array_push($items, $model);
         }
-        if(isset($order->uuid)){
-            SellItem::where('sell_id', $order->uuid)
-            ->whereNotIn('uuid', $itemUuids)
-            ->delete();
-        }
+        // if(isset($order->uuid)){
+        //     SellItem::where('sell_id', $order->uuid)
+        //     ->whereNotIn('uuid', $itemUuids)
+        //     ->delete();
+        // }
        
 
         $order->items_count=SellItem::where('sell_id',$order->uuid)->count();
