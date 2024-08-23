@@ -75,6 +75,7 @@ class HomeController extends Controller
                 'sales' => $this->query(Sell::class)->with(['user', 'address', 'items.address'])->whereDate('created_at', today())->where('business_id', $business_id)->get(),
                 'tables' => $this->query(DiningTable::class)->with('sell')->where('business_id', $business_id)->get(),
                 'units' => (Unit::all()),
+                'users' => AdminUser::where('business_id', $business_id)->get(),
                 'kitchens' => (Kitchen::where('business_id', $business_id)->get()),
                 'materials' => (Material::where('business_id', $business_id)->get()),
                 'earning_expense' => (OfflineTransaction::where('business_id', $business_id)->get()),

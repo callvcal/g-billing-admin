@@ -6,7 +6,7 @@ use OpenAdmin\Admin\Controllers\AdminController;
 use OpenAdmin\Admin\Form;
 use OpenAdmin\Admin\Grid;
 use OpenAdmin\Admin\Show;
-use \App\Models\PushNotification;
+use App\Models\PushNotification;
 use OpenAdmin\Admin\Facades\Admin;
 
 class PushNotificationController extends AdminController
