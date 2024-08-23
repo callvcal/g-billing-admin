@@ -72,7 +72,7 @@ class HomeController extends Controller
                 'recentProducts' => Menu::where('business_id', $business_id)->get(),
                 'settings' => Setting::find($business_id),
                 'app_settings' => Setting::find(1),
-                'sales' => $this->query(Sell::class)->with(['user', 'address', 'items.address'])->whereDate('created_at', today())->where('business_id', $business_id)->get(),
+                'sales' => $this->query(Sell::class)->with(['admin','user', 'address', 'items.address'])->whereDate('created_at', today())->where('business_id', $business_id)->get(),
                 'tables' => $this->query(DiningTable::class)->with('sell')->where('business_id', $business_id)->get(),
                 'units' => (Unit::all()),
                 'users' => AdminUser::where('business_id', $business_id)->get(),
