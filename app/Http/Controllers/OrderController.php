@@ -198,29 +198,34 @@ class OrderController extends Controller
 
     function getSales()
     {
-        if (isset(apache_request_headers()['isdriver']) && (apache_request_headers()['isdriver'] == 'true')) {
+        $headers = apache_request_headers();
+        $user = auth()->user();
 
-            $sales = Sell::with(['address', 'user'])->where('driver_id', auth()->user()->id);
-        } else
-        if (isset(apache_request_headers()['isbilling']) && (apache_request_headers()['isbilling'] == 'true')) {
-
-            $sales = Sell::with(['items','admin','user'])->where('business_id', auth()->user()->business_id);
+        if (isset($headers['isdriver']) && $headers['isdriver'] === 'true') {
+            $sales = Sell::with(['address', 'user'])
+                ->where('driver_id', $user->id);
+        } elseif (isset($headers['isbilling']) && $headers['isbilling'] === 'true') {
+            $sales = Sell::with(['items', 'admin', 'user'])
+                ->where('business_id', $user->business_id);
         } else {
-            $sales = Sell::with(['address', 'driver'])->where('user_id', auth()->user()->id);
+            $sales = Sell::with(['address', 'driver'])
+                ->where('user_id', $user->id);
         }
 
         $from = request('from');
         $to = request('to');
 
-        if (isset($from)) {
+        if (!empty($from) && !empty($to)) {
+            $sales = $sales->whereBetween('created_at', [$from, $to]);
+        } elseif (!empty($from)) {
             $sales = $sales->where('created_at', '>=', $from);
-        }
-        if (isset($to)) {
+        } elseif (!empty($to)) {
             $sales = $sales->where('created_at', '<=', $to);
         }
 
-        return ($sales->get());
+        return $sales->get();
     }
+
 
     public function getAllSales()
     {
@@ -319,14 +324,14 @@ class OrderController extends Controller
             $orderData
         );
 
-        $order=$this->checkCustomer($order);
+        $order = $this->checkCustomer($order);
 
 
         $items = [];
 
         $itemsJson = ($request->items);
         // $itemUuids = array_filter(array_column($itemsJson, 'uuid')); // Collect UUIDs, filtering out null values
-        $itemUuids =[];
+        $itemUuids = [];
         foreach ($itemsJson as $key => $item) {
 
             $orderItemData = [
@@ -350,14 +355,14 @@ class OrderController extends Controller
             array_push($items, $model);
             array_push($itemUuids, $model->uuid);
         }
-        if(isset($order->uuid)){
+        if (isset($order->uuid)) {
             SellItem::where('sell_id', $order->uuid)
-            ->whereNotIn('uuid', $itemUuids)
-            ->delete();
+                ->whereNotIn('uuid', $itemUuids)
+                ->delete();
         }
-       
 
-        $order->items_count=SellItem::where('sell_id',$order->uuid)->count();
+
+        $order->items_count = SellItem::where('sell_id', $order->uuid)->count();
         $order->save();
         $table = null;
         // return json_encode($request->toArray());
@@ -400,7 +405,7 @@ class OrderController extends Controller
     function checkCustomer($order): Sell
     {
         if ($order->customer_mobile != null) {
-           $user= User::updateOrCreate(
+            $user = User::updateOrCreate(
                 [
                     'mobile' => $order->customer_mobile
                 ],
@@ -409,8 +414,8 @@ class OrderController extends Controller
 
                 ]
             );
-            $order->user_id=$user->id;
+            $order->user_id = $user->id;
         }
-       return  $order;
+        return  $order;
     }
 }
