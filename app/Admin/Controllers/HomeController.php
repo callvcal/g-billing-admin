@@ -66,10 +66,8 @@ class HomeController extends AdminController
 
         $sells = $this->getSalesByDateRange($startDate, $endDate);
        
-        $vehicles = TblVehicle::selectRaw('location, COUNT(*) as total')
-        ->groupBy('location')
-        ->get();
-
+      
+        
 
         $transactions = $this->getOfflineTrnByDateRange($startDate, $endDate);
 
