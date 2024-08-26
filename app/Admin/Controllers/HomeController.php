@@ -43,11 +43,13 @@ class HomeController extends AdminController
 
         $admins = $this->admins();
         $users_total = 0;
+        $reports=[];
         if (isAdministrator()) {
             $users_total = User::count();
             $businesses=Business::count();
             $free_businesses=Business::where('plan','free')->count();
             $paid_businesses=Business::where('plan','!=','free')->count();
+            $reports=Sell::selectRaw('business_id,business_key, COUNT(*) as total')->groupBy('business_id')->get();
         }
 
         $activeOrders = $this->query(Sell::class)->whereDate('created_at', now()->toDateString())->whereNotIN('order_status', [
@@ -63,6 +65,10 @@ class HomeController extends AdminController
         $endDate = Carbon::now();
 
         $sells = $this->getSalesByDateRange($startDate, $endDate);
+       
+        $vehicles = TblVehicle::selectRaw('location, COUNT(*) as total')
+        ->groupBy('location')
+        ->get();
 
 
         $transactions = $this->getOfflineTrnByDateRange($startDate, $endDate);
@@ -118,7 +124,8 @@ class HomeController extends AdminController
             'statistics' => [
                 'sells' => $sells
             ],
-            'offlineTranctions' => $transactions
+            'offlineTranctions' => $transactions,
+            'reports'=>$reports
 
         ];
 

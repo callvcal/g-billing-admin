@@ -17,27 +17,31 @@
                 </div>
 
                 <div>
-                  <div class="card" style="width:400px; float: right;">
-                    <div class="row p-1 m-1" >
-                        <label class="col" for="summary">Choose Duration</label>
-                        <select class="col form-select" class="form-select" name="summary" id="summary">
-                            <option id="day" value="day">
-                                Last 24 hours</option>
-                            <option id="week" value="week">
-                                Last 7 days</option>
-                            <option id="month" value="month">
-                                Last 30 days</option>
-    
-                            <option id="6month" value="6month">
-                                Last 6 months</option>
-    
-    
-    
-                            <option id="all" value="all">
-                                Overall</option>
-                        </select>
-                       </div>
-                  </div>
+                    <div class="card" style="width:400px; float: right;">
+                        <div class="row p-1 m-1">
+                            <label class="col" for="summary">Choose Duration</label>
+                            <select class="col form-select" class="form-select" name="summary" id="summary">
+                                <option id="day" value="day">
+                                    Last 24 hours</option>
+                                <option id="week" value="week">
+                                    Last 7 days</option>
+                                <option id="month" value="month">
+                                    Last 30 days</option>
+
+                                <option id="6month" value="6month">
+                                    Last 6 months</option>
+
+
+
+                                <option id="all" value="all">
+                                    Overall</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="container">
+                        @include('reports', ['reports' => $data['reports']])
+                    </div>
+
                     <canvas id="myChart" width="400" height="400" style="max-height:400px;"></canvas>
                     <h5>Expense & Earning Analysis</h5>
                     <canvas id="offlineTransactions" width="400" height="400" style="max-height:400px;"></canvas>
@@ -82,7 +86,7 @@
             .catch(error => {
                 console.log(error);
             });
-        
+
     });
 
 

@@ -1,5 +1,5 @@
 <div class="container">
-    <h1>Vehicles</h1>
+    <h1>Reports</h1>
     <table class="table">
         <thead>
             <tr>
@@ -10,12 +10,11 @@
             </tr>
         </thead>
         <tbody>
-            @foreach ($vehicles as $vehicle)
+            @foreach ($reports as $item)
                 <tr>
-                    <td>{{ $vehicle->location }}</td>
-                    <td>{{ $vehicle->entry }}</td>
-                    <td>{{ $vehicle->departure }}</td>
-                    <td>{{ $vehicle->total }}</td>
+                    <td>{{ $item->business_id }}</td>
+                    <td>{{ $item->business_key }}</td>
+                    <td>{{ $item->total }}</td>
                 </tr>
             @endforeach
         </tbody>
