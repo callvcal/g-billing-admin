@@ -205,7 +205,7 @@ class OrderController extends Controller
             $sales = Sell::with(['address', 'user'])
                 ->where('driver_id', $user->id);
         } elseif (isset($headers['isbilling']) && $headers['isbilling'] === 'true') {
-            $sales = Sell::with(['items', 'admin', 'user'])
+            $sales = Sell::with(['items', 'admin.roles', 'user'])
                 ->where('business_id', $user->business_id);
         } else {
             $sales = Sell::with(['address', 'driver'])
