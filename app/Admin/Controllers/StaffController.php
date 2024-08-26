@@ -39,7 +39,16 @@ class StaffController extends AdminController
                 $query->where('slug','!=','Partner-Admin');
             });
         }
-
+        $grid->filter(function ($filter) {
+            $filter->disableIdFilter();
+            $filter->like('created_at')->date();
+            $filter->like('username');
+            $filter->like('name');
+            if(isAdministrator()){
+            $filter->like('business_key');
+            $filter->equal('business_id')->select(Business::all()->pluck('name','id'));
+            }
+        });
         $grid->column('id', 'ID')->sortable();
         $grid->column('username', trans('admin.username'));
         $grid->column('name', trans('admin.name'));
