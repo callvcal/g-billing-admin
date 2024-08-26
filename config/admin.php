@@ -135,9 +135,9 @@ return [
         'redirect_to' => 'auth/login',
 
         // Protect agaist brute force attacks
-        'throttle_logins'   => true,
+        'throttle_logins'   => false,
         'throttle_attempts' => 5,
-        'throttle_timeout'  => 900, // in seconds
+        'throttle_timeout'  => 60, // in seconds
 
         // The URIs that should be excluded from authorization.
         'excepts' => [
