@@ -49,7 +49,7 @@ class HomeController extends AdminController
             $businesses=Business::count();
             $free_businesses=Business::where('plan','free')->count();
             $paid_businesses=Business::where('plan','!=','free')->count();
-            $reports=Sell::selectRaw('business_id, COUNT(*) as total')->groupBy('business_id')->get();
+            $reports=Sell::with('business')->selectRaw('business_id, COUNT(*) as total')->groupBy('business_id')->get();
         }
 
         $activeOrders = $this->query(Sell::class)->whereDate('created_at', now()->toDateString())->whereNotIN('order_status', [

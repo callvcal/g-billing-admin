@@ -69,6 +69,10 @@ class Sell extends Model
     {
         return $this->belongsTo(AdminUser::class, 'admin_id');
     }
+    public function business()
+    {
+        return $this->belongsTo(Business::class, 'business_id');
+    }
 
     public function billPrint()
     {
