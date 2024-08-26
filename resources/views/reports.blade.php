@@ -13,7 +13,6 @@
             @foreach ($reports as $item)
                 <tr>
                     <td>{{ $item->business_id }}</td>
-                    <td>{{ $item->business_key }}</td>
                     <td>{{ $item->total }}</td>
                 </tr>
             @endforeach
