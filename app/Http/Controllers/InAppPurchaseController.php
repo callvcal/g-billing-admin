@@ -42,11 +42,11 @@ class InAppPurchaseController extends Controller
 
         $plan = $request->purchaseDetails['productID'];
 
-        if ($business->plan == $plan) {
-            return response([
-                'message' => 'already purchased', 302
-            ]);
-        }
+        // if ($business->plan == $plan) {
+        //     return response([
+        //         'message' => 'already purchased'
+        //     ],302);
+        // }
 
         $expiry_date = Carbon::now();
         switch ($plan) {
