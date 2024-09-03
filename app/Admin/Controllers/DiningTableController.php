@@ -2,6 +2,7 @@
 
 namespace App\Admin\Controllers;
 
+use App\Models\Business;
 use OpenAdmin\Admin\Controllers\AdminController;
 use OpenAdmin\Admin\Form;
 use OpenAdmin\Admin\Grid;
@@ -27,7 +28,16 @@ class DiningTableController extends AdminController
     {
         $grid = new Grid(new DiningTable());
         $grid->model()->orderBy('updated_at', "desc");
-        //(new RelationController())->gridActions($grid);
+        $grid->expandFilter();
+
+        $grid->filter(function ($filter) {
+            $filter->disableIdFilter();
+            $filter->like('created_at')->date();
+            if(isAdministrator()){
+                $filter->equal('business_id')->select(Business::all()->pluck('name','id'));
+            }
+        });
+
         $grid->quickCreate(function (Grid\Tools\QuickCreate $form) {
             $form->text('name', __('Name'));
             $form->number('capacity', __('Capacity'));

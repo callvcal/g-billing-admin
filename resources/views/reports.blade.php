@@ -3,10 +3,10 @@
     <table class="table">
         <thead>
             <tr>
-                <th>Location</th>
-                <th>Entry</th>
-                <th>Departure</th>
-                <th>Total</th>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Plan</th>
+                <th>Sells</th>
             </tr>
         </thead>
         <tbody>
