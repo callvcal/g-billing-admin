@@ -34,10 +34,11 @@ class BusinessController extends Controller
         ]);
         $business = $request->business_key;
 
-        $businesss = Business::where('name', $business)->get();
+        $businesss = Business::where('name','like', "$business%")->get();
         if (count($businesss) != 0) {
             $business = $business .  count($businesss);
         }
+
         $user->business_key = $business;
         $user->username = 'admin@' . $business;
         $business = Business::create(
