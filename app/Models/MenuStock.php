@@ -12,6 +12,7 @@ class MenuStock extends Model
         'note',
         'type',
         'stock',
+        'sell_id',
         'datetime',
         'admin_id',
         'menu_id',

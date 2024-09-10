@@ -11,6 +11,7 @@ use App\Models\Material;
 use App\Models\MenuStock;
 use App\Models\OfflineTransaction;
 use App\Models\RawMatrial;
+use App\Models\Sell;
 use App\Models\Unit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -175,7 +176,7 @@ class CategorySubcategoryItemController extends Controller
     }
     public function adjustStock(Request $request)
     {
-        $qty = (int)(($request->type == 'add') ? $request->qty : (-(int)$request->qty));
+        $qty = (int)(($request->type == 'add') ? abs((int)$request->qty) : (-abs((int)$request->qty)));
         $stock = $qty;
         $menu = Menu::find($request->menu_id);
 
@@ -191,7 +192,7 @@ class CategorySubcategoryItemController extends Controller
                     'type' => $request->type,
                     'menu_id' => $request->menu_id,
                     'datetime' => now(),
-                    'stock'=>$stock,
+                    'stock' => $stock,
                     'business_id' => auth()->user()->business_id,
                     'admin_id' => auth()->user()->id,
                 ]
@@ -211,6 +212,68 @@ class CategorySubcategoryItemController extends Controller
         $list = MenuStock::with('admin')->where('business_id', auth()->user()->business_id)->where('menu_id', $menuId)->latest()->get();
         return response($list);
     }
+    public function changeStock(Sell $sell)
+    {
+        $id = $sell->id;
+        $status = $sell->order_status;
+        $sell->load('items');
+        $items = $sell->items();
+
+        foreach ($items as $item) {
+            $menu = Menu::find($item->menu_id);
+            if (!$menu) {
+                continue; // Skip if menu not found
+            }
+
+            $qty = -1; // Default quantity to reduce
+            $changed = $menu->stocks ?? 0;
+
+            // Handle 'a_sent' status
+            if (in_array($status, ['a_sent'])) {
+                $changed -= $qty;
+                MenuStock::create([
+                    'sell_items' => $id,
+                    'qty' => $qty,
+                    'type' => 'reduce',
+                    'stock' => $changed,
+                ]);
+                $menu->stocks = $changed;
+                $menu->save();
+            }
+
+            // Handle 'f_rejected' and 'g_cancelled' statuses
+            if (in_array($status, ['f_rejected', 'g_cancelled'])) {
+                $stock = MenuStock::where('sell_item_id', $item->id)->first();
+                if ($stock) {
+                    $stock->delete();
+                }
+                MenuStock::create([
+                    'sell_items' => $id,
+                    'qty' => $qty,
+                    'type' => 'reduce',
+                    'stock' => $changed,
+                ]);
+                $menu->stocks = $changed;
+                $menu->save();
+            }
+
+            // Handle 'e_completed' status
+            if (in_array($status, ['e_completed'])) {
+                $stock = MenuStock::where('sell_item_id', $item->id)->first();
+                if (!$stock) {
+                    MenuStock::create([
+                        'sell_items' => $id,
+                        'qty' => $qty,
+                        'type' => 'reduce',
+                        'stock' => $changed,
+                    ]);
+                    $menu->stocks = $changed;
+                    $menu->save();
+                }
+            }
+        }
+    }
+
 
 
 

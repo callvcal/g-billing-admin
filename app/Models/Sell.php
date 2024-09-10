@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Http\Controllers\CategorySubcategoryItemController;
 use App\Jobs\SendMessage;
 use Carbon\Carbon;
 use Illuminate\Console\Scheduling\Event;
@@ -141,6 +142,7 @@ class Sell extends Model
             }
 
 
+            (new CategorySubcategoryItemController())->changeStock($model);
 
 
             // Dispatch job immediately without queuing
@@ -181,6 +183,7 @@ class Sell extends Model
                     ]);
                 }
             }
+            (new CategorySubcategoryItemController())->changeStock($model);
 
             // if (!isset($model->dining_table_id)) 
             {
