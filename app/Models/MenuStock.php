@@ -17,6 +17,8 @@ class MenuStock extends Model
         'admin_id',
         'menu_id',
         'business_id',
+        'sell_item_id',
+        
     ];
     function business()  {
         return $this->belongsTo(Business::class,'business_id');

@@ -12,6 +12,7 @@ use App\Models\MenuStock;
 use App\Models\OfflineTransaction;
 use App\Models\RawMatrial;
 use App\Models\Sell;
+use App\Models\SellItem;
 use App\Models\Unit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -212,12 +213,35 @@ class CategorySubcategoryItemController extends Controller
         $list = MenuStock::with('admin')->where('business_id', auth()->user()->business_id)->where('menu_id', $menuId)->latest()->get();
         return response($list);
     }
+    public function updateMenuStock($item, $menu, $sell, $qty, $type, $note)
+    {
+        $changed = ($menu->stocks ?? 0) + (($type == 'add') ? $qty : -$qty);
+
+        // Create or update MenuStock record
+        MenuStock::create([
+            'sell_item_id' => $item->id,
+            'qty' => $qty,
+            'sell_id' => $sell->id,
+            'type' => $type,
+            'menu_id' => $menu->id,
+            'stock' => $changed,
+            'note' => $note,
+            'datetime' => now(),
+            'admin_id' => $sell->admin_id,
+            'business_id' => $sell->business_id,
+        ]);
+
+        // Update menu stock
+        $menu->stocks = $changed;
+        $menu->save();
+    }
     public function changeStock(Sell $sell)
     {
         $id = $sell->id;
         $status = $sell->order_status;
         $sell->load('items');
-        $items = $sell->items();
+        $items = $sell->items;
+        Log::channel('callvcal')->info('menus: ' . json_encode($items));
 
         foreach ($items as $item) {
             $menu = Menu::find($item->menu_id);
@@ -225,55 +249,61 @@ class CategorySubcategoryItemController extends Controller
                 continue; // Skip if menu not found
             }
 
-            $qty = -1; // Default quantity to reduce
-            $changed = $menu->stocks ?? 0;
+            $qty = $item->qty; // Default quantity to reduce
 
             // Handle 'a_sent' status
             if (in_array($status, ['a_sent'])) {
-                $changed -= $qty;
-                MenuStock::create([
-                    'sell_items' => $id,
-                    'qty' => $qty,
-                    'type' => 'reduce',
-                    'stock' => $changed,
-                ]);
-                $menu->stocks = $changed;
-                $menu->save();
+                $this->updateMenuStock($item, $menu, $sell, $qty, 'reduce', 'Order is created');
             }
 
             // Handle 'f_rejected' and 'g_cancelled' statuses
             if (in_array($status, ['f_rejected', 'g_cancelled'])) {
-                $stock = MenuStock::where('sell_item_id', $item->id)->first();
-                if ($stock) {
-                    $stock->delete();
-                }
-                MenuStock::create([
-                    'sell_items' => $id,
-                    'qty' => $qty,
-                    'type' => 'reduce',
-                    'stock' => $changed,
-                ]);
-                $menu->stocks = $changed;
-                $menu->save();
+                $this->updateMenuStock($item, $menu, $sell, $qty, 'add', 'Order is cancelled/rejected');
             }
 
             // Handle 'e_completed' status
             if (in_array($status, ['e_completed'])) {
-                $stock = MenuStock::where('sell_item_id', $item->id)->first();
+                $stock = MenuStock::where('sell_item_id', $item->id)->where('type', 'reduce')->first();
                 if (!$stock) {
-                    MenuStock::create([
-                        'sell_items' => $id,
-                        'qty' => $qty,
-                        'type' => 'reduce',
-                        'stock' => $changed,
-                    ]);
-                    $menu->stocks = $changed;
-                    $menu->save();
+                    $this->updateMenuStock($item, $menu, $sell, -$item->qty, 'reduce', 'Order is completed');
                 }
             }
         }
     }
+    public function changeStockSellItem(SellItem $sellItem)
+    {
+        $id = $sellItem->sell_id;
+        $mSell = Sell::where('uuid', $id)->first();
+        if (!$mSell) {
+            return;
+        }
+        $status = $mSell->order_status;
 
+        $menu = Menu::find($sellItem->menu_id);
+        if (!$menu) {
+            return; // Skip if menu not found
+        }
+
+        $qty = $sellItem->qty;
+
+        // Handle 'a_sent' status
+        if (in_array($status, ['a_sent'])) {
+            $this->updateMenuStock($sellItem, $menu, $mSell, $qty, 'reduce', 'Order is created');
+        }
+
+        // Handle 'f_rejected' and 'g_cancelled' statuses
+        if (in_array($status, ['f_rejected', 'g_cancelled'])) {
+            $this->updateMenuStock($sellItem, $menu, $mSell, $qty, 'add', 'Order is cancelled/rejected');
+        }
+
+        // Handle 'e_completed' status
+        if (in_array($status, ['e_completed'])) {
+            $stock = MenuStock::where('sell_item_id', $sellItem->id)->where('type', 'reduce')->first();
+            if (!$stock) {
+                $this->updateMenuStock($sellItem, $menu, $mSell, -$qty, 'reduce', 'Order is completed');
+            }
+        }
+    }
 
 
 

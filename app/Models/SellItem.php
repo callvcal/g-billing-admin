@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Events\ReloadEvent;
+use App\Http\Controllers\CategorySubcategoryItemController;
 use Illuminate\Database\Eloquent\Model;
 
 class SellItem extends Model
@@ -43,6 +44,7 @@ class SellItem extends Model
     protected static function booted()
     {
         static::created(function ($model) {
+            (new CategorySubcategoryItemController())->changeStockSellItem($model);
         });
         static::updated(function ($model) {
             // event(new ReloadEvent($model->toArray()));

@@ -142,7 +142,6 @@ class Sell extends Model
             }
 
 
-            (new CategorySubcategoryItemController())->changeStock($model);
 
 
             // Dispatch job immediately without queuing

@@ -14,7 +14,8 @@ return new class extends Migration
         Schema::table('menu_stocks', function (Blueprint $table) {
             $table->unsignedBigInteger('sell_item_id')->nullable();
             $table->foreign('sell_item_id')->references('id')->on('sell_items')->nullOnDelete();
-
+            $table->unsignedBigInteger('sell_id')->nullable();
+            $table->foreign('sell_id')->references('id')->on('sells')->nullOnDelete();
         });
     }
 

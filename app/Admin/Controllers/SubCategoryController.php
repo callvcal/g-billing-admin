@@ -2,6 +2,7 @@
 
 namespace App\Admin\Controllers;
 
+use App\Models\Business;
 use App\Models\Category;
 use App\Models\Kitchen;
 use OpenAdmin\Admin\Controllers\AdminController;
@@ -31,12 +32,21 @@ class SubCategoryController extends AdminController
         $grid->enableHotKeys();
         //(new RelationController())->gridActions($grid);
         
-        
-        $grid->column('id', __('Id'));
-        $grid->column('name', __('Name'));
+        $grid->filter(function ($filter) {
+            
+            $filter->disableIdFilter();
+            
+            $filter->like('name', 'name');
+            if(isAdministrator()){
+                $filter->equal('business_id')->select(Business::all()->pluck('name','id'));
+            }
+            
+        });
+        $grid->column('id', __('Id'))->sortable();
+        $grid->column('name', __('Name'))->sortable();
         $grid->column('image', __('Image'))->image("",64,64);
-        $grid->column('admin_id', __('Admin id'));
-        $grid->column('created_at', __('Created at'));
+        $grid->column('admin_id', __('Admin id'))->sortable();
+        $grid->column('created_at', __('Created at'))->sortable();
         $grid->column('updated_at', __('Updated at'));
 
         return $grid;
