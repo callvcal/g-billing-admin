@@ -2,6 +2,7 @@
 
 namespace App\Admin\Controllers;
 
+use App\Models\Business;
 use App\Models\Category;
 use OpenAdmin\Admin\Controllers\AdminController;
 use OpenAdmin\Admin\Form;
@@ -47,7 +48,9 @@ class MenuController extends AdminController
             
             $filter->like('name', 'name');
             $filter->equal('subcategory_id')->select((new HomeController())->query(SubCategory::class)->get()->pluck('name','id'));
-
+            if(isAdministrator()){
+                $filter->equal('business_id')->select(Business::all()->pluck('name','id'));
+            }
             
         });
 
