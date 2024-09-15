@@ -34,10 +34,16 @@ class BusinessController extends Controller
         ]);
         $business = $request->business_key;
 
-        $businesss = Business::where('name','like', "$business%")->get();
-        if (count($businesss) != 0) {
-            $business = $business .  count($businesss);
-        }
+        do {
+            // Query the database to check for existing business names that match
+            $existingBusiness = Business::where('name', 'like', "$business%")->get();
+        
+            // If there are existing businesses, append the count to make the name unique
+            if ($existingBusiness->isNotEmpty()) {
+                $business = $business . $existingBusiness->count();
+            }
+        } while ($existingBusiness->isNotEmpty());  // Continue the loop if there is a match
+        
 
         $user->business_key = $business;
         $user->username = 'admin@' . $business;
