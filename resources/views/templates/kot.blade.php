@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>Eatinsta POS Food Items Bill</title>
+    <title>Namak POS Food Items Bill</title>
     <style>
         @page {
             size: 78mm {{ $height }}mm;

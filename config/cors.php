@@ -19,7 +19,7 @@ return [
 
     'allowed_methods' => ['*'],
 
-    'allowed_origins' => ['https://dashboard.eatinsta.callvcal.com'],
+    'allowed_origins' => ['https://dashboard.namak.callvcal.com'],
 
     'allowed_origins_patterns' => [],
 

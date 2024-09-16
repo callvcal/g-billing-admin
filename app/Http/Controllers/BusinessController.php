@@ -105,7 +105,7 @@ class BusinessController extends Controller
         try {
             if (!isset($userModel->image)) {
                 if (isset($user['image'])) {
-                    $dist = 'eatinsta/images';
+                    $dist = 'namak/images';
                     $name = time() . '_' . 'avatar.png';
                     $path = $dist . '/' . $name;
                     Storage::disk('s3')->put("$dist/$name", file_get_contents($user['image']));
@@ -151,7 +151,7 @@ class BusinessController extends Controller
                 $this->deleteFilePath($model, $key);
             } catch (Exception $e) {
             }
-            $dist = "eatinsta/$dir";
+            $dist = "namak/$dir";
             $name = time() . '_' . $image->getClientOriginalName();
 
 

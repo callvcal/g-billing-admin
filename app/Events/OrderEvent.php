@@ -19,7 +19,7 @@ class OrderEvent implements ShouldBroadcastNow
 
   public function broadcastOn()
   {
-      return ['eatinsta'];
+      return ['namak'];
   }
 
   public function broadcastAs()

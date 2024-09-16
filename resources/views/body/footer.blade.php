@@ -14,7 +14,7 @@
          
 
         <a href="" class="logo">
-       <img src="{{ asset('img/icon.png') }}" alt="Eatinsta Logo" style="width: 150px; height: auto;">
+       <img src="{{ asset('img/icon.png') }}" alt="Namak Logo" style="width: 150px; height: auto;">
         </a>
  
 
@@ -37,13 +37,13 @@
             </li>
 
             <li>
-              <a href="https://www.instagram.com/im_Eatinsta/" class="social-link">
+              <a href="https://www.instagram.com/im_Namak/" class="social-link">
                 <ion-icon name="logo-instagram"></ion-icon>
               </a>
             </li>
 
             <li>
-              <a href="https://www.instagram.com/im_Eatinsta/" class="social-link">
+              <a href="https://www.instagram.com/im_Namak/" class="social-link">
                 <ion-icon name="logo-pinterest"></ion-icon>
               </a>
             </li>
@@ -68,7 +68,7 @@
           </li>
 
           <li>
-            <p class="footer-list-item">Eatinsta@gmail.com</p>
+            <p class="footer-list-item">Namak@gmail.com</p>
           </li>
 
           <li>
@@ -114,7 +114,7 @@
         <ul class="footer-list">
 
 <li>
-  <p class="footer-list-title">Eatinsta Pos Billing </p>
+  <p class="footer-list-title">Namak Pos Billing </p>
 </li>
 
 

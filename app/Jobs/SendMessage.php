@@ -78,7 +78,7 @@ class SendMessage implements ShouldQueue
                 // $pusher = new Pusher(auth_key: env('PUSHER_APP_KEY'), secret: env('PUSHER_APP_SECRET'), app_id: env('PUSHER_APP_ID'), options: [
                 //     'cluster' => env('PUSHER_APP_CLUSTER')
                 // ]);
-                // $pusher->trigger('eatinsta', event: 'orders', data: [
+                // $pusher->trigger('namak', event: 'orders', data: [
                 //     'message' => $data['body'],
                 //     'body' => $data['body'],
                 //     'order_id' => $order->id,

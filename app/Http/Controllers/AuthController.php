@@ -723,7 +723,7 @@ class AuthController extends Controller
         try {
             if (!isset($userModel->image)) {
                 if (isset($user['image'])) {
-                    $dist = 'eatinsta/images';
+                    $dist = 'namak/images';
                     $name = time() . '_' . 'avatar.png';
                     $path = $dist . '/' . $name;
                     Storage::disk('s3')->put("$dist/$name", file_get_contents($user['image']));

@@ -27,7 +27,7 @@ class RazorPayController extends Controller
     // protected $razorpayKey = 'rzp_test_zy6lT4IBQKa0Sp';
     protected $keySecrete = 'APmk2gvvwJGMmGKXSlhc9MPg';
     // protected $keySecrete = 'scnsflKLMAKKjsI89C8u9q44';
-    protected $callbackUrl = 'https://eatinsta.callvcal.com/api/callback';
+    protected $callbackUrl = 'https://namak.callvcal.com/api/callback';
 
 
 

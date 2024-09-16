@@ -3,8 +3,8 @@ var pusher = new Pusher('993fac7a22d18eba2fa6', {
   cluster: 'ap2'
 });
 
-// Subscribe to the 'eatinsta' channel
-var channel = pusher.subscribe('eatinsta');
+// Subscribe to the 'namak' channel
+var channel = pusher.subscribe('namak');
 
 function play() {
   var audio = document.getElementById('ringtone');

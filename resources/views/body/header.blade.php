@@ -7,7 +7,7 @@
 
 
            <a href="/" class="logo">
-               <img src="{{ asset('img/icon.png') }}" alt="Eatinsta" style="width: 100px; height: auto;">
+               <img src="{{ asset('img/icon.png') }}" alt="Namak" style="width: 100px; height: auto;">
            </a>
 
            <nav class="navbar" data-navbar>
@@ -18,15 +18,15 @@
                    </li>
 
                    <li class="nav-item">
-                       <a href="https://play.google.com/store/apps/details?id=org.callvcal.eatinsta.billing"
+                       <a href="https://play.google.com/store/apps/details?id=org.callvcal.namak.billing"
                            class="navbar-link" data-nav-link>Android</a>
                    </li>
                    <li class="nav-item">
-                       <a href="https://apps.apple.com/us/app/eatinsta/id6504708393" class="navbar-link"
+                       <a href="https://apps.apple.com/us/app/namak/id6504708393" class="navbar-link"
                            data-nav-link>IOS</a>
                    </li>
                    <li class="nav-item">
-                       <a href="https://apps.apple.com/us/app/eatinsta/id6504708393" class="navbar-link"
+                       <a href="https://apps.apple.com/us/app/namak/id6504708393" class="navbar-link"
                            data-nav-link>MacOS</a>
                    </li>
                    <li class="nav-item">

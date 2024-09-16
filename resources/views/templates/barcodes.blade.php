@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>Eatinsta POS Barcodes</title>
+    <title>Namak POS Barcodes</title>
     <link rel="preload" href="https://fonts.googleapis.com/css?family=Libre+Barcode+39" as="style">
     <link href="https://fonts.googleapis.com/css?family=Libre+Barcode+39" rel="stylesheet">
     <style>

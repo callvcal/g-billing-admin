@@ -102,9 +102,9 @@
               ><bdt class="question"
                 ><a
                   data-custom-class="link"
-                  href="https://eatinsta.callvcal.com"
+                  href="https://namak.callvcal.com"
                   target="_blank"
-                  >https://eatinsta.callvcal.com</a
+                  >https://namak.callvcal.com</a
                 ></bdt
               ></span
             ><span style="font-size: 15px;"
@@ -147,7 +147,7 @@
             >Download and use<bdt class="block-component"></bdt> our mobile
             application<bdt class="block-component"></bdt> (<bdt
               class="question"
-              >Eatinsta)<span style="color: #595959; font-size: 15px;"
+              >Namak)<span style="color: #595959; font-size: 15px;"
                 ><span style="color: #595959; font-size: 15px;"
                   ><span data-custom-class="body_text"
                     ><span style="font-size: 15px;"
@@ -176,7 +176,7 @@
                       ><bdt class="statement-end-if-in-editor"
                         ><bdt class="block-component"></bdt> our Facebook
                         application<bdt class="block-component">&nbsp;</bdt
-                        >(<bdt class="question">Eatinsta)</bdt
+                        >(<bdt class="question">Namak)</bdt
                         ><bdt class="statement-end-if-in-editor">,</bdt
                         ><bdt class="statement-end-if-in-editor">
                           or any other application of ours that links to this
@@ -228,7 +228,7 @@
           you do not agree with our policies and practices, please do not use
           our Services.<bdt class="block-component"></bdt> If you still have any
           questions or concerns, please contact us at
-          <bdt class="question">info@eatinsta.callvcal.com</bdt>.</span
+          <bdt class="question">info@namak.callvcal.com</bdt>.</span
         ></span
       ></span
     >
@@ -2842,7 +2842,7 @@
   <span data-custom-class="body_text"
     ><span style="font-size: 15px;"
       >If you have questions or comments about your privacy rights, you may
-      email us at <bdt class="question">info@eatinsta.callvcal.com</bdt>.</span
+      email us at <bdt class="question">info@namak.callvcal.com</bdt>.</span
     ></span
   ><bdt class="statement-end-if-in-editor"
     ><span style="font-size: 15px;"
@@ -2975,7 +2975,7 @@
           ><span data-custom-class="body_text"
             ><bdt class="block-component"
               ><bdt class="block-component"></bdt></bdt
-            >email us at <bdt class="question">info@eatinsta.callvcal.com or&nbsp;</bdt
+            >email us at <bdt class="question">info@namak.callvcal.com or&nbsp;</bdt
             ><bdt class="statement-end-if-in-editor"
               ><bdt class="block-component"></bdt></bdt></span></span
         ><span style="color: #595959; font-size: 15px;"

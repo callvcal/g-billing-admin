@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="{{ asset('public/img/logo.jpg') }}" type="image/x-icon">
-    <title>EatInsta POS Billing - Elevate Your Business, Simplify Your Life</title>
+    <title>namak POS Billing - Elevate Your Business, Simplify Your Life</title>
 
     <!--
     - favicon
@@ -69,7 +69,7 @@
 
                     <div class="hero-content">
 
-                        <p class="hero-subtitle" style="color: #ff5722; font:poppin; ">EATINSTA Pos Billing</p>
+                        <p class="hero-subtitle" style="color: #ff5722; font:poppin; ">namak Pos Billing</p>
 
                         <h2 class="h1 hero-title" style="color: white;">Get Desktop Billing Software</h2>
 
@@ -107,14 +107,14 @@
 
 
                         <h2 class="h2 section-title" style=" color: #333; margin-bottom: 10px;">
-                        EatInsta POS Billing
+                        namak POS Billing
 
                             <span class="span" style="color: #ff5722;">Now Available on Desktop!</span>
                         </h2>
 
                         <p class="section-text" style=" color: #666;">
 
-                        Streamline your restaurant management with EatInsta's powerful desktop application. Enjoy quick billing,
+                        Streamline your restaurant management with namak's powerful desktop application. Enjoy quick billing,
                          inventory management, and seamless integration, all from the convenience of your desktop.t management.
 
                         </p>

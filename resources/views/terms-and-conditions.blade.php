@@ -1,9 +1,9 @@
 <p>Terms and Conditions</p>
 <p><br /></p>
 <p>
-  Welcome to Eatinsta! Please read these Terms and Conditions ("Terms")
+  Welcome to Namak! Please read these Terms and Conditions ("Terms")
   carefully before using our mobile application ("App") and website ("Website")
-  operated by Eatinsta, a restaurant providing food home delivery, dine-in, and
+  operated by Namak, a restaurant providing food home delivery, dine-in, and
   take-away facilities. By accessing or using our App and Website, you agree to
   be bound by these Terms. If you disagree with any part of the terms, then you
   may not access the App or Website.
@@ -20,7 +20,7 @@
 <p>2. Use of Services</p>
 <p><br /></p>
 <p>
-  a. Eatinsta provides food home delivery, dine-in, and take-away facilities for
+  a. Namak provides food home delivery, dine-in, and take-away facilities for
   customers.
 </p>
 <p><br /></p>
@@ -50,7 +50,7 @@
 </p>
 <p><br /></p>
 <p>
-  d. All payments are processed securely. Eatinsta does not store your payment
+  d. All payments are processed securely. Namak does not store your payment
   information.
 </p>
 <p><br /></p>
@@ -61,7 +61,7 @@
 </p>
 <p><br /></p>
 <p>
-  b. Eatinsta is not responsible for delays caused by unforeseen circumstances.
+  b. Namak is not responsible for delays caused by unforeseen circumstances.
 </p>
 <p><br /></p>
 <p>
@@ -72,7 +72,7 @@
 <p>5. Refunds, Cancellations, and Return Policy</p>
 <p><br /></p>
 <p>
-  a. Refunds or cancellations may be subject to Eatinsta's discretion and
+  a. Refunds or cancellations may be subject to Namak's discretion and
   policies.
 </p>
 <p><br /></p>
@@ -88,12 +88,12 @@
 <p><br /></p>
 <p>
   a. The content, logos, and trademarks displayed on the App and Website are the
-  property of Eatinsta and are protected by copyright and other laws.
+  property of Namak and are protected by copyright and other laws.
 </p>
 <p><br /></p>
 <p>
   b. You may not use, reproduce, modify, or distribute any content from the App
-  or Website without prior written consent from Eatinsta.
+  or Website without prior written consent from Namak.
 </p>
 <p><br /></p>
 <p>7. Privacy Policy</p>
@@ -111,7 +111,7 @@
 </p>
 <p><br /></p>
 <p>- Phone: 9102424888, 9102524888</p>
-<p>- Email: eatinsta@gmail.com</p>
+<p>- Email: namak@gmail.com</p>
 <p>
   - Address: Gayatri Palace, Adarsh Colony Chowk, West Patel Nagar, Near Dakshin
   Bihar Gramin Bank, Patna-800020, Bihar.
@@ -120,12 +120,12 @@
 <p>9. Changes to Terms</p>
 <p><br /></p>
 <p>
-  Eatinsta reserves the right to update or modify these Terms at any time
+  Namak reserves the right to update or modify these Terms at any time
   without prior notice. Continued use of the App and Website after any changes
   constitutes your acceptance of the new Terms.
 </p>
 <p><br /></p>
 <p>
-  Thank you for choosing Eatinsta! We hope you enjoy your dining experience with
+  Thank you for choosing Namak! We hope you enjoy your dining experience with
   us.
 </p>
