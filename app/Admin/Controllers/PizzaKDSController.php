@@ -65,7 +65,6 @@ class PizzaKDSController extends AdminController
         // ], 'danger');
         $grid->disableCreateButton();
         $grid->disableFilter();
-        $grid->disablePagination();
         $grid->disableExport();
         $grid->disableActions();
         $grid->disableColumnSelector();
