@@ -33,7 +33,7 @@ Route::post('/refresh', function (Request $request) {
 });
 
 Route::get('/force', function (Request $request) {
-    exec('/usr/bin/git pull origin main 2>&1', $output);
+    exec('/usr/bin/git pull origin single_shop 2>&1', $output);
     echo json_encode($output);
     return response(['message'=>"success"]);
 });
