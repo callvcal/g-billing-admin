@@ -18,7 +18,6 @@ use PgSql\Lob;
 
 class AuthController extends Controller
 {
-    public $apiKey = "AIzaSyDOIuUFLJ_FsT6J-bwI85N8mISLTVSHbxo";
 
     protected $emailOtpExpiryInMinutes = 180;
 
@@ -655,9 +654,12 @@ class AuthController extends Controller
 
 
 
-    protected $secret1 = 'A8@C1#03&56%14^ED@BE(EC)E1-A2+69=5F#142%5TD8hBCvA2@8A%33#41';
-    protected $secret2 = '#1C@D5@48@65@#2#2@B7@7#2@79@6E@4F@30@76@C1@ED@59@5D@E7@54@C4@ED@#21@CA@BC@DD@69@D3@A7@9A@C9@60@7#2@#21#';
-
+   
+    
+    protected $secret1 =
+    'A8@C1#03&56%14^ED@BE(EC)E1-A2+69=5F#1fxdghbvgTD8hBCvA2@8A%33#41';
+    protected $secret2  =
+    '#1C@D5@48@65@#2#2@B7@7#2@79@6E@bvhjnbvh@C1@ED@59@5D@E7@54@C4@ED@#21@CA@BC@DD@69@D3@A7@9A@C9@60@7#2@#21#';
 
 
     public function invalid($fields)

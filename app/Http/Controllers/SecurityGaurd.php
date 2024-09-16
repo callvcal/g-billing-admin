@@ -19,7 +19,7 @@ class SecurityGaurd extends Controller
 
     public function password()
     {
-        return '@3456025AQ%71GbghMi*8N46w%i^j7Gn^2dsdfghcu^w#p&';
+        return '@345602hjhhbb%71GbghMi*8N46w%i^j7Gn^2dsdfghcu^w#p&';
     }
 
     public function check()
