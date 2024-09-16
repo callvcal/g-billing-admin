@@ -48,9 +48,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::get('/', function () {
-    return view('welcome');
-});
+
 
 Route::get('/about', function () {
     return view('body.about');
