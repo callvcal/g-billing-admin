@@ -29,7 +29,7 @@ class SettingController extends Controller
     {
         $settings = Setting::updateOrCreate(
             [
-                'id' => auth()->user()->business_id,
+                'id' => 1,
             ],
 
             [

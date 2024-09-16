@@ -68,7 +68,7 @@ class UserCouponController extends AdminController
         $form->number('user_id', __('User id'));
         $form->number('coupon_id', __('Coupon id'));
         $form->hidden('admin_id', __('Admin id'))->default(Admin::user()->id);
-        $form->hidden('business_id', __('Business id'))->default(Admin::user()->business_id);
+        
         return $form;
     }
 }

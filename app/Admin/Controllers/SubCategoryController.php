@@ -37,9 +37,7 @@ class SubCategoryController extends AdminController
             $filter->disableIdFilter();
             
             $filter->like('name', 'name');
-            if(isAdministrator()){
-                $filter->equal('business_id')->select(Business::all()->pluck('name','id'));
-            }
+
             
         });
         $grid->column('id', __('Id'))->sortable();
@@ -84,7 +82,7 @@ class SubCategoryController extends AdminController
         $form->select('category_id', __('Select Category'))->options((new HomeController())->query(Category::class)->get()->pluck("name","id"));
         $form->select('kitchen_id', __('Select Kitchen'))->options((new HomeController())->query(Kitchen::class)->get()->pluck("name","id"));
         $form->hidden('admin_id', __('Admin id'))->default(Admin::user()->id);
-        $form->hidden('business_id', __('Business id'))->default(Admin::user()->business_id);
+        
         return $form;
     }
 }

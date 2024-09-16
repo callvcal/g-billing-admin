@@ -59,35 +59,31 @@ class HomeController extends Controller
 
     public function home()
     {
-
-
-
-
         if (isset(apache_request_headers()['isbilling']) && (apache_request_headers()['isbilling'] == 'true')) {
             $admin_id = auth()->user()->id;
-            $business_id = auth()->user()->business_id;
-
+    
             return response([
-                'categories' => Category::where('business_id', $business_id)->get(),
-                'recentProducts' => Menu::where('business_id', $business_id)->get(),
-                'settings' => Setting::find($business_id),
+                'categories' => Category::all(),
+                'recentProducts' => Menu::all(),
+                'settings' => Setting::find(1), // Assuming business settings aren't needed, so using global settings (ID 1)
                 'app_settings' => Setting::find(1),
-                'sales' => $this->query(Sell::class)->with(['admin.roles','user', 'address', 'items.address'])->whereDate('created_at', today())->where('business_id', $business_id)->get(),
-                'tables' => $this->query(DiningTable::class)->with('sell')->where('business_id', $business_id)->get(),
-                'units' => (Unit::all()),
-                'users' => AdminUser::with(['roles','business'])->where('business_id', $business_id)->get(),
-                'kitchens' => (Kitchen::where('business_id', $business_id)->get()),
-                'materials' => (Material::where('business_id', $business_id)->get()),
-                'earning_expense' => (OfflineTransaction::where('business_id', $business_id)->get()),
-                'materialsStock' => ($this->query(RawMatrial::class)->with('material')->where('business_id', $business_id)->get()),
-                'subCategories' => SubCategory::where('business_id', $business_id)->get(),
+                'sales' => $this->query(Sell::class)->with(['admin.roles','user', 'address', 'items.address'])->whereDate('created_at', today())->get(),
+                'tables' => $this->query(DiningTable::class)->with('sell')->get(),
+                'units' => Unit::all(),
+                'users' => AdminUser::with(['roles'])->get(), 
+                'kitchens' => Kitchen::all(), 
+                'materials' => Material::all(), 
+                'earning_expense' => OfflineTransaction::all(), 
+                'materialsStock' => $this->query(RawMatrial::class)->with('material')->get(), 
+                'subCategories' => SubCategory::all(), 
             ]);
         }
-
+    
         return response([
             'message' => 'Not developed'
         ], 401);
     }
+    
 
     public function categories()
     {
@@ -136,13 +132,8 @@ class HomeController extends Controller
 
     function query($model)
     {
-        $user = auth()->user();
+        return $model::query();
 
-        if ($this->isAdministrator($user)) {
-            return $model::query();
-        }
-
-        return $model::where('business_id', $user->business_id);
     }
 
     function isAdministrator($user)
@@ -152,13 +143,8 @@ class HomeController extends Controller
 
     function subQuery($query)
     {
-        $user = auth()->user();
+        return $query;
 
-        if ($this->isAdministrator($user)) {
-            return $query;
-        }
-
-        return $query->where('business_id', $user->business_id);
     }
     function checkRole($adminId, $role)
     {

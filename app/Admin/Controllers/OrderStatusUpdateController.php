@@ -75,7 +75,7 @@ class OrderStatusUpdateController extends AdminController
         $form->number('user_id', __('User id'));
         $form->text('status', __('Status'));
         $form->hidden('admin_id', __('Admin id'))->default(Admin::user()->id);
-        $form->hidden('business_id', __('Business id'))->default(Admin::user()->business_id);
+        
         return $form;
     }
 }

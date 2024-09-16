@@ -206,7 +206,7 @@ class OrderController extends Controller
                 ->where('driver_id', $user->id);
         } elseif (isset($headers['isbilling']) && $headers['isbilling'] === 'true') {
             $sales = Sell::with(['items', 'admin.roles', 'user'])
-                ->where('business_id', $user->business_id);
+                ;
         } else {
             $sales = Sell::with(['address', 'driver'])
                 ->where('user_id', $user->id);
@@ -304,7 +304,6 @@ class OrderController extends Controller
         $orderData['uuid'] = $orderData['uuid'] ?? Str::orderedUuid();
         $orderData['date_time'] = Carbon::now();
         $orderData['admin_id'] = $orderData['admin_id'] ?? auth()->user()->id;
-        $orderData['business_id'] = auth()->user()->business_id;
         $orderData['delivery_status'] = $orderData['delivery_status'] ?? "a_unassigned";
         if (!isset($orderData['order_status'])) {
             $orderData['order_status'] = ($request->pos_action == 'BILL') ? "e_completed" : (isset($request->dining_table_id) ? 'KOT' : 'e_completed');
@@ -343,7 +342,7 @@ class OrderController extends Controller
                 'admin_id' => auth()->user()->id,
                 'token_number' => (new KotTokenController())->generateToken(),
                 'sell_id' => $order->uuid,
-                'business_id' => auth()->user()->business_id,
+                
             ];
             $model = SellItem::updateOrCreate([
                 'sell_id' => $order->uuid,

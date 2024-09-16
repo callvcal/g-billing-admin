@@ -94,8 +94,8 @@ Route::group([
     $router->resource('customer-events', CustomerEventController::class);
     $router->resource('raw-materials', RawMatrialController::class);
     $router->resource('materials', MaterialController::class);
-    $router->resource('businesses', BusinessController::class);
-    $router->resource('all-settings', AllBusinessSettings::class);
+    // $router->resource('businesses', BusinessController::class);
+    // $router->resource('all-settings', AllBusinessSettings::class);
     $router->resource('working-locations', WorkingLocationController::class);
     $router->resource('staffs', StaffController::class);
 

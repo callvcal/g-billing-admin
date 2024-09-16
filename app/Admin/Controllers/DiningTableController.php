@@ -33,16 +33,14 @@ class DiningTableController extends AdminController
         $grid->filter(function ($filter) {
             $filter->disableIdFilter();
             $filter->like('created_at')->date();
-            if(isAdministrator()){
-                $filter->equal('business_id')->select(Business::all()->pluck('name','id'));
-            }
+            
+            
         });
 
         $grid->quickCreate(function (Grid\Tools\QuickCreate $form) {
             $form->text('name', __('Name'));
             $form->number('capacity', __('Capacity'));
             $form->text('number', __('Table Number'))->required();
-            $form->hidden('business_id', __('Business id'))->default(Admin::user()->business_id);
             $form->hidden('admin_id', __('Admin id'))->default(Admin::user()->id);
             $form->hidden('status', __('status'))->default('blank');
            });
@@ -96,7 +94,6 @@ class DiningTableController extends AdminController
         ])->default('blank');
         $form->text('number', __('Table Number'))->required();
         $form->hidden('admin_id', __('Admin id'))->default(Admin::user()->id);
-        $form->hidden('business_id', __('Business id'))->default(Admin::user()->business_id);
         $form->hidden('status', __('status'))->default('blank');
         return $form;
     }

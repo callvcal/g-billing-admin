@@ -17,20 +17,6 @@ class PremiumPlan
      */
     public function handle(Request $request, Closure $next): Response
     {
-    
-        if((Admin::user()!=null)&&!isAdministrator()&&(!is('CALLVCAL-STAFF')))
-        {
-            $user=AdminUser::with('business')->find(auth()->user()->id);
-            if($user->business->plan=='free')
-            {
-               return response(
-                "Only premium users can access admin panel. Buy our plan and try again. https://eatinsta.callvcal.com/"
-               ,401);
-                return view('plan_expired');
-            }
-        }
-        
-
         return $next($request);
     }
 }

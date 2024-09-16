@@ -44,10 +44,8 @@ class StaffController extends AdminController
             $filter->like('created_at')->date();
             $filter->like('username');
             $filter->like('name');
-            if(isAdministrator()){
-            $filter->like('business_key');
-            $filter->equal('business_id')->select(Business::all()->pluck('name','id'));
-            }
+            
+            
         });
         $grid->column('id', 'ID')->sortable();
         $grid->column('username', trans('admin.username'));
@@ -175,13 +173,8 @@ class StaffController extends AdminController
         $form->phonenumber('mobile', __('Mobile'));
         $form->image('avatar', trans('admin.avatar'));
 
-        if (isAdministrator()) {
-            $form->select('business_id', __('Business id'))->options(Business::all()->pluck('name', 'id'));
-            $form->select('business_key', __('Business name'))->options(Business::all()->pluck('name', 'name'));
-            $form->select('admin_id', __('Admin id'))->options(AdminUser::all()->pluck('name', 'id'));
-        } else {
-            $form->hidden('business_id', __('Business id'))->default(Admin::user()->business_id);
-            $form->hidden('business_key', __('Business id'))->default(Admin::user()->business);
+        {
+            
             $form->hidden('admin_id', __('Admin id'))->default(Admin::user()->id);
         }
 

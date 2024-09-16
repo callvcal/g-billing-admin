@@ -31,7 +31,6 @@ class EarningController extends AdminController
             $form->number('amount', __('Amount'));
             $form->text('cause', __('cause'));
             $form->hidden('type', __('e'))->default($this->type);
-            $form->hidden('business_id', __('Business id'))->default(Admin::user()->business_id);
             $form->hidden('admin_id', __('Admin id'))->default(Admin::user()->id);
         });
         $grid->model()->where('type',$this->type);
@@ -82,7 +81,6 @@ class EarningController extends AdminController
         $form->hidden('type', __('Type'))->default($this->type);
         $form->textarea('cause', __('Cause'));
         $form->hidden('admin_id', __('Admin id'))->default(Admin::user()->id);
-        $form->hidden('business_id', __('Business id'))->default(Admin::user()->business_id);
         return $form;
     }
 }

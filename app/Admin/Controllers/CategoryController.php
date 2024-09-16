@@ -36,7 +36,6 @@ class CategoryController extends AdminController
             $form->text('name', __('Name'));
             $form->image('image', __('Image'));
             $form->image('web_image', __('Web Image'));
-            $form->hidden('business_id', __('Business id'))->default(Admin::user()->business_id);
             $form->hidden('admin_id', __('Admin id'))->default(Admin::user()->id);
         });
         $grid->column('id', __('Id'))->sortable();
@@ -82,7 +81,6 @@ class CategoryController extends AdminController
         $form->image('image', __('Image'));
         $form->image('web_image', __('Web Image'));
         $form->hidden('admin_id', __('Admin id'))->default(Admin::user()->id);
-        $form->hidden('business_id', __('Business id'))->default(Admin::user()->business_id);
         return $form;
     }
 }

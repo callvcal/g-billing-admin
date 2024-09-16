@@ -89,7 +89,7 @@ class RawMatrialController extends AdminController
             'stock-out' => "Stock Out",
         ])->required();
         $form->hidden('admin_id', __('Admin id'))->default(Admin::user()->id);
-        $form->hidden('business_id', __('Business id'))->default(Admin::user()->business_id);
+        
         return $form;
     }
 }

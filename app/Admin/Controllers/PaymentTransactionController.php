@@ -125,7 +125,7 @@ class PaymentTransactionController extends AdminController
         $form->decimal('gst', __('Gst'));
         $form->decimal('service_charge', __('Service charge'));
         $form->hidden('admin_id', __('Admin id'))->default(Admin::user()->id);
-        $form->hidden('business_id', __('Business id'))->default(Admin::user()->business_id);
+        
         return $form;
     }
 }

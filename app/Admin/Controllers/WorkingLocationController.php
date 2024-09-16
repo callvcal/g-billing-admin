@@ -76,7 +76,7 @@ class WorkingLocationController extends AdminController
         $form->text('city', __('City'));
         $form->number('pincode', __('Pincode'));
         $form->hidden('admin_id', __('Admin id'))->default(Admin::user()->id);
-        $form->hidden('business_id', __('Business id'))->default(Admin::user()->business_id);
+        
         return $form;
     }
 }

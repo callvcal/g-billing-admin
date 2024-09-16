@@ -90,7 +90,7 @@ class SellItemController extends AdminController
         $form->number('total_amt', __('Total amt'));
         $form->number('gst_amt', __('Gst amt'));
         $form->hidden('admin_id', __('Admin id'))->default(Admin::user()->id);
-        $form->hidden('business_id', __('Business id'))->default(Admin::user()->business_id);
+        
         return $form;
     }
 }

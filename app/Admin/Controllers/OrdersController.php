@@ -200,7 +200,6 @@ class OrdersController extends Controller
         $form->number('user_id', __('User id'));
         $form->number('address_id', __('Address id'));
         $form->hidden('admin_id', __('Admin id'))->default(Admin::user()->id);
-        $form->hidden('business_id', __('Business id'))->default(Admin::user()->business_id);
         return $form;
     }
 }

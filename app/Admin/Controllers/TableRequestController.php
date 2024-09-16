@@ -109,7 +109,7 @@ class TableRequestController extends AdminController
         ]);
         $form->select('dining_table_id', __('Set dining table'))->options((new HomeController())->query(DiningTable::class)->get()->pluck("name","id"))->required();
         $form->hidden('admin_id', __('Admin id'))->default(Admin::user()->id);
-        $form->hidden('business_id', __('Business id'))->default(Admin::user()->business_id);
+        
         return $form;
     }
 }

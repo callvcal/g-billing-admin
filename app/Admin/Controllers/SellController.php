@@ -124,9 +124,8 @@ class SellController extends AdminController
         $grid->filter(function ($filter) {
             $filter->disableIdFilter();
             $filter->like('created_at')->date();
-            if(isAdministrator()){
-                $filter->equal('business_id')->select(Business::all()->pluck('name','id'));
-            }
+            
+            
         });
 
         $grid->column('serve_type', __('Order Type'))->sortable()->label();
@@ -279,7 +278,7 @@ class SellController extends AdminController
         $form->number('user_id', __('User id'));
         $form->number('address_id', __('Address id'));
         $form->hidden('admin_id', __('Admin id'))->default(Admin::user()->id);
-        $form->hidden('business_id', __('Business id'))->default(Admin::user()->business_id);
+        
         return $form;
     }
 }

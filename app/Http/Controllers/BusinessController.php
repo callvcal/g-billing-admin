@@ -20,94 +20,8 @@ class BusinessController extends Controller
     
 
 
-    function setBusiness(Request $request)
-    {
-
-        $user = AdminUser::find(auth()->user()->id);
-
-        $request->validate([
-            // 'password' => ['required', 'string', 'max:20'],
-            'mobile' => ['required'],
-            'name' => ['required'],
-            'username' => ['required'],
-            'business_key' => ['required'],
-        ]);
-        $business = $request->business_key;
-
-        do {
-            // Query the database to check for existing business names that match
-            $existingBusiness = Business::where('name', 'like', "$business%")->get();
-        
-            // If there are existing businesses, append the count to make the name unique
-            if ($existingBusiness->isNotEmpty()) {
-                $business = $business . $existingBusiness->count();
-            }
-        } while ($existingBusiness->isNotEmpty());  // Continue the loop if there is a match
-        
-
-        $user->business_key = $business;
-        $user->username = 'admin@' . $business;
-        $business = Business::create(
-            [
-                'name' => $business,
-                'on_board_way' => 'app',
-                'active' => 1,
-                'plan' => 'free',
-                'on_board_date' => Carbon::now(),
-                'purchase_date' => null,
-                'last_subscription_date' => null,
-                'expiry_date' => null,
-                'admin_id' => $user->id
-            ]
-        );
-        $user->business_id = $business->id;
-        $user->business_key = $business->name;
-
-
-        $mobile = $request->mobile;
-        $name = $request->name;
-        $username = $request->username;
-
-
-
-        $user->mobile = $mobile;
-        $user->password = Hash::make($request->password);
-        $user->name = $name;
-        $user->username = $username;
-        $user->save();
-
-        $user->load('business');
-
-        $posRoleId = DB::table('admin_roles')->where('slug', 'Partner-Admin')->value('id');
-        if (!$posRoleId) {
-            $posRoleId = DB::table('admin_roles')->insertGetId([
-                'name' => 'Partner-Admin',
-                'slug' => 'Partner-Admin'
-            ]);
-        }
-
-        Setting::create([
-            'id' => $user->business_id,
-            'json' => [
-                'mobile' => $user->mobile ?? null,
-                'email' => $user->email ?? null,
-                'shop_name' => ucfirst($business->name),
-                'footer_message' => "Thank You",
-
-            ]
-        ]);
-
-        // Assign the role to the user
-        DB::table('admin_role_users')->insert([
-            'role_id' => $posRoleId,
-            'user_id' => $user->id
-        ]);
-
-        $user->load('business', 'roles', 'permissions');
-
-        return response($user);
-    }
-
+  
+    
     public function status($id)
     {
         $user = AdminUser::find($id);
@@ -142,42 +56,13 @@ class BusinessController extends Controller
     }
     public function fetch()
     {
-        $users = AdminUser::with('business')->where('business_id', auth()->user()->business_id)->get();
+        $users = AdminUser::all();
 
 
         return response($users);
     }
-    function verifyBusiness()
-    {
-        $user = AdminUser::find(auth()->user()->id);
-        $business = request('business_key');
-        Log::channel('callvcal')->info(json_encode(request()->all()));
-
-        if (strpos($business, ' ') !== false) {
-            return response([
-                'message' => "Please don't use space, remove space and try again."
-            ], 401);
-        }
-
-        if (strlen($business) < 3) {
-            return response([
-                'message' => "Please enter business at least 3 charecter and try again."
-            ], 401);
-        }
-        if (strlen($business) > 18) {
-            return response([
-                'message' => "Please enter business at max 18 charecter and try again."
-            ], 401);
-        }
-        $businesss = Business::where('name', $business)->get();
-        if (count($businesss) != 0) {
-            $business = $business .  count($businesss);
-        }
-        return response([
-            'business_key' => $business,
-
-        ]);
-    }
+   
+    
 
     public function verifyGAF(Request $request)
     {

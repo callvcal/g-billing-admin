@@ -48,9 +48,8 @@ class MenuController extends AdminController
             
             $filter->like('name', 'name');
             $filter->equal('subcategory_id')->select((new HomeController())->query(SubCategory::class)->get()->pluck('name','id'));
-            if(isAdministrator()){
-                $filter->equal('business_id')->select(Business::all()->pluck('name','id'));
-            }
+           
+            
             
         });
 
@@ -143,7 +142,6 @@ class MenuController extends AdminController
         $form->text('weight_per_serving', __('Weight per serving ,(Enter unit also)'))->default(0);
         $form->text('proteins_count', __('Proteins count ,(Enter unit also)'))->default(0);
         $form->hidden('admin_id', __('Admin id'))->default(Admin::user()->id);
-        $form->hidden('business_id', __('Business id'))->default(Admin::user()->business_id);
         return $form;
     }
 }

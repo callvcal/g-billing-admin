@@ -61,7 +61,7 @@ class CategorySubcategoryItemController extends Controller
         $category = Category::updateOrCreate(
             ['id' => $request->id],
             [
-                'name' => $request->name, 'business_id' => auth()->user()->business_id,
+                'name' => $request->name, 
                 'admin_id' => auth()->user()->id
             ]
         );
@@ -74,7 +74,7 @@ class CategorySubcategoryItemController extends Controller
             ['id' => $request->id],
             [
                 'name' => $request->name,
-                'business_id' => auth()->user()->business_id,
+                
                 'admin_id' => auth()->user()->id
 
             ]
@@ -87,7 +87,7 @@ class CategorySubcategoryItemController extends Controller
             ['id' => $request->id],
             [
                 'name' => $request->name,
-                'business_id' => auth()->user()->business_id,
+                
                 'unit_id' => $request->unit_id,
                 'qty' => $request->qty,
                 'datetime' => $request->datetime,
@@ -107,7 +107,7 @@ class CategorySubcategoryItemController extends Controller
             ['id' => $request->id],
             [
                 'name' => $request->name,
-                'business_id' => auth()->user()->business_id,
+                
                 'admin_id' => auth()->user()->id
             ]
         );
@@ -121,7 +121,7 @@ class CategorySubcategoryItemController extends Controller
                 'amount' => (int) $request->amount,
                 'type' => $request->type,
                 'cause' => $request->cause,
-                'business_id' => auth()->user()->business_id,
+                
                 'admin_id' => auth()->user()->id
             ]
         );
@@ -134,7 +134,7 @@ class CategorySubcategoryItemController extends Controller
             ['id' => $request->id],
             [
                 'name' => $request->name,
-                'business_id' => auth()->user()->business_id,
+                
                 'admin_id' => auth()->user()->id,
                 'category_id' => $request->category_id,
                 'kitchen_id' => $request->kitchen_id,
@@ -148,7 +148,6 @@ class CategorySubcategoryItemController extends Controller
     {
         $data = $request->all();
         $data['admin_id'] = auth()->user()->id;
-        $data['business_id'] = auth()->user()->business_id;
 
 
         if (isset($data['active'])) {
@@ -169,7 +168,7 @@ class CategorySubcategoryItemController extends Controller
             ['id' => $request->id],
             [
                 'name' => $request->name,
-                'business_id' => auth()->user()->business_id,
+                
                 'admin_id' => auth()->user()->id,
             ]
         );
@@ -194,7 +193,7 @@ class CategorySubcategoryItemController extends Controller
                     'menu_id' => $request->menu_id,
                     'datetime' => now(),
                     'stock' => $stock,
-                    'business_id' => auth()->user()->business_id,
+                    
                     'admin_id' => auth()->user()->id,
                 ]
             );
@@ -210,7 +209,7 @@ class CategorySubcategoryItemController extends Controller
     }
     public function stocks($menuId)
     {
-        $list = MenuStock::with('admin')->where('business_id', auth()->user()->business_id)->where('menu_id', $menuId)->latest()->get();
+        $list = MenuStock::with('admin')->where('menu_id', $menuId)->latest()->get();
         return response($list);
     }
     public function updateMenuStock($item, $menu, $sell, $qty, $type, $note)
@@ -228,7 +227,6 @@ class CategorySubcategoryItemController extends Controller
             'note' => $note,
             'datetime' => now(),
             'admin_id' => $sell->admin_id,
-            'business_id' => $sell->business_id,
         ]);
 
         // Update menu stock
@@ -313,7 +311,7 @@ class CategorySubcategoryItemController extends Controller
             ['id' => $request->id],
             [
                 'name' => $request->name,
-                'business_id' => auth()->user()->business_id,
+                
                 'number' => $request->number,
                 'capacity' => $request->capacity,
                 'status' => 'blank',
@@ -417,122 +415,9 @@ class CategorySubcategoryItemController extends Controller
     }
 
     public function importDefaultData()
+   
     {
-        $adminId = auth()->user()->id;
-        $businessId = auth()->user()->business_id;
-        // We will not change admin id, so we can delete default data easily.
-        // Also, to avoid image related errors, we can make duplicate images.
-
-        // 03/06/24
-        // Menu is linked to category and subcategory
-        // Subcategory is linked to kitchen and category
-
-        // Models to duplicate
-        $models = [
-            Category::class,
-            Kitchen::class,
-            SubCategory::class,
-            DiningTable::class,
-            Menu::class,
-        ];
-
-        $menus = Menu::with('category', 'subcategory.kitchen', 'subcategory.category')
-            ->whereNull('business_id')
-            ->get();
-
-        $addedCategories = [];
-        $addedSubcategories = [];
-        $addedKitchens = [];
-
-        foreach ($menus as $menu) {
-            // Duplicate the menu
-            $newMenu = $menu->replicate();
-            $newMenu->business_id = $businessId;
-
-            $subcategory = $menu->subcategory;
-            $category = $menu->category;
-
-            if ($category) {
-                $categoryFound = collect($addedCategories)->firstWhere('old_id', $category->id);
-                if (!$categoryFound) {
-                    $newCategory = $category->replicate();
-                    $newCategory->business_id = $businessId;
-                    if ($newCategory->image) {
-                        $newImageName = $this->duplicateImage($newCategory->image);
-                        $newCategory->image = $newImageName;
-                    }
-                    $newCategory->save();
-                    $addedCategories[] = [
-                        'old_id' => $category->id,
-                        'new_id' => $newCategory->id
-                    ];
-                    $categoryId = $newCategory->id;
-                } else {
-                    $categoryId = $categoryFound['new_id'];
-                }
-            }
-
-            if ($subcategory) {
-                $subcategoryFound = collect($addedSubcategories)->firstWhere('old_id', $subcategory->id);
-                if (!$subcategoryFound) {
-                    $newSubcategory = $subcategory->replicate();
-                    $newSubcategory->business_id = $businessId;
-                    if ($newSubcategory->image) {
-                        $newImageName = $this->duplicateImage($newSubcategory->image);
-                        $newSubcategory->image = $newImageName;
-                    }
-                    $kitchen = $subcategory->kitchen;
-                    if ($kitchen) {
-                        $kitchenFound = collect($addedKitchens)->firstWhere('old_id', $kitchen->id);
-                        if (!$kitchenFound) {
-                            $newKitchen = $kitchen->replicate();
-                            $newKitchen->business_id = $businessId;
-                            $newKitchen->save();
-                            $addedKitchens[] = [
-                                'old_id' => $kitchen->id,
-                                'new_id' => $newKitchen->id
-                            ];
-                            $kitchenId = $newKitchen->id;
-                        } else {
-                            $kitchenId = $kitchenFound['new_id'];
-                        }
-                    }
-                    if (isset($kitchenId)) {
-                        $newSubcategory->kitchen_id = $kitchenId;
-                    }
-
-                    if (isset($categoryId)) {
-                        $newSubcategory->category_id = $categoryId;
-                    }
-
-                    $newSubcategory->save();
-                    $addedSubcategories[] = [
-                        'old_id' => $subcategory->id,
-                        'new_id' => $newSubcategory->id
-                    ];
-                    $subcategoryId = $newSubcategory->id;
-                } else {
-                    $subcategoryId = $subcategoryFound['new_id'];
-                }
-            }
-
-            // Copy image if it exists
-            if ($menu->image) {
-                $newImageName = $this->duplicateImage($menu->image);
-                $newMenu->image = $newImageName;
-            }
-
-            // Update category and subcategory IDs
-            if (isset($categoryId)) {
-                $newMenu->category_id = $categoryId;
-            }
-            if (isset($subcategoryId)) {
-                $newMenu->subcategory_id = $subcategoryId;
-            }
-
-            $newMenu->save();
-        }
-        return (new HomeController())->home();
+        
     }
 
     private function duplicateImage($originalImagePath)

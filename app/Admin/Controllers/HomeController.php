@@ -46,10 +46,6 @@ class HomeController extends AdminController
         $reports=[];
         if (isAdministrator()) {
             $users_total = User::count();
-            $businesses=Business::count();
-            $free_businesses=Business::where('plan','free')->count();
-            $paid_businesses=Business::where('plan','!=','free')->count();
-            $reports=Sell::with('business')->selectRaw('business_id, COUNT(*) as total')->groupBy('business_id')->get();
         }
 
         $activeOrders = $this->query(Sell::class)->whereDate('created_at', now()->toDateString())->whereNotIN('order_status', [
@@ -158,18 +154,8 @@ class HomeController extends AdminController
                 'name' => "Customers",
                 'count' => $users_total,
             ],);
-            array_unshift($data['counts'], [
-                'name' => "Businesses",
-                'count' => $businesses,
-            ],);
-            array_unshift($data['counts'], [
-                'name' => "Free",
-                'count' => $free_businesses,
-            ],);
-            array_unshift($data['counts'], [
-                'name' => "Subscribed",
-                'count' => $paid_businesses,
-            ],);
+           
+            
         }
 
        
@@ -263,7 +249,6 @@ class HomeController extends AdminController
 
     function switchBackBusiness()  {
         $user=AdminUser::find(FacadesAdmin::user()->id);
-        $user->business_id=null;
         $user->business_key=null;
         $user->save();
 
@@ -288,25 +273,20 @@ class HomeController extends AdminController
             return $model::query();
         }
 
-        return $model::where('business_id', $user->business_id);
+        return $model::query();
     }
     function subQuery($query)
     {
-        $user = FacadesAdmin::user();
 
-        if (isAdministrator()) {
-            return $query;
-        }
+       
+        
 
-        return $query->where('business_id', $user->business_id);
+        return $query;
     }
     function admins()
     {
-        if (isAdministrator()) {
-            return AdminUser::count();
-        }
+        return AdminUser::count();
 
-        return AdminUser::where('business_id', FacadesAdmin::user()->business_id)->count();
     }
 
     public function loadBusinesses(Request $request)

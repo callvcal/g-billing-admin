@@ -61,11 +61,8 @@ Admin::js("js/pusher.js",);
 Admin::js("js/print.js",);
 
 
-if (is('CALLVCAL-STAFF')) {
-  if (isset(Admin::user()->business_id)) {
-    Admin::js("js/overlay.js",);
-  }
-}
+
+
 
 Admin::script("
 document.addEventListener('DOMContentLoaded', function() {
@@ -94,19 +91,8 @@ Grid::init(function (Grid $grid) {
 
 
 
-  if (!isAdministrator()) {
+  $grid->orderBy('id', 'DESC');
 
-    if (is('CALLVCAL-STAFF')) {
-
-      if (isset(Admin::user()->business_id)) {
-        $grid->model()->where('business_id', Admin::user()->business_id)->orderBy('id', 'DESC');
-      }
-    } else {
-      $grid->model()->where('business_id', Admin::user()->business_id)->orderBy('id', 'DESC');
-    }
-  } else {
-    $grid->orderBy('id', 'DESC');
-  }
 
 
   // $grid->disablePagination();
@@ -146,10 +132,7 @@ Grid::init(function (Grid $grid) {
       }
     });
   });
-
-  if (isAdministrator()) {
-    $grid->column('business_id', __('Business ID'));
-  }
+  
 });
 
 
@@ -164,9 +147,8 @@ Show::init(function (Show $show) {
         $tools->disableDelete();
       }
     });
-  if (isAdministrator()) {
-    $show->field('business_id', __('Business ID'));
-  }
+ 
+    
 });
 
 

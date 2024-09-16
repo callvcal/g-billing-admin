@@ -89,7 +89,6 @@ class MenuStockController extends AdminController
         $form->hidden('stock', __('Stock'));
         $form->datetime('datetime', __('Datetime'))->default(date('Y-m-d H:i:s'));
         $form->hidden('admin_id', __('Admin id'))->default(Admin::user()->id);
-        $form->hidden('business_id', __('Business id'))->default(Admin::user()->business_id);
 
         $form->saving(function (Form $form) {
 

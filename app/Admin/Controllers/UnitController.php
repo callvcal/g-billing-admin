@@ -30,7 +30,7 @@ class UnitController extends AdminController
         //(new RelationController())->gridActions($grid);
         $grid->quickCreate(function (Grid\Tools\QuickCreate $form) {
             $form->text('name', __('Name'));
-            $form->hidden('business_id', __('Business id'))->default(Admin::user()->business_id);
+            
             $form->hidden('admin_id', __('Admin id'))->default(Admin::user()->id);
         });
         $grid->column('id', __('Id'))->sortable();
@@ -70,7 +70,7 @@ class UnitController extends AdminController
         $form = new Form(new Unit());
         $form->text('name', __('Name'));
         $form->hidden('admin_id', __('Admin id'))->default(Admin::user()->id);
-        $form->hidden('business_id', __('Business id'))->default(Admin::user()->business_id);
+        
         return $form;
     }
 }

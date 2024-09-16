@@ -97,7 +97,6 @@ class POSController extends AdminController
     {
         $orderData = $request->toArray();
         $user = FacadesAdmin::user();
-        $orderData['business_id'] = $user->business_id;
         $orderData['admin_id'] = $user->id;
 
         $orderData['date_time'] = Carbon::now();
@@ -145,7 +144,6 @@ class POSController extends AdminController
             ['id' => $request->id],
             $orderData
         );
-        Log::channel('callvcal')->info("Order:business_id: " . $order->business_id);
 
 
         $items = [];
@@ -158,7 +156,6 @@ class POSController extends AdminController
                 'qty' => $item->qty,
                 'total_amt' => $item->total_amt,
                 'user_id' => null,
-                'business_id' => $order->business_id,
                 'token_number' => (new KotTokenController())->generateToken(),
                 'menu_id' => $item->menu_id,
                 'sell_id' => $order->uuid,
@@ -228,23 +225,13 @@ class POSController extends AdminController
     }
     function query($model)
     {
-        $user = FacadesAdmin::user();
+        return $model::query();
 
-        if (isAdministrator()) {
-            return $model::query();
-        }
-
-        return $model::where('business_id', $user->business_id);
     }
     function subQuery($query)
     {
-        $user = FacadesAdmin::user();
+        return $query;
 
-        if (isAdministrator()) {
-            return $query;
-        }
-
-        return $query->where('business_id', $user->business_id);
     }
     function calculateGSTIncluded($total, $gstRate)
     {
