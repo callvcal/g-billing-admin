@@ -38,7 +38,7 @@ Route::get('/force', function (Request $request) {
     return response(['message'=>"success"]);
 });
 Route::get('/', function () {
-    return view('welcome');
+    return redirect('/admin');
 });
 
 
