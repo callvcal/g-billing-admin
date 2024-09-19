@@ -37,6 +37,8 @@ class StaffController extends AdminController
         $grid->model()->whereHas('roles', function ($query) {
             $query->where('slug','!=','Partner-Admin')->where('slug','!=','Administrator');
         });
+
+        
         $grid->filter(function ($filter) {
             $filter->disableIdFilter();
             $filter->like('created_at')->date();
