@@ -36,7 +36,7 @@ class StaffController extends AdminController
         $grid = new Grid(new $userModel());
         if (!isAdministrator()) {
             $grid->model()->whereHas('roles', function ($query) {
-                $query->where('slug','!=','Partner-Admin');
+                $query->where('slug','!=','Partner-Admin')->where('slug','!=','Administrator');
             });
         }
         $grid->filter(function ($filter) {

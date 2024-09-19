@@ -42,27 +42,10 @@ class PizzaKDSController extends AdminController
     protected function grid()
     {
         $grid = new Grid(new SellItem());
-        // $grid->model()->orderBy('updated_at', "desc"); {
+       
+        $grid->model()->where('business_id',Admin::user()->business_id)
+        ->where('order_status_prepared', 0)->orderBy('id', 'asc'); // Exclude certain order statuses            
 
-            $grid->model()
-            // ->whereDate('created_at', date("Y-m-d")) 
-                // Order by id in descending order
-                ->where('order_status_prepared', 0)->orderBy('id', 'asc'); // Exclude certain order statuses            
-        // }
-        // $grid->selector(function (Grid\Tools\Selector $selector) {
-        //     $selector->select('order_status_preparing', 'Preparing Status', [0=>"Pending",1=>"Preparing"]);
-        //     $selector->select('order_status_prepared', 'Prepared Status', [0=>"Pending",1=>"Prepared"]);
-        // });
-        // $grid->column('order_status_preparing')->using([
-        //     0 => 'Pending Orders',
-        //     1 => 'Preparing Orders',
-        //     null => 'Pending',
-        // ], 'Pending')->dot([
-        //     0 => 'primary',
-        //     'd_readyToPickup' => 'success',
-        //     null => 'danger',
-        //     'pending' => 'danger',
-        // ], 'danger');
         $grid->disableCreateButton();
         $grid->disableFilter();
         $grid->disablePagination();
