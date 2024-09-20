@@ -20,8 +20,8 @@ class CreateDiningTablesTable extends Migration
             $table->integer('capacity')->nullable();
             $table->string('number')->nullable();
             $table->unsignedBigInteger('admin_id')->nullable();
-            $table->unsignedBigInteger('business_id')->nullable();
-            $table->foreign('business_id')->references('id')->on('businesses')->nullOnDelete();
+            
+            
             $table->unsignedBigInteger('staff_id')->nullable();
             $table->foreign("admin_id")->references('id')->on('admin_users')->nullOnDelete();
             $table->foreign("staff_id")->references('id')->on('admin_users')->nullOnDelete();

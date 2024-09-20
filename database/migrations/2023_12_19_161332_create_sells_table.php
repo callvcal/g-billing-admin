@@ -63,8 +63,8 @@ class CreateSellsTable extends Migration
             $table->unsignedBigInteger('dining_table_id')->nullable();
             $table->foreign('dining_table_id')->references('id')->on('dining_tables')->nullOnDelete();
             $table->unsignedBigInteger('admin_id')->nullable();
-            $table->unsignedBigInteger('business_id')->nullable();
-            $table->foreign('business_id')->references('id')->on('businesses')->nullOnDelete();
+            
+            
             $table->foreign("admin_id")->references('id')->on('admin_users')->nullOnDelete();
             $table->string('token_number')->nullable();
             $table->string('pos_status')->nullable();

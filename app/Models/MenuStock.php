@@ -16,13 +16,11 @@ class MenuStock extends Model
         'datetime',
         'admin_id',
         'menu_id',
-        'business_id',
+        
         'sell_item_id',
         
     ];
-    function business()  {
-        return $this->belongsTo(Business::class,'business_id');
-    }
+    
     function admin()  {
         return $this->belongsTo(AdminUser::class,'admin_id');
     }

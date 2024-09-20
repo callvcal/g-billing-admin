@@ -63,9 +63,7 @@ class AdminUser extends Authenticatable
 
         return $this->belongsToMany($relatedModel, $pivotTable, 'user_id', 'permission_id');
     }
-    function business()  {
-        return $this->belongsTo(Business::class,'business_id');
-    }
+    
     
     
 }

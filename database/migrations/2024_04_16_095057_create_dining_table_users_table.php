@@ -28,8 +28,8 @@ class CreateDiningTableUsersTable extends Migration
             $table->integer('invoice_id')->nullable();
             $table->unsignedBigInteger('admin_id')->nullable();
             $table->foreign("admin_id")->references('id')->on('admin_users')->nullOnDelete();
-            $table->unsignedBigInteger('business_id')->nullable();
-            $table->foreign('business_id')->references('id')->on('businesses')->nullOnDelete();
+            
+            
             $table->integer('discount')->nullable();
             $table->timestamps();
         });

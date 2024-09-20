@@ -15,7 +15,7 @@ class InAppPurchaseModel extends Model
         'id',
         'json',
         'admin_id'
-        ,'business_id',
+        ,
         'status',
         'json',
         'product_id',

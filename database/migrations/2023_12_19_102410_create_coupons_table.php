@@ -26,8 +26,8 @@ class CreateCouponsTable extends Migration
             $table->dateTime('start_date')->nullable();
             $table->dateTime('end_date')->nullable();
             $table->unsignedBigInteger('admin_id')->nullable();
-            $table->unsignedBigInteger('business_id')->nullable();
-            $table->foreign('business_id')->references('id')->on('businesses')->nullOnDelete();
+            
+            
             $table->string('status')->nullable();
             $table->timestamps();
         });

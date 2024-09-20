@@ -14,7 +14,7 @@ class OfflineTransaction extends Model
         'amount',
         'type',
         'cause',
-        'business_id',
+        
         'admin_id',
 
     ];

@@ -13,7 +13,7 @@ class PaymentTransaction extends Model
         'transaction_id',
         'user_id',
         'json',
-        'business_id',
+        
         'date_time',
         'transaction_status_local',
         'transaction_status_callback',
@@ -32,9 +32,7 @@ class PaymentTransaction extends Model
     function user()  {
         return $this->belongsTo(AdminUser::class,'user_id');
     }
-    function business()  {
-        return $this->belongsTo(Business::class,'business_id');
-    }
+    
     protected static function booted()
     {
         static::created(function ($model) {

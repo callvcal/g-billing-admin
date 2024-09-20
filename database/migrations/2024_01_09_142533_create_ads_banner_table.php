@@ -26,8 +26,8 @@ class CreateAdsBannerTable extends Migration
             $table->foreign("subcategory_id")->references('id')->on('sub_categories')->nullOnDelete();
             $table->unsignedBigInteger('admin_id')->nullable();
             $table->foreign("admin_id")->references('id')->on('admin_users')->nullOnDelete();
-            $table->unsignedBigInteger('business_id')->nullable();
-            $table->foreign('business_id')->references('id')->on('businesses')->nullOnDelete();
+            
+            
 
             $table->timestamps();
         });

@@ -20,8 +20,8 @@ class CreateSubCategoriesTable extends Migration
             $table->unsignedBigInteger('kitchen_id')->nullable();
             $table->foreign("kitchen_id")->references('id')->on('kitchens')->nullOnDelete();
             $table->unsignedBigInteger('admin_id')->nullable();
-            $table->unsignedBigInteger('business_id')->nullable();
-            $table->foreign('business_id')->references('id')->on('businesses')->nullOnDelete();
+            
+            
             $table->foreign("admin_id")->references('id')->on('admin_users')->nullOnDelete();
             $table->unsignedBigInteger('category_id')->nullable();
             $table->foreign("category_id")->references('id')->on('categories')->nullOnDelete();

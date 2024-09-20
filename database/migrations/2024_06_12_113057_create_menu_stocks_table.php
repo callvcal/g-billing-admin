@@ -24,8 +24,8 @@ class CreateMenuStocksTable extends Migration
             $table->unsignedBigInteger('menu_id')->nullable();
             $table->foreign("menu_id")->references('id')->on('menus')->nullOnDelete();
             $table->foreign("admin_id")->references('id')->on('admin_users')->nullOnDelete();
-            $table->unsignedBigInteger('business_id')->nullable();
-            $table->foreign('business_id')->references('id')->on('businesses')->nullOnDelete();
+            
+            
 
             $table->timestamps();
         });

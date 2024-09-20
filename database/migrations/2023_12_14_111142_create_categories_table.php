@@ -20,8 +20,8 @@ class CreateCategoriesTable extends Migration
             $table->string('web_image')->nullable();
             $table->unsignedBigInteger('admin_id')->nullable();
             $table->foreign("admin_id")->references('id')->on('admin_users')->nullOnDelete();
-            $table->unsignedBigInteger('business_id')->nullable();
-            $table->foreign('business_id')->references('id')->on('businesses')->nullOnDelete();
+            
+            
             $table->timestamps();
         });
     }

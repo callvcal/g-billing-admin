@@ -20,8 +20,8 @@ class CreateWorkingLocationsTable extends Migration
             $table->string('district')->nullable();
             $table->string('city')->nullable();
             $table->integer('pincode')->nullable();
-            $table->unsignedBigInteger('business_id')->nullable();
-            $table->foreign('business_id')->references('id')->on('businesses')->nullOnDelete();
+            
+            
 
             $table->unsignedBigInteger('admin_id')->nullable();
             $table->foreign("admin_id")->references('id')->on('admin_users')->nullOnDelete();

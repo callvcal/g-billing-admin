@@ -38,8 +38,8 @@ class CreateMenusTable extends Migration
             $table->foreign("unit_id")->references('id')->on('units')->nullOnDelete();
             $table->foreign("kitchen_id")->references('id')->on('kitchens')->nullOnDelete();
             $table->unsignedBigInteger('admin_id')->nullable();
-            $table->unsignedBigInteger('business_id')->nullable();
-            $table->foreign('business_id')->references('id')->on('businesses')->nullOnDelete();
+            
+            
             $table->foreign("admin_id")->references('id')->on('admin_users')->nullOnDelete();
             $table->boolean('active')->default(1)->nullable();
             $table->string('stock_status')->nullable();

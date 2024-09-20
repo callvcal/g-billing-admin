@@ -18,8 +18,8 @@ class CreateRawMaterialsTable extends Migration
             $table->string('name')->nullable();
             $table->unsignedBigInteger('unit_id')->nullable();
             $table->unsignedBigInteger('admin_id')->nullable();
-            $table->unsignedBigInteger('business_id')->nullable();
-            $table->foreign('business_id')->references('id')->on('businesses')->nullOnDelete();
+            
+            
             $table->dateTime('datetime')->nullable();
             $table->integer('qty')->nullable();
             $table->double('amount')->nullable();

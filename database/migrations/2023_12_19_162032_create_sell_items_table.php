@@ -28,8 +28,8 @@ class CreateSellItemsTable extends Migration
             
             $table->unsignedBigInteger('admin_id')->nullable();
             $table->foreign("admin_id")->references('id')->on('admin_users')->nullOnDelete();
-            $table->unsignedBigInteger('business_id')->nullable();
-            $table->foreign('business_id')->references('id')->on('businesses')->nullOnDelete();
+            
+            
 
             $table->unsignedBigInteger('menu_id')->nullable();
             $table->integer('qty')->nullable();

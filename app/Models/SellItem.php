@@ -20,7 +20,7 @@ class SellItem extends Model
         'token_number',
         'qty',
         'discount_amt',
-        'business_id',
+        
         'total_amt',
         'gst_amt',
         'order_status',

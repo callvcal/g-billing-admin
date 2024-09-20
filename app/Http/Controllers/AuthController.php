@@ -30,7 +30,7 @@ class AuthController extends Controller
             ], 401);
         }
         if (Hash::check($request->password, $user->password)) {
-            $user->load('roles', 'permissions','business');
+            $user->load('roles', 'permissions');
             return  response([
                 'token' => $user->createToken('token')->plainTextToken,
                 'user' => $user,
@@ -297,7 +297,7 @@ class AuthController extends Controller
 
         if (isset(apache_request_headers()['isbilling']) && (apache_request_headers()['isbilling'] == 'true')) {
             $auth = AdminUser::find($auth->id);
-            $auth->load('roles', 'permissions','business');
+            $auth->load('roles', 'permissions');
         }
 
         return response([
