@@ -34,14 +34,14 @@ class CategoryController extends AdminController
         //(new RelationController())->gridActions($grid);
         $grid->quickCreate(function (Grid\Tools\QuickCreate $form) {
             $form->text('name', __('Name'));
-            $form->image('image', __('Image'));
-            $form->image('web_image', __('Web Image'));
+            // $form->image('image', __('Image'));
+            // $form->image('web_image', __('Web Image'));
             $form->hidden('admin_id', __('Admin id'))->default(Admin::user()->id);
         });
         $grid->column('id', __('Id'))->sortable();
         $grid->column('name', __('Name'))->sortable();
-        $grid->column('image', __('Image'))->image("",64,64);
-        $grid->column('web_image', __('Web Image'))->image("",64,64);
+        // $grid->column('image', __('Image'))->image("",64,64);
+        // $grid->column('web_image', __('Web Image'))->image("",64,64);
         
 
         return $grid;
@@ -59,8 +59,8 @@ class CategoryController extends AdminController
 
         $show->field('id', __('Id'));
         $show->field('name', __('Name'));
-        $show->field('image', __('Image'))->image();
-        $show->field('web_image', __('Web Image'))->image();
+        // $show->field('image', __('Image'))->image();
+        // $show->field('web_image', __('Web Image'))->image();
         $show->field('admin_id', __('admin_id'));
         $show->field('created_at', __('Created at'));
         $show->field('updated_at', __('Updated at'));
@@ -78,8 +78,8 @@ class CategoryController extends AdminController
         $form = new Form(new Category());
 
         $form->text('name', __('Name'));
-        $form->image('image', __('Image'));
-        $form->image('web_image', __('Web Image'));
+        // $form->image('image', __('Image'));
+        // $form->image('web_image', __('Web Image'));
         $form->hidden('admin_id', __('Admin id'))->default(Admin::user()->id);
         return $form;
     }

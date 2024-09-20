@@ -42,7 +42,7 @@ class SubCategoryController extends AdminController
         });
         $grid->column('id', __('Id'))->sortable();
         $grid->column('name', __('Name'))->sortable();
-        $grid->column('image', __('Image'))->image("",64,64);
+        // $grid->column('image', __('Image'))->image("",64,64);
         $grid->column('admin_id', __('Admin id'))->sortable();
         $grid->column('created_at', __('Created at'))->sortable();
         $grid->column('updated_at', __('Updated at'));
@@ -62,7 +62,7 @@ class SubCategoryController extends AdminController
 
         $show->field('id', __('Id'))->sortable();
         $show->field('name', __('Name'))->sortable();
-        $show->field('image', __('Image'))->image();
+        // $show->field('image', __('Image'))->image();
         
 
         return $show;
@@ -78,7 +78,7 @@ class SubCategoryController extends AdminController
         $form = new Form(new SubCategory());
 
         $form->text('name', __('Name'));
-        $form->image('image', __('Image'));
+        // $form->image('image', __('Image'));
         $form->select('category_id', __('Select Category'))->options((new HomeController())->query(Category::class)->get()->pluck("name","id"));
         $form->select('kitchen_id', __('Select Kitchen'))->options((new HomeController())->query(Kitchen::class)->get()->pluck("name","id"));
         $form->hidden('admin_id', __('Admin id'))->default(Admin::user()->id);
