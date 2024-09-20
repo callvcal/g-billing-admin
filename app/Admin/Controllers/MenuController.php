@@ -118,15 +118,15 @@ class MenuController extends AdminController
         $form = new Form(new Menu());
 
         $form->text('name', __('Enter item Name'))->required();
-        $form->image('image', __('Select Item photo'))->required();
+        // $form->image('image', __('Select Item photo'))->required();
         // $form->text('subtitle', __('Enter Small description of item'));
         $form->textarea('description', __('Enter Description'))->required();
         $form->currency('price', __('Enter normal price'))->symbol("₹")->required();
-        $form->currency('price_din_in', __('Enter Din in price (For app)'))->symbol("₹");
-        $form->currency('price_with_delivery', __('Enter price with delivery (For app)'))->symbol("₹");
-        $form->currency('price_take_away', __('Enter Take away price (For app)'))->symbol("₹");
+        // $form->currency('price_din_in', __('Enter Din in price (For app)'))->symbol("₹");
+        // $form->currency('price_with_delivery', __('Enter price with delivery (For app)'))->symbol("₹");
+        // $form->currency('price_take_away', __('Enter Take away price (For app)'))->symbol("₹");
         $form->number('discount', __('Enter discount in (%)'))->default(0)->required();
-        $form->select('food_type', __('Food type'))->options(["veg" => "Veg", "non-veg" => "Non-Veg", "vegan" => "Vegan", "egg" => "Egg"])->required();
+        // $form->select('food_type', __('Food type'))->options(["veg" => "Veg", "non-veg" => "Non-Veg", "vegan" => "Vegan", "egg" => "Egg"])->required();
 
         $form->select('category_id', __('Select Category'))->options((new HomeController())->query(Category::class)->get()->pluck('name', 'id'))->required()->load('subcategory_id', '/api/load-subcategories');
         $form->select('subcategory_id', __('Select Sub-Category'))->options((new HomeController())->query(SubCategory::class)->get()->pluck("name", "id"))->required();
@@ -136,11 +136,11 @@ class MenuController extends AdminController
 
         $form->switch('active', __('Active'))->default(1);
         
-        $form->text('calories_count', __('Calories count ,(Enter unit also)'))->default(0);
-        $form->number('stocks', __('In Stocks'))->default(0);
-        $form->number('alert_stocks', __('Alert Stocks'))->default(0);
-        $form->text('weight_per_serving', __('Weight per serving ,(Enter unit also)'))->default(0);
-        $form->text('proteins_count', __('Proteins count ,(Enter unit also)'))->default(0);
+        // $form->text('calories_count', __('Calories count ,(Enter unit also)'))->default(0);
+        // $form->number('stocks', __('In Stocks'))->default(0);
+        // $form->number('alert_stocks', __('Alert Stocks'))->default(0);
+        // $form->text('weight_per_serving', __('Weight per serving ,(Enter unit also)'))->default(0);
+        // $form->text('proteins_count', __('Proteins count ,(Enter unit also)'))->default(0);
         $form->hidden('admin_id', __('Admin id'))->default(Admin::user()->id);
         return $form;
     }
