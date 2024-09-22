@@ -303,7 +303,7 @@ class OrderController extends Controller
         $orderData = $request->toArray();
         $orderData['uuid'] = $orderData['uuid'] ?? Str::orderedUuid();
         $orderData['date_time'] = Carbon::now();
-        $orderData['admin_id'] = $orderData['admin_id'] ?? auth()->user()->id;
+        $orderData['admin_id'] = auth()->user()->id;
         $orderData['business_id'] = auth()->user()->business_id;
         $orderData['delivery_status'] = $orderData['delivery_status'] ?? "a_unassigned";
         if (!isset($orderData['order_status'])) {
