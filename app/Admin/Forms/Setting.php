@@ -36,7 +36,7 @@ class Setting extends Form
         //     $data[$value]=$data[$value.'_cb']??$data[$value];
         // }
 
-        ModelsSetting::updateOrCreate(['id' => 1], [
+        ModelsSetting::updateOrCreate(['id' => 2], [
             'json' => $data
         ]);
 
@@ -92,41 +92,42 @@ class Setting extends Form
             0 => "No",
             1 => "Yes",
         ];
-        if (isAdministrator()) {
-            $this->number('invoice_id_label_width', 'invoice_id_label_width')->default(4);
-            $this->number('invoice_id_value_width', 'invoice_id_value_width')->default(8);
-            $this->number('customer_name_label_width', 'customer_name_label_width')->default(4);
-            $this->number('customer_name_value_width', 'customer_name_value_width')->default(8);
-            $this->number('item_name_width', 'item_name_width')->default(2);
-            $this->number('image_quality', 'image_quality')->default(15);  
-            $this->number('qty_width', 'qty_width')->default(2);
-            $this->number('rate_width', 'rate_width')->default(2);
-            $this->number('total_width', 'total_width')->default(6);
-            $this->number('payment_label_width', 'payment_label_width')->default(6);
-            $this->number('payment_value_width', 'payment_value_width')->default(6);
-            $this->number('table_label_width', 'table_label_width')->default(6);
-            $this->number('table_value_width', 'table_value_width')->default(6);
-            $this->number('line_char_len_diff', 'line_char_len_diff')->default(8);
-            $this->number('empty_lines_after_kot', 'empty_lines_after_kot')->default(1);
-            $this->text('line_char', 'line_char')->default('-');
-            $this->text('mid', 'Paytm MID')->rules('required');
-            $this->number('is_font_a', 'is_font_a')->default(1);
-            $this->url('whatsapp_link', 'Whatsapp Group Link')->rules('required');
-            $this->email('email', 'Email Address')->rules('required|email');
-            $this->number('show_ads', 'Show Ads in Free Plan')->default(1);
-            $this->number('show_int_ads', 'Show Interstitial Ads in Free Plan')->default(1);
-            $this->number('service_charge_rate', 'Service charge rate')->default(2);
-            $this->number('gst_rate', 'Gst rate')->default(18);
-            $this->number('monthly_charge_in_rs', 'Monthly Charge in Rs')->default(100);
-            $this->number('annual_charge_in_rs', 'Annual Charge in Rs')->default(1000);
-            $this->number('lifetime_charge_in_rs', 'Lifetime Charge')->default(15);
-            $this->select('print_new_line', 'print_new_line')->options($states)->default(1);
-            $this->select('reset_bluetooth', 'reset_bluetooth')->options($states)->default(1);
-            $this->select('show_line_above_total', 'show_line_above_total')->options($states)->default(1);
-            $this->select('show_line_below_total', 'show_line_below_total')->options($states)->default(1);
-            $this->select('is_font_a_all', 'is_font_a_all')->options($states)->default(1);
-            $this->select('bill_disable_hf', 'bill_disable_hf')->options($states)->default(1);
-        } else {
+        // if (isAdministrator()) {
+        //     $this->number('invoice_id_label_width', 'invoice_id_label_width')->default(4);
+        //     $this->number('invoice_id_value_width', 'invoice_id_value_width')->default(8);
+        //     $this->number('customer_name_label_width', 'customer_name_label_width')->default(4);
+        //     $this->number('customer_name_value_width', 'customer_name_value_width')->default(8);
+        //     $this->number('item_name_width', 'item_name_width')->default(2);
+        //     $this->number('image_quality', 'image_quality')->default(15);  
+        //     $this->number('qty_width', 'qty_width')->default(2);
+        //     $this->number('rate_width', 'rate_width')->default(2);
+        //     $this->number('total_width', 'total_width')->default(6);
+        //     $this->number('payment_label_width', 'payment_label_width')->default(6);
+        //     $this->number('payment_value_width', 'payment_value_width')->default(6);
+        //     $this->number('table_label_width', 'table_label_width')->default(6);
+        //     $this->number('table_value_width', 'table_value_width')->default(6);
+        //     $this->number('line_char_len_diff', 'line_char_len_diff')->default(8);
+        //     $this->number('empty_lines_after_kot', 'empty_lines_after_kot')->default(1);
+        //     $this->text('line_char', 'line_char')->default('-');
+        //     $this->text('mid', 'Paytm MID')->rules('required');
+        //     $this->number('is_font_a', 'is_font_a')->default(1);
+        //     $this->url('whatsapp_link', 'Whatsapp Group Link')->rules('required');
+        //     $this->email('email', 'Email Address')->rules('required|email');
+        //     $this->number('show_ads', 'Show Ads in Free Plan')->default(1);
+        //     $this->number('show_int_ads', 'Show Interstitial Ads in Free Plan')->default(1);
+        //     $this->number('service_charge_rate', 'Service charge rate')->default(2);
+        //     $this->number('gst_rate', 'Gst rate')->default(18);
+        //     $this->number('monthly_charge_in_rs', 'Monthly Charge in Rs')->default(100);
+        //     $this->number('annual_charge_in_rs', 'Annual Charge in Rs')->default(1000);
+        //     $this->number('lifetime_charge_in_rs', 'Lifetime Charge')->default(15);
+        //     $this->select('print_new_line', 'print_new_line')->options($states)->default(1);
+        //     $this->select('reset_bluetooth', 'reset_bluetooth')->options($states)->default(1);
+        //     $this->select('show_line_above_total', 'show_line_above_total')->options($states)->default(1);
+        //     $this->select('show_line_below_total', 'show_line_below_total')->options($states)->default(1);
+        //     $this->select('is_font_a_all', 'is_font_a_all')->options($states)->default(1);
+        //     $this->select('bill_disable_hf', 'bill_disable_hf')->options($states)->default(1);
+        // } else
+         {
             $this->text('shop_name', 'Shop Name')->rules('required');
             $this->text('address', 'Address');
             $this->text('mobile', 'Mobile Number')->rules('required');
@@ -160,7 +161,7 @@ class Setting extends Form
 
         if (!$data) {
             ModelsSetting::create([
-                'id' => 1
+                'id' => 2
             ]);
         }
 

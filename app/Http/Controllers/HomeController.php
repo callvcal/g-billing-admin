@@ -65,7 +65,7 @@ class HomeController extends Controller
             return response([
                 'categories' => Category::all(),
                 'recentProducts' => Menu::all(),
-                'settings' => Setting::find(1), // Assuming business settings aren't needed, so using global settings (ID 1)
+                'settings' => Setting::find(2), // Assuming business settings aren't needed, so using global settings (ID 1)
                 'app_settings' => Setting::find(1),
                 'sales' => $this->query(Sell::class)->with(['admin.roles','user', 'address', 'items.address'])->whereDate('created_at', today())->get(),
                 'tables' => $this->query(DiningTable::class)->with('sell')->get(),
