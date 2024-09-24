@@ -29,7 +29,7 @@ class SettingController extends Controller
     {
         $settings = Setting::updateOrCreate(
             [
-                'id' => 1,
+                'id' => 2,
             ],
 
             [
