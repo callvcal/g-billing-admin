@@ -45,9 +45,9 @@ class BusinessController extends Controller
             if ($existingBusiness->isNotEmpty()) {
                 $business = $business . '-'.$i;
             }
-            $existingAdmin = AdminUser::where('username','like',  'admin@' . $business)->get();
+            $existingAdmin = AdminUser::where('username', 'admin@' . $business)->get();
 
-        } while ($existingBusiness->isNotEmpty()&&$existingAdmin->isNotEmpty());  // Continue the loop if there is a match
+        } while ($existingBusiness->isNotEmpty()||$existingAdmin->isNotEmpty());  // Continue the loop if there is a match
         
 
         $user->business_key = $business;
