@@ -17,7 +17,7 @@ class BusinessController extends Controller
 {
 
 
-    
+
 
 
     function setBusiness(Request $request)
@@ -34,22 +34,22 @@ class BusinessController extends Controller
         ]);
         $business = $request->business_key;
 
-        $i=0;
+        $i = 0;
 
-        $business2 = $business ;
+        $business2 = $business;
         do {
             $i++;
             // Query the database to check for existing business names that match
             $existingBusiness = Business::where('name', $business2)->get();
-        
+
             // If there are existing businesses, append the count to make the name unique
-            if ($existingBusiness->isNotEmpty()) {
-                $business2 = $business .$i;
-            }
             $existingAdmin = AdminUser::where('username', 'admin@' . $business2)->get();
-        } while ($existingBusiness->isNotEmpty()||$existingAdmin->isNotEmpty());  // Continue the loop if there is a match
-        
-        $business=$business2;
+            if ($existingBusiness->isNotEmpty() || $existingAdmin->isNotEmpty()) {
+                $business2 = $business . $i; // Update business2 for uniqueness
+            }
+        } while ($existingBusiness->isNotEmpty() || $existingAdmin->isNotEmpty());  // Continue the loop if there is a match
+
+        $business = $business2;
 
         $user->business_key = $business;
         $user->username = 'admin@' . $business;
@@ -175,21 +175,21 @@ class BusinessController extends Controller
                 'message' => "Please enter business at max 18 charecter and try again."
             ], 401);
         }
-        $i=0;
+        $i = 0;
 
-        $business2 = $business ;
+        $business2 = $business;
         do {
             $i++;
             // Query the database to check for existing business names that match
             $existingBusiness = Business::where('name', $business2)->get();
-        
+
             // If there are existing businesses, append the count to make the name unique
-            if ($existingBusiness->isNotEmpty()) {
-                $business2 = $business .$i;
-            }
             $existingAdmin = AdminUser::where('username', 'admin@' . $business2)->get();
-        } while ($existingBusiness->isNotEmpty()||$existingAdmin->isNotEmpty());  // Continue the loop if there is a match
-        
+            if ($existingBusiness->isNotEmpty() || $existingAdmin->isNotEmpty()) {
+                $business2 = $business . $i; // Update business2 for uniqueness
+            }
+        } while ($existingBusiness->isNotEmpty() || $existingAdmin->isNotEmpty());  // Continue the loop if there is a match
+
         return response([
             'business_key' => $business2,
 
