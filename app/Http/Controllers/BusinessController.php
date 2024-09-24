@@ -176,16 +176,17 @@ class BusinessController extends Controller
         }
         $i=0;
 
+        $business2 = $business ;
         do {
             $i++;
             // Query the database to check for existing business names that match
-            $existingBusiness = Business::where('name', $business)->get();
+            $existingBusiness = Business::where('name', $business2)->get();
         
             // If there are existing businesses, append the count to make the name unique
             if ($existingBusiness->isNotEmpty()) {
-                $business = $business . '-'.$i;
+                $business2 = $business .$i;
             }
-            $existingAdmin = AdminUser::where('username','like', 'admin@' . $business)->get();
+            $existingAdmin = AdminUser::where('username','like', 'admin@' . $business2)->get();
             Log::channel('callvcal')->info('existingAdmin: '.json_encode($existingAdmin).' existingBusiness:'.json_encode($existingBusiness));
         } while ($existingBusiness->isNotEmpty()||$existingAdmin->isNotEmpty());  // Continue the loop if there is a match
         
