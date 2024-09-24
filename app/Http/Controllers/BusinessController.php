@@ -191,7 +191,7 @@ class BusinessController extends Controller
         } while ($existingBusiness->isNotEmpty()||$existingAdmin->isNotEmpty());  // Continue the loop if there is a match
         
         return response([
-            'business_key' => $business,
+            'business_key' => $business2,
 
         ]);
     }
