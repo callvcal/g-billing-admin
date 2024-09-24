@@ -174,10 +174,21 @@ class BusinessController extends Controller
                 'message' => "Please enter business at max 18 charecter and try again."
             ], 401);
         }
-        $businesss = Business::where('name', $business)->get();
-        if (count($businesss) != 0) {
-            $business = $business .  count($businesss);
-        }
+        $i=0;
+
+        do {
+            $i++;
+            // Query the database to check for existing business names that match
+            $existingBusiness = Business::where('name', $business)->get();
+        
+            // If there are existing businesses, append the count to make the name unique
+            if ($existingBusiness->isNotEmpty()) {
+                $business = $business . '-'.$i;
+            }
+            $existingAdmin = AdminUser::where('username','like', 'admin@' . $business)->get();
+            Log::channel('callvcal')->info('existingAdmin: '.json_encode($existingAdmin).' existingBusiness:'.json_encode($existingBusiness));
+        } while ($existingBusiness->isNotEmpty()||$existingAdmin->isNotEmpty());  // Continue the loop if there is a match
+        
         return response([
             'business_key' => $business,
 
