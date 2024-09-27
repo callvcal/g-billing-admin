@@ -82,6 +82,8 @@ class POSController extends AdminController
 
         $running = [];
 
+        
+
         $view = view("widgets.subcategories", compact(['subcategories', 'menus', 'tables', 'running', 'sell', 'items']));
         return $content
             ->css_file(Admin::asset("open-admin/css/pages/dashboard.css"))
