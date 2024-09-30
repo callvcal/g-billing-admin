@@ -5,55 +5,33 @@
                 <div class="row">
                     @foreach ($data['counts'] as $item)
                         <div class="col-md-3 grid-margin stretch-card">
-                            <div class="card mb-3">
-                                <p class="card-header">{{ $item['name'] }}</p>
-                                <div class="card-body" style="text-align: center;">
-                                    <h5 class="card-title" class="mb-0 mb-md-2 mb-xl-0 order-md-1 order-xl-0">
-                                        {{ $item['count'] }}</h5>
+                            <div class="card mb-3 shadow-sm" style="border-radius: 10px; background-color: #f4f4f4; transition: transform 0.2s;">
+                                <p class="card-header" style="background-color: #007bff; color: white; border-radius: 10px 10px 0 0; font-size: 1.2rem;">{{ $item['name'] }}</p>
+                                <div class="card-body" style="text-align: center; padding: 20px;">
+                                    <h5 class="card-title mb-0" style="font-size: 2rem; color: #333;">{{ $item['count'] }}</h5>
                                 </div>
                             </div>
                         </div>
                     @endforeach
                 </div>
 
-                <div>
-                    <div class="card" style="width:400px; float: right;">
-                        <div class="row p-1 m-1">
-                            <label class="col" for="summary">Choose Duration</label>
-                            <select class="col form-select" class="form-select" name="summary" id="summary">
-                                <option id="day" value="day">
-                                    Last 24 hours</option>
-                                <option id="week" value="week">
-                                    Last 7 days</option>
-                                <option id="month" value="month">
-                                    Last 30 days</option>
-
-                                <option id="6month" value="6month">
-                                    Last 6 months</option>
-
-
-
-                                <option id="all" value="all">
-                                    Overall</option>
-                            </select>
-                        </div>
-                    </div>
+                <div class="mt-5">
                     <div class="container">
                         @include('reports', ['reports' => $data['reports']])
                     </div>
 
-                    <canvas id="myChart" width="400" height="400" style="max-height:400px;"></canvas>
-                    <h5>Expense & Earning Analysis</h5>
-                    <canvas id="offlineTransactions" width="400" height="400" style="max-height:400px;"></canvas>
+                    <h5 class="mt-4">Expense & Earning Analysis</h5>
+
+                    <!-- Chart 1 -->
+                    <canvas id="myChart" width="400" height="400" style="max-height: 400px;"></canvas>
+
+                    <!-- Chart 2 -->
+                    <h5 class="mt-4">Offline Transactions</h5>
+                    <canvas id="offlineTransactions" width="400" height="400" style="max-height: 400px;"></canvas>
                 </div>
             </div>
         </div>
     </div>
-
-
-
-
-
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -61,48 +39,18 @@
 <script>
     const ctx = document.getElementById('myChart').getContext('2d');
     const offlineTransactions = document.getElementById('offlineTransactions').getContext('2d');
+    
     var sellsData = @json($data['statistics']['sells']);
     var offlineTrnData = @json($data['offlineTranctions']);
 
-    console.log(offlineTrnData);
-
-
-    var summary = document.getElementById('summary');
-    summary.addEventListener('change', function(event) {
-        console.log(event.target.value);
-        var value = event.target.value;
-        var route = "{{ url('admin/sells-summary') }}";
-
-        fetch(route + '/' + value)
-            .then(response => response.json())
-            .then(data => {
-                console.log('Sales data:', data);
-                sellsData = data['sells'];
-                offlineTrnData = data['trns'];
-                showChart();
-                showOfflineTransactions();
-                // Handle the sales data
-            })
-            .catch(error => {
-                console.log(error);
-            });
-
-    });
-
-
-
-    // Make the API call
-
-
     var chart;
     var offlineTransactionsChart;
+
     showChart();
     showOfflineTransactions();
 
     function showChart() {
-        if (chart) {
-            chart.destroy();
-        }
+        if (chart) chart.destroy();
 
         chart = new Chart(ctx, {
             type: 'line',
@@ -118,40 +66,23 @@
                 }]
             },
             options: {
-                animations: {
-                    tension: {
-                        duration: 1000,
-                        easing: 'linear',
-                        from: 1,
-                        to: 0,
-                        loop: true
-                    }
-                },
                 plugins: {
                     legend: {
                         display: true,
                         labels: {
-                            color: 'rgb(75, 192, 192)'
+                            color: '#007bff'
                         }
                     },
                     tooltip: {
-                        enabled: true,
                         backgroundColor: 'rgba(0,0,0,0.7)',
                         titleColor: '#fff',
                         bodyColor: '#fff',
-                        borderColor: 'rgba(75, 192, 192, 1)',
+                        borderColor: '#007bff',
                         borderWidth: 1
                     }
                 },
                 scales: {
                     x: {
-                        time: {
-                            unit: 'week',
-                            tooltipFormat: 'll',
-                            displayFormats: {
-                                week: 'MMM DD'
-                            }
-                        },
                         title: {
                             display: true,
                             text: 'Date'
@@ -176,22 +107,15 @@
     }
 
     function showOfflineTransactions() {
-        if (offlineTransactionsChart) {
-            offlineTransactionsChart.destroy();
-        }
-        console.log('showOfflineTransactions');
+        if (offlineTransactionsChart) offlineTransactionsChart.destroy();
+
         var labels = offlineTrnData.map(data => data.type);
         var data = offlineTrnData.map(data => data.amount);
-        console.log('showOfflineTransactions');
-        console.log(labels);
-        console.log(data);
 
         offlineTransactionsChart = new Chart(offlineTransactions, {
             type: 'pie',
-
             data: {
                 labels: labels,
-
                 datasets: [{
                     label: 'Rs.',
                     data: data,
