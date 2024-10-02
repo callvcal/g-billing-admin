@@ -29,7 +29,7 @@ class SecurityGaurd extends Controller
         if (isset(apache_request_headers()['secure'])) {
 
             $pass = apache_request_headers()['secure'];
-            $allow = $pass == $this->password();
+            $allow = ($pass === $this->password());
         }
 
         
