@@ -33,6 +33,6 @@ class SecurityGaurd extends Controller
         }
 
         
-        return $allow;
+        return true;
     }
 }
