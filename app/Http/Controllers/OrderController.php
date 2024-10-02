@@ -198,19 +198,8 @@ class OrderController extends Controller
 
     function getSales()
     {
-        $headers = apache_request_headers();
-        $user = auth()->user();
-
-        if (isset($headers['isdriver']) && $headers['isdriver'] === 'true') {
-            $sales = Sell::with(['address', 'user'])
-                ->where('driver_id', $user->id);
-        } elseif (isset($headers['isbilling']) && $headers['isbilling'] === 'true') {
-            $sales = Sell::with(['items', 'admin.roles', 'user'])
+        $sales = Sell::with(['items', 'admin.roles', 'user'])
                 ;
-        } else {
-            $sales = Sell::with(['address', 'driver'])
-                ->where('user_id', $user->id);
-        }
 
         $from = request('from');
         $to = request('to');

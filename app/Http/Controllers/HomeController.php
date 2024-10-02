@@ -59,24 +59,26 @@ class HomeController extends Controller
 
     public function home()
     {
+        return response([
+            'categories' => Category::all(),
+            'recentProducts' => Menu::all(),
+            'settings' => Setting::find(2), // Assuming business settings aren't needed, so using global settings (ID 1)
+            'app_settings' => Setting::find(1),
+            'sales' => $this->query(Sell::class)->with(['admin.roles','user', 'address', 'items.address'])->whereDate('created_at', today())->get(),
+            'tables' => $this->query(DiningTable::class)->with('sell')->get(),
+            'units' => Unit::all(),
+            'users' => AdminUser::with(['roles'])->get(), 
+            'kitchens' => Kitchen::all(), 
+            'materials' => Material::all(), 
+            'earning_expense' => OfflineTransaction::all(), 
+            'materialsStock' => $this->query(RawMatrial::class)->with('material')->get(), 
+            'subCategories' => SubCategory::all(), 
+        ]);
+        
         if (isset(apache_request_headers()['isbilling']) && (apache_request_headers()['isbilling'] == 'true')) {
             $admin_id = auth()->user()->id;
     
-            return response([
-                'categories' => Category::all(),
-                'recentProducts' => Menu::all(),
-                'settings' => Setting::find(2), // Assuming business settings aren't needed, so using global settings (ID 1)
-                'app_settings' => Setting::find(1),
-                'sales' => $this->query(Sell::class)->with(['admin.roles','user', 'address', 'items.address'])->whereDate('created_at', today())->get(),
-                'tables' => $this->query(DiningTable::class)->with('sell')->get(),
-                'units' => Unit::all(),
-                'users' => AdminUser::with(['roles'])->get(), 
-                'kitchens' => Kitchen::all(), 
-                'materials' => Material::all(), 
-                'earning_expense' => OfflineTransaction::all(), 
-                'materialsStock' => $this->query(RawMatrial::class)->with('material')->get(), 
-                'subCategories' => SubCategory::all(), 
-            ]);
+           
         }
     
         return response([

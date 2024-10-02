@@ -295,10 +295,8 @@ class AuthController extends Controller
     {
         $auth = auth()->user();
 
-        if (isset(apache_request_headers()['isbilling']) && (apache_request_headers()['isbilling'] == 'true')) {
-            $auth = AdminUser::find($auth->id);
-            $auth->load('roles', 'permissions');
-        }
+        $auth = AdminUser::find($auth->id);
+        $auth->load('roles', 'permissions');
 
         return response([
             'authenticated' => ($auth) != null,
@@ -356,11 +354,8 @@ class AuthController extends Controller
         $fcmToken = $request->fcm_token;
         if (isset($fcmToken)) {
 
-            if (isset(apache_request_headers()['isbilling']) && (apache_request_headers()['isbilling'] == 'true')) {
-                $user = AdminUser::find(auth()->user()->id);
-            } else {
-                $user = User::find(auth()->user()->id);
-            }
+            $user = AdminUser::find(auth()->user()->id);
+
 
 
             $user->fcm_token = $fcmToken;
@@ -460,15 +455,11 @@ class AuthController extends Controller
 
 
 
-        if (isset(apache_request_headers()['isdriver']) && (apache_request_headers()['isdriver'] == 'true')) {
-            $user->is_driver = 1;
-            $user->save();
-        }
+      
+        
 
-        if (isset(apache_request_headers()['isbilling']) && (apache_request_headers()['isbilling'] == 'true')) {
-            $auth = AdminUser::find($user->id);
+        $auth = AdminUser::find($user->id);
             $auth->load('roles', 'permissions','business');
-        }
 
         return response([
             'token' => $user->createToken('token')->plainTextToken,
