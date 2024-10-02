@@ -75,15 +75,11 @@ class HomeController extends Controller
             'subCategories' => SubCategory::all(), 
         ]);
         
-        if (isset(apache_request_headers()['isbilling']) && (apache_request_headers()['isbilling'] == 'true')) {
-            $admin_id = auth()->user()->id;
+        
+        
     
-           
-        }
-    
-        return response([
-            'message' => 'Not developed'
-        ], 401);
+        
+        
     }
     
 

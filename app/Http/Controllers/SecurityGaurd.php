@@ -19,18 +19,14 @@ class SecurityGaurd extends Controller
 
     public function password()
     {
-        return '@345602hjhhbb%71GbghMi*8N46w%i^j7Gn^2dsdfghcu^w#p&';
     }
 
     public function check()
     {
         $allow = false;
 
-        if (isset(apache_request_headers()['secure'])) {
-
-            $pass = apache_request_headers()['secure'];
-            $allow = ($pass === $this->password());
-        }
+       
+        
 
         
         return true;
