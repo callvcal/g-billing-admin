@@ -100,6 +100,7 @@ Route::group([
     $router->resource('staffs', StaffController::class);
 
     $router->get('settings', [SettingController::class, 'create']);
+    $router->get('all-settings', [SettingController::class, 'bCreate']);
     $router->get('orders', [OrdersController::class, 'orders']);
     $router->post('placeOrder', [POSController::class,'placeOrder']);
     $router->get('php', [HomeController::class, 'php']);

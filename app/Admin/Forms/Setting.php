@@ -92,6 +92,9 @@ class Setting extends Form
             0 => "No",
             1 => "Yes",
         ];
+        $this->text('id', 'Shop Name')->rules('required');
+
+
         // if (isAdministrator()) {
         //     $this->number('invoice_id_label_width', 'invoice_id_label_width')->default(4);
         //     $this->number('invoice_id_value_width', 'invoice_id_value_width')->default(8);
@@ -166,7 +169,9 @@ class Setting extends Form
         }
 
         if ($data) {
-            return $data->json;
+            $json= $data->json;
+            $json['id']=$data->id;
+            return $json;
         }
 
         return [

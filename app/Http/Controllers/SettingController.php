@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Admin\Controllers\AllBusinessSettings;
+use App\Admin\Forms\AdminSetting;
 use App\Admin\Forms\Setting as FormsSetting;
 use App\Models\Setting;
 use Illuminate\Http\Request;
@@ -23,6 +25,10 @@ class SettingController extends Controller
     public function create(Content $content)
     {
         return $content->title("Settings Page")->body(new FormsSetting());
+    }
+    public function bCreate(Content $content)
+    {
+        return $content->title("Settings Page")->body(new AdminSetting());
     }
 
     public function update(Request $request)
