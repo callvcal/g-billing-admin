@@ -92,7 +92,6 @@ class Setting extends Form
             0 => "No",
             1 => "Yes",
         ];
-        $this->text('id', 'Shop Name')->rules('required');
 
 
         // if (isAdministrator()) {
