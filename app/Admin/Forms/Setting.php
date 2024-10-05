@@ -159,7 +159,7 @@ class Setting extends Form
      */
     public function data()
     {
-        $data = ModelsSetting::find(1);
+        $data = ModelsSetting::find(2);
 
         if (!$data) {
             ModelsSetting::create([
