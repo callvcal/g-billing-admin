@@ -136,6 +136,7 @@ class OrderController extends Controller
             $orderItemData = [
                 'date_time' => ($orderData['date_time']) ?? Carbon::now(),
                 'qty' => $item['qty'],
+                'printed_qty' => $item['printed_qty']??0,
                 'total_amt' => $item['total_amt'],
                 'user_id' => $user_id,
                 'menu_id' => $item['menu_id'],
