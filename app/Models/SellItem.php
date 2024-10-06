@@ -16,6 +16,7 @@ class SellItem extends Model
         'admin_id',
         'menu_id',
         'sell_id',
+        'printed_qty',
         'uuid',
         'token_number',
         'qty',
