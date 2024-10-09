@@ -340,7 +340,7 @@ class OrderController extends Controller
                 'qty' => $item['qty'],
                 'total_amt' => $item['total_amt'],
                 'menu_id' => $item['menu_id'],
-                // 'uuid' => $item['uuid'],
+                'uuid' => $item['uuid'],
                 'admin_id' => auth()->user()->id,
                 'token_number' => (new KotTokenController())->generateToken(),
                 'sell_id' => $order->uuid,
@@ -349,7 +349,7 @@ class OrderController extends Controller
             $model = SellItem::updateOrCreate([
                 'sell_id' => $order->uuid,
                 'menu_id' => $item['menu_id'],
-                // 'uuid' => $item['uuid'],
+                'uuid' => $item['uuid'],
             ], $orderItemData);
 
             $model->load('menu');
