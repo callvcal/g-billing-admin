@@ -583,8 +583,10 @@
                 if ((subcategoryId+"") === "{{ $menu->subcategory_id }}") {
                     var menuItem = `
                         <div class="menu-item btn btn-outline-primary m-1" onclick="addToCart({{ $menu->id }})">
-                            <img class="card-img-top" src="{{ Storage::url($menu->image??'') }}" alt="https://namak.cybersoftit.in/img/app_logo.jpg" style="width: 64px; height:64px">
-                            <p class="card-text" style="font-size: 0.8em"> {{ $menu->name }}</p>
+                            <img class="card-img-top" 
+                            src="{{ $menu->image && Storage::exists($menu->image) ? Storage::url($menu->image) : asset('img/app_logo.jpg') }}" 
+                            alt="Menu Image" 
+                            style="width: 64px; height:64px">                            <p class="card-text" style="font-size: 0.8em"> {{ $menu->name }}</p>
                             <p class="card-text" style="font-size: 0.9em"> Rs. {{ $menu->price }}</p>
                            
                         </div>
