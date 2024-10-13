@@ -17,6 +17,7 @@ return [
     */
 
     'name' => env('APP_NAME', 'Laravel'),
+    'placeholder_image' => '/img/app_logo.jpg', // Define the placeholder path here
 
     /*
     |--------------------------------------------------------------------------
