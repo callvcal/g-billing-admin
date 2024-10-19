@@ -8,7 +8,7 @@ class Material extends Model
 {
     protected $fillable = [
         'name','business_id',
-        'admin_id',
+        'admin_id','alert_qty','unit_id'
 
     ];
 
