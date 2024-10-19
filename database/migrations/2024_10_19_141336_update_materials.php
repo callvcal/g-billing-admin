@@ -15,6 +15,7 @@ return new class extends Migration
             $table->unsignedBigInteger('unit_id')->nullable();
             $table->integer('alert_qty')->default(0)->nullable();
             $table->foreign("unit_id")->references('id')->on('units')->nullOnDelete();
+            $table->double('stock')->nullable()->default(0);
         });
     }
 

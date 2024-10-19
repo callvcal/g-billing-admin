@@ -12,7 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('materials', function (Blueprint $table) {
-            $table->double('stock')->nullable()->default(0);
+            $table->double('used_in_sell')->nullable()->default(0);
+            $table->double('total_stock_in')->nullable()->default(0);
+            $table->double('total_stock_out')->nullable()->default(0);
         });
     }
 

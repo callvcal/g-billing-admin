@@ -76,8 +76,8 @@ class CategorySubcategoryItemController extends Controller
             ['id' => $request->id],
             [
                 'name' => $request->name,
-                'alert_qty' => (int) $request->alert_qty ?? 0,
-                'unit_id' => (int) $request->unit_id ?? 0,
+                'alert_qty' => (int) $request->alert_qty ,
+                'unit_id' => (int) $request->unit_id ,
                 'business_id' => auth()->user()->business_id,
                 'admin_id' => auth()->user()->id
 
@@ -91,7 +91,7 @@ class CategorySubcategoryItemController extends Controller
         // Validate the request data
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
-            'unit_id' => 'required|integer',
+            // 'unit_id' => 'required|integer',
             'qty' => 'required|numeric',
             'datetime' => 'required|date',
             'type' => 'required|string',
