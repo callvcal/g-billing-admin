@@ -75,7 +75,7 @@ class CategorySubcategoryItemController extends Controller
             [
                 'name' => $request->name,
                 'alert_qty' => $request->alert_qty??0,
-                'unit' => $request->unit_id??0,
+                'unit_id' => $request->unit_id??0,
                 'business_id' => auth()->user()->business_id,
                 'admin_id' => auth()->user()->id
 
