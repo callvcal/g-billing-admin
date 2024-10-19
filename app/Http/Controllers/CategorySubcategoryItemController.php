@@ -89,19 +89,19 @@ class CategorySubcategoryItemController extends Controller
     public function createRawMaterialStock(Request $request)
     {
         // Validate the request data
-        $validator = Validator::make($request->all(), [
-            'name' => 'required|string|max:255',
-            // 'unit_id' => 'required|integer',
-            'qty' => 'required|numeric',
-            'datetime' => 'required|date',
-            'type' => 'required|string',
-            'amount' => 'required|numeric',
-            'material_id' => 'required|exists:materials,id', // Ensure material exists
-        ]);
+        // $validator = Validator::make($request->all(), [
+        //     // 'name' => 'required|string|max:255',
+        //     // 'unit_id' => 'required|integer',
+        //     'qty' => 'required|numeric',
+        //     'datetime' => 'required|date',
+        //     'type' => 'required|string',
+        //     'amount' => 'required|numeric',
+        //     'material_id' => 'required|exists:materials,id', // Ensure material exists
+        // ]);
 
-        if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors()], 422);
-        }
+        // if ($validator->fails()) {
+        //     return response()->json(['errors' => $validator->errors()], 422);
+        // }
 
         $category='';
         DB::transaction(function () use ($request) {
