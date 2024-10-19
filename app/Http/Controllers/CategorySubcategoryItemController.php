@@ -104,30 +104,28 @@ class CategorySubcategoryItemController extends Controller
         // }
 
         $category='';
-        DB::transaction(function () use ($request) {
-            $category = RawMatrial::updateOrCreate(
-                ['id' => $request->id],
-                [
-                    'name' => $request->name,
-                    'business_id' => auth()->user()->business_id,
-                    'unit_id' => $request->unit_id,
-                    'qty' => $request->qty,
-                    'datetime' => $request->datetime,
-                    'type' => $request->type,
-                    'amount' => $request->amount,
-                    'material_id' => $request->material_id,
-                    'admin_id' => auth()->user()->id,
-                ]
-            );
+        $category = RawMatrial::updateOrCreate(
+            ['id' => $request->id],
+            [
+                'name' => $request->name,
+                'business_id' => auth()->user()->business_id,
+                'unit_id' => $request->unit_id,
+                'qty' => $request->qty,
+                'datetime' => $request->datetime,
+                'type' => $request->type,
+                'amount' => $request->amount,
+                'material_id' => $request->material_id,
+                'admin_id' => auth()->user()->id,
+            ]
+        );
 
-            $category->load('material');
+        $category->load('material');
 
-            if ($category->material) {
-                // Update the stock based on the type
-                $category->material->stock += ($request->name === 'stock-in' ? $category->qty : -$category->qty);
-                $category->material->save(); // Save the updated stock
-            }
-        });
+        if ($category->material) {
+            // Update the stock based on the type
+            $category->material->stock += ($request->name === 'stock-in' ? $category->qty : -$category->qty);
+            $category->material->save(); // Save the updated stock
+        }
 
         return response($category);
     }
