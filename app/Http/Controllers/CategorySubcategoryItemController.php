@@ -114,6 +114,7 @@ class CategorySubcategoryItemController extends Controller
                 'datetime' => $request->datetime,
                 'type' => $request->type,
                 'amount' => $request->amount,
+                'note' => $request->note,
                 'material_id' => $request->material_id,
                 'admin_id' => auth()->user()->id,
             ]
