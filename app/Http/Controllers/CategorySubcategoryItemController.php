@@ -15,8 +15,10 @@ use App\Models\Sell;
 use App\Models\SellItem;
 use App\Models\Unit;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 
 class CategorySubcategoryItemController extends Controller
@@ -83,8 +85,27 @@ class CategorySubcategoryItemController extends Controller
         );
         return response($category);
     }
-    public function createRawMaterialStock(Request $request)
-    {
+    use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
+
+public function createRawMaterialStock(Request $request)
+{
+    // Validate the request data
+    $validator = Validator::make($request->all(), [
+        'name' => 'required|string|max:255',
+        'unit_id' => 'required|integer',
+        'qty' => 'required|numeric',
+        'datetime' => 'required|date',
+        'type' => 'required|string',
+        'amount' => 'required|numeric',
+        'material_id' => 'required|exists:materials,id', // Ensure material exists
+    ]);
+
+    if ($validator->fails()) {
+        return response()->json(['errors' => $validator->errors()], 422);
+    }
+
+    DB::transaction(function () use ($request) {
         $category = RawMatrial::updateOrCreate(
             ['id' => $request->id],
             [
@@ -96,12 +117,22 @@ class CategorySubcategoryItemController extends Controller
                 'type' => $request->type,
                 'amount' => $request->amount,
                 'material_id' => $request->material_id,
-                'admin_id' => auth()->user()->id
+                'admin_id' => auth()->user()->id,
             ]
         );
+
         $category->load('material');
-        return response($category);
-    }
+
+        if ($category->material) {
+            // Update the stock based on the type
+            $category->material->stock += ($request->name === 'stock-in' ? $category->qty : -$category->qty);
+            $category->material->save(); // Save the updated stock
+        }
+    });
+
+    return response()->json($category);
+}
+
 
     public function createKitchen(Request $request)
     {
