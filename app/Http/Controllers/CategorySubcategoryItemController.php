@@ -76,8 +76,8 @@ class CategorySubcategoryItemController extends Controller
             ['id' => $request->id],
             [
                 'name' => $request->name,
-                'alert_qty' =>(int) $request->alert_qty??0,
-                'unit_id' =>(int) $request->unit_id??0,
+                'alert_qty' => (int) $request->alert_qty ?? 0,
+                'unit_id' => (int) $request->unit_id ?? 0,
                 'business_id' => auth()->user()->business_id,
                 'admin_id' => auth()->user()->id
 
@@ -85,53 +85,52 @@ class CategorySubcategoryItemController extends Controller
         );
         return response($category);
     }
-    use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Validator;
 
-public function createRawMaterialStock(Request $request)
-{
-    // Validate the request data
-    $validator = Validator::make($request->all(), [
-        'name' => 'required|string|max:255',
-        'unit_id' => 'required|integer',
-        'qty' => 'required|numeric',
-        'datetime' => 'required|date',
-        'type' => 'required|string',
-        'amount' => 'required|numeric',
-        'material_id' => 'required|exists:materials,id', // Ensure material exists
-    ]);
+    public function createRawMaterialStock(Request $request)
+    {
+        // Validate the request data
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string|max:255',
+            'unit_id' => 'required|integer',
+            'qty' => 'required|numeric',
+            'datetime' => 'required|date',
+            'type' => 'required|string',
+            'amount' => 'required|numeric',
+            'material_id' => 'required|exists:materials,id', // Ensure material exists
+        ]);
 
-    if ($validator->fails()) {
-        return response()->json(['errors' => $validator->errors()], 422);
-    }
-
-    DB::transaction(function () use ($request) {
-        $category = RawMatrial::updateOrCreate(
-            ['id' => $request->id],
-            [
-                'name' => $request->name,
-                'business_id' => auth()->user()->business_id,
-                'unit_id' => $request->unit_id,
-                'qty' => $request->qty,
-                'datetime' => $request->datetime,
-                'type' => $request->type,
-                'amount' => $request->amount,
-                'material_id' => $request->material_id,
-                'admin_id' => auth()->user()->id,
-            ]
-        );
-
-        $category->load('material');
-
-        if ($category->material) {
-            // Update the stock based on the type
-            $category->material->stock += ($request->name === 'stock-in' ? $category->qty : -$category->qty);
-            $category->material->save(); // Save the updated stock
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
         }
-    });
 
-    return response()->json($category);
-}
+        $category='';
+        DB::transaction(function () use ($request) {
+            $category = RawMatrial::updateOrCreate(
+                ['id' => $request->id],
+                [
+                    'name' => $request->name,
+                    'business_id' => auth()->user()->business_id,
+                    'unit_id' => $request->unit_id,
+                    'qty' => $request->qty,
+                    'datetime' => $request->datetime,
+                    'type' => $request->type,
+                    'amount' => $request->amount,
+                    'material_id' => $request->material_id,
+                    'admin_id' => auth()->user()->id,
+                ]
+            );
+
+            $category->load('material');
+
+            if ($category->material) {
+                // Update the stock based on the type
+                $category->material->stock += ($request->name === 'stock-in' ? $category->qty : -$category->qty);
+                $category->material->save(); // Save the updated stock
+            }
+        });
+
+        return response($category);
+    }
 
 
     public function createKitchen(Request $request)
