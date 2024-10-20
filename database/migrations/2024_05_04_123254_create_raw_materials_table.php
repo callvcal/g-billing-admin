@@ -28,7 +28,8 @@ class CreateRawMaterialsTable extends Migration
             $table->foreign("unit_id")->references('id')->on('units')->nullOnDelete();
             $table->unsignedBigInteger('material_id')->nullable();
             $table->foreign("material_id")->references('id')->on('materials')->nullOnDelete();
-           
+            $table->text('note')->nullable();
+
             $table->timestamps();
         });
     }

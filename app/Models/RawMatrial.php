@@ -24,6 +24,7 @@ class RawMatrial extends Model
         'qty',
         'type',
         'datetime',
+        'latest_stock',
         'note',
         'amount',
         'unit_id',

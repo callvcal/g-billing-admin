@@ -12,8 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('raw_materials', function (Blueprint $table) {
-            $table->text('note')->nullable();
-            
+            $table->double('latest_stock')->nullable();
+
         });
     }
 
