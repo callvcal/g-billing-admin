@@ -124,7 +124,7 @@ class CategorySubcategoryItemController extends Controller
 
         if ($category->material) {
             // Update the stock based on the type
-            $category->material->stock += ($request->name === 'stock-in' ? $category->qty : -$category->qty);
+            $category->material->stock = $category->material->stock+($request->name === 'stock-in' ? $category->qty : - $category->qty);
             $category->material->save(); // Save the updated stock
         }
 
