@@ -27,6 +27,15 @@ class RecipeController extends Controller
             'message' => "Recipe Created Successfully"
         ]);
     }
+    function recipes(){
+
+        $page=request('page')??1;
+        $data=Recipe::where('business_id',auth()->user()->business_id)->latest()->paginate(100,['*'],'page',$page);
+
+        return response($data);
+
+
+    }
     function addMaterial(Request $request)
     {
         $request->validate([

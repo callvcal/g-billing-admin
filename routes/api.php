@@ -196,6 +196,7 @@ Route::group(['middleware' => ['security', 'auth:sanctum']], function () {
 
     ///Recipe Part
     Route::post('/recipe/create', [RecipeController::class, 'createRecipe']);
+    Route::get('/recipes', [RecipeController::class, 'recipes']);
     Route::delete('/recipe/delete/{id}', [RecipeController::class, 'deleteRecipe']);
     Route::post('/recipe/material/create', [RecipeController::class, 'addMaterial']);
     Route::delete('/recipe/material/delete/{id}', [RecipeController::class, 'deleteMaterial']);
