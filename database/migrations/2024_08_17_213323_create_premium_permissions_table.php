@@ -14,7 +14,7 @@ class CreatePremiumPermissionsTable extends Migration
     public function up()
     {
         Schema::create('premium_permissions', function (Blueprint $table) {
-            $table->increments('id');
+            $table->id();
             $table->boolean('active')->nullable();
             $table->string('name')->nullable();
             $table->string('slug')->nullable();

@@ -36,6 +36,8 @@ use App\Admin\Controllers\PremiumPermissionController;
 use App\Admin\Controllers\PremiumPlanController;
 use App\Admin\Controllers\PushNotificationController;
 use App\Admin\Controllers\RawMatrialController;
+use App\Admin\Controllers\RecipeMaterialController;
+use App\Admin\Controllers\RecipeController;
 use App\Admin\Controllers\SellController;
 use App\Admin\Controllers\SellItemController;
 use App\Admin\Controllers\SpecialDiscountController;
@@ -118,6 +120,10 @@ Route::group([
     $router->resource('menu-stocks', MenuStockController::class);
 
     $router->resource('premium-plans', PremiumPlanController::class);
+    $router->resource('recipes', RecipeController::class);
+
+    $router->resource('recipe-materials', RecipeMaterialController::class);
+
 
     
     $router->get('pusher/events', [HomeController::class, function () {

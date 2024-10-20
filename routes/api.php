@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CategorySubcategoryItemController;
 use App\Http\Controllers\InAppPurchaseController;
 use App\Http\Controllers\ManagePaymentController;
+use App\Http\Controllers\RecipeController;
 use App\Http\Controllers\SettingController;
 
 /*
@@ -191,5 +192,12 @@ Route::group(['middleware' => ['security', 'auth:sanctum']], function () {
     Route::post('/menu/stock/adjust', [CategorySubcategoryItemController::class, 'adjustStock']);
     Route::post('/staffs/password/change', [AuthController::class, 'changePassword']);
 
+
+
+    ///Recipe Part
+    Route::post('/recipe/create', [RecipeController::class, 'createRecipe']);
+    Route::delete('/recipe/delete/{id}', [RecipeController::class, 'deleteRecipe']);
+    Route::post('/recipe/material/create', [RecipeController::class, 'addMaterial']);
+    Route::delete('/recipe/material/delete/{id}', [RecipeController::class, 'deleteMaterial']);
 
 });
