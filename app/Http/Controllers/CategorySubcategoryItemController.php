@@ -106,7 +106,7 @@ class CategorySubcategoryItemController extends Controller
         $item = RawMatrial::updateOrCreate(
             ['id' => $request->id],
             [
-                'name' => $request->name,
+                'name' => $request->type,
                 'business_id' => auth()->user()->business_id,
                 'unit_id' => $request->unit_id,
                 'qty' => $request->qty,
@@ -124,7 +124,7 @@ class CategorySubcategoryItemController extends Controller
         if ($item->material) {
             // Update the stock based on the type
 
-            if($request->name === 'stock-in'){
+            if($request->type === 'stock-in'){
                 $item->material->stock = $item->material->stock+$item->qty;
                 $item->material->total_stock_in = $item->material->total_stock_in+$item->qty;
                 
