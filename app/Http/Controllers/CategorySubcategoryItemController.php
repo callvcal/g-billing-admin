@@ -103,8 +103,7 @@ class CategorySubcategoryItemController extends Controller
         //     return response()->json(['errors' => $validator->errors()], 422);
         // }
 
-        $category='';
-        $category = RawMatrial::updateOrCreate(
+        $item = RawMatrial::updateOrCreate(
             ['id' => $request->id],
             [
                 'name' => $request->name,
@@ -120,15 +119,24 @@ class CategorySubcategoryItemController extends Controller
             ]
         );
 
-        $category->load('material');
+        $item->load('material');
 
-        if ($category->material) {
+        if ($item->material) {
             // Update the stock based on the type
-            $category->material->stock = $category->material->stock+($request->name === 'stock-in' ? $category->qty : - $category->qty);
-            $category->material->save(); // Save the updated stock
+
+            if($request->name === 'stock-in'){
+                $item->material->stock = $item->material->stock+$item->qty;
+                $item->material->total_stock_in = $item->material->total_stock_in+$item->qty;
+                
+            }else{
+                $item->material->stock = $item->material->stock-$item->qty;
+                $item->material->total_stock_out = $item->material->total_stock_out+$item->qty;
+            }
+
+           $item->material->save(); // Save the updated stock
         }
 
-        return response($category);
+        return response($item);
     }
 
 
