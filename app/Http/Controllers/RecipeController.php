@@ -30,7 +30,7 @@ class RecipeController extends Controller
     function recipes(){
 
         $page=request('page')??1;
-        $data=Recipe::where('business_id',auth()->user()->business_id)->latest()->paginate(100,['*'],'page',$page);
+        $data=Recipe::with('materials')->where('business_id',auth()->user()->business_id)->latest()->paginate(100,['*'],'page',$page);
 
         return response($data);
 

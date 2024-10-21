@@ -13,4 +13,9 @@ class Recipe extends Model
         'menu_id',
         'subcategory_id',
     ];
+
+    public function materials()
+    {
+        return $this->hasMany(RecipeMaterial::class);
+    }
 }
