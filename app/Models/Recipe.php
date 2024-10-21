@@ -18,4 +18,8 @@ class Recipe extends Model
     {
         return $this->hasMany(RecipeMaterial::class, 'recipe_id');
     }
+    public function menu()
+    {
+        return $this->belongsTo(Menu::class, 'menu_id','id');
+    }
 }
