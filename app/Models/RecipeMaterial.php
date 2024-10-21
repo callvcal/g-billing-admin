@@ -13,4 +13,8 @@ class RecipeMaterial extends Model
         'recipe_id','allow_dine_in','allow_parcel_delivery','qty',
         'material_id',
     ];
+    public function material()
+    {
+        return $this->belongsTo(Material::class, 'material_id','id');
+    }
 }
