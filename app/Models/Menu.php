@@ -21,7 +21,7 @@ class Menu extends Model
         return $this->belongsTo(Category::class, 'category_id');
     }
     protected $fillable = [
-        'name', 'business_id',
+        'name', 'business_id','allow_delivery','allow_dine_in','allow_take_away',
         'image',
         'subtitle',
         'code',
