@@ -9,7 +9,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Http;
 
 /*
 |--------------------------------------------------------------------------
@@ -144,12 +143,3 @@ Route::get('/dev', function () {
 });
 
 
-Route::get('/eatplan8-import', function () {
-
-    $response = Http::get('https://api.example.com/data');
-
-    // Get the response body as JSON
-    $data = $response->json();
-
-    return response($data);
-});

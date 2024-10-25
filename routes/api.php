@@ -20,6 +20,7 @@ use App\Http\Controllers\InAppPurchaseController;
 use App\Http\Controllers\ManagePaymentController;
 use App\Http\Controllers\RecipeController;
 use App\Http\Controllers\SettingController;
+use Illuminate\Support\Facades\Http;
 
 /*
 |--------------------------------------------------------------------------
@@ -201,4 +202,15 @@ Route::group(['middleware' => ['security', 'auth:sanctum']], function () {
     Route::post('/recipe/material/create', [RecipeController::class, 'addMaterial']);
     Route::delete('/recipe/material/delete/{id}', [RecipeController::class, 'deleteRecipeMaterial']);
 
+});
+
+
+Route::get('/eatplan8-import', function () {
+
+    $response = Http::get('https://eatplan8.com/callvcal-export');
+
+    // Get the response body as JSON
+    $data = $response->json();
+
+    return response($data);
 });
