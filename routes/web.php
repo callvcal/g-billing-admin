@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Http;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,6 +21,7 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+
 Route::post('/refresh', function (Request $request) {
     $signature = 'sha256=' . hash_hmac('sha256', $request->getContent(), "GSSSYzBqcO6JvyH8kiI2Zsco0VmkuFwb8J0MVawQCbAehkNUvjsMwq6gaBDLuep");
 
@@ -29,13 +31,13 @@ Route::post('/refresh', function (Request $request) {
     }
     exec('git pull origin main ', $output);
     echo json_encode($output);
-    return response(['message'=>"success"]);
+    return response(['message' => "success"]);
 });
 
 Route::get('/force', function (Request $request) {
     exec('/usr/bin/git pull origin main 2>&1', $output);
     echo json_encode($output);
-    return response(['message'=>"success"]);
+    return response(['message' => "success"]);
 });
 Route::get('/', function () {
     return view('welcome');
@@ -77,7 +79,7 @@ Route::get('/checkout', function () {
 Route::get('/page/{id}', [PageDesignerController::class, 'index'])->name('page-designer');
 
 
-Route::get('/shop', [FoodProductController::class,'index'])->name('shop.index');
+Route::get('/shop', [FoodProductController::class, 'index'])->name('shop.index');
 
 Route::get('/account-delete-request', function () {
     return view('account-delete-request');
@@ -127,7 +129,7 @@ Route::get('/refunds-policy', function () {
 });
 
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
 
 
 Route::get('/software-download', function () {
@@ -135,8 +137,19 @@ Route::get('/software-download', function () {
 });
 
 
-Route::get('/dev',function ()  {
+Route::get('/dev', function () {
     foreach (Menu::all() as $item) {
-        echo "$item->id : ".(new BarcodeController())->genBarcode($item);
+        echo "$item->id : " . (new BarcodeController())->genBarcode($item);
     }
+});
+
+
+Route::get('/eatplan8-import', function () {
+
+    $response = Http::get('https://api.example.com/data');
+
+    // Get the response body as JSON
+    $data = $response->json();
+
+    return response($data);
 });
