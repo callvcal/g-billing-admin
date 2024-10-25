@@ -27,6 +27,7 @@ use App\Models\Menu;
 use App\Models\SubCategory;
 use App\Models\Unit;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Storage;
 
 /*
 |--------------------------------------------------------------------------
@@ -219,8 +220,40 @@ Route::get('/eatplan8-import', function () {
     $businessId = 137;
 
     // Helper function to map old IDs to new IDs
-    function mapOldToNewId($oldId, $idArray) {
+    function mapOldToNewId($oldId, $idArray)
+    {
         return collect($idArray)->firstWhere('old_id', $oldId)['new_id'] ?? null;
+    }
+
+    function uploadImageToS3($imageUrl)
+    {
+        // Check if URL is valid
+        if (empty($imageUrl)) {
+            return null;
+        }
+
+        try {
+            // Get the image content
+            $response = Http::get($imageUrl);
+
+            if ($response->successful()) {
+                // Extract file extension from URL
+                $extension = pathinfo(parse_url($imageUrl, PHP_URL_PATH), PATHINFO_EXTENSION) ?: 'jpg';
+                // Generate unique filename with extension
+                $filename = 'files/eatinsta/images/' . uniqid('image_', true) . '.' . $extension;
+
+                // Upload to S3
+                Storage::disk('s3')->put($filename, $response->body());
+
+                // Return the S3 relative path
+                return $filename;
+            } else {
+                return null; // If image download fails
+            }
+        } catch (\Exception $e) {
+            // Handle any errors
+            return null;
+        }
     }
 
     // Process Units
@@ -274,6 +307,7 @@ Route::get('/eatplan8-import', function () {
             'old_id' => $category['id'],
             'new_id' => Category::create([
                 'name' => $category['name'],
+                'image' =>uploadImageToS3($category['image']) ,
                 'business_id' => $businessId,
                 'admin_id' => $adminId,
             ])->id,
@@ -289,6 +323,7 @@ Route::get('/eatplan8-import', function () {
                 'name' => $subcategory['name'],
                 'business_id' => $businessId,
                 'admin_id' => $adminId,
+                'image' =>uploadImageToS3($subcategory['image']) ,
                 'category_id' => mapOldToNewId($subcategory['category_id'], $categoriesId),
                 'kitchen_id' => mapOldToNewId($subcategory['kitchen_id'], $kitchenId),
             ])->id,
@@ -313,7 +348,7 @@ Route::get('/eatplan8-import', function () {
                 'allow_delivery' => $product['allow_delivery'] ?? 0,
                 'allow_dine_in' => $product['allow_dine_in'] ?? 0,
                 'allow_take_away' => $product['allow_take_away'] ?? 0,
-                'image' => $product['image'] ?? null,
+                'image' =>uploadImageToS3($product['image']) ,
                 'subtitle' => $product['subtitle'] ?? null,
                 'code' => $product['code'] ?? null,
                 'in_stock' => $product['in_stock'] ?? 1,
@@ -330,7 +365,7 @@ Route::get('/eatplan8-import', function () {
             ])->id,
         ]);
     }
-    
+
 
     return response()->json([
         'units' => $unitId,
