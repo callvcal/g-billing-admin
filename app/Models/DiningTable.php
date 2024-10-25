@@ -16,7 +16,7 @@ class DiningTable extends Model
         'amount',
         'sell_id',
         'invoice_number',
-        'name',
+        'name','admin_id',
         'capacity',
         'uuid',
         'number','business_id',

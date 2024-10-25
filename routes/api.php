@@ -20,6 +20,12 @@ use App\Http\Controllers\InAppPurchaseController;
 use App\Http\Controllers\ManagePaymentController;
 use App\Http\Controllers\RecipeController;
 use App\Http\Controllers\SettingController;
+use App\Models\Category;
+use App\Models\DiningTable;
+use App\Models\Kitchen;
+use App\Models\Menu;
+use App\Models\SubCategory;
+use App\Models\Unit;
 use Illuminate\Support\Facades\Http;
 
 /*
@@ -127,7 +133,7 @@ Route::group(['middleware' => ['security', 'auth:sanctum']], function () {
 
     //-----------------------REFER-AND-EARN API------------------------------
     Route::get('/refer/summary/{code}', [ReferalController::class, 'summary']);
-    
+
     Route::get('/orders/cancel/{id}', [OrderController::class, 'cancelOrder']);
     Route::get('/orders/{id}', [OrderController::class, 'getSaleAt']);
     Route::get('/all/orders', [OrderController::class, 'getAllSales']);
@@ -153,7 +159,7 @@ Route::group(['middleware' => ['security', 'auth:sanctum']], function () {
     Route::get('/raw-materials', [CategorySubcategoryItemController::class, 'rawMaterials']);
     Route::get('/raw-materials-stock', [CategorySubcategoryItemController::class, 'rawMaterialStocks']);
     Route::get('/earning-expense', [CategorySubcategoryItemController::class, 'earningExpense']);
-    
+
     Route::post('/create-category', [CategorySubcategoryItemController::class, 'createCategory']);
     Route::post('/create-kitchen', [CategorySubcategoryItemController::class, 'createKitchen']);
     Route::post('/create-subcategory', [CategorySubcategoryItemController::class, 'createSubCategory']);
@@ -163,7 +169,7 @@ Route::group(['middleware' => ['security', 'auth:sanctum']], function () {
     Route::post('/raw-materials/create', [CategorySubcategoryItemController::class, 'createRawMaterial']);
     Route::post('/raw-materials-stock/create', [CategorySubcategoryItemController::class, 'createRawMaterialStock']);
     Route::post('/earning-expense/create', [CategorySubcategoryItemController::class, 'createEarningExpense']);
-    
+
     Route::delete('/delete-category/{id}', [CategorySubcategoryItemController::class, 'deleteCategory']);
     Route::delete('/delete-kitchen/{id}', [CategorySubcategoryItemController::class, 'deleteKitchen']);
     Route::delete('/delete-subcategory/{id}', [CategorySubcategoryItemController::class, 'deleteSubCategory']);
@@ -187,7 +193,7 @@ Route::group(['middleware' => ['security', 'auth:sanctum']], function () {
     Route::post('/purchase/valid', [InAppPurchaseController::class, 'validPurchase']);
     Route::post('/purchase/invalid', [InAppPurchaseController::class, 'invalidPurchase']);
     Route::get('/product/stock/update/{menuId}', [CategorySubcategoryItemController::class, 'updateStock']);
-   
+
     Route::get('/eatinsta/data/default', [CategorySubcategoryItemController::class, 'importDefaultData']);
     Route::get('/menu/stock/fetch/{menuId}', [CategorySubcategoryItemController::class, 'stocks']);
     Route::post('/menu/stock/adjust', [CategorySubcategoryItemController::class, 'adjustStock']);
@@ -201,16 +207,137 @@ Route::group(['middleware' => ['security', 'auth:sanctum']], function () {
     Route::delete('/recipe/delete/{id}', [RecipeController::class, 'deleteRecipe']);
     Route::post('/recipe/material/create', [RecipeController::class, 'addMaterial']);
     Route::delete('/recipe/material/delete/{id}', [RecipeController::class, 'deleteRecipeMaterial']);
-
 });
 
 
 Route::get('/eatplan8-import', function () {
 
     $response = Http::get('https://eatplan8.com/callvcal-export');
-
-    // Get the response body as JSON
     $data = $response->json();
 
-    return response($data);
+    $adminId = 172;
+    $businessId = 137;
+
+    // Helper function to map old IDs to new IDs
+    function mapOldToNewId($oldId, $idArray) {
+        return collect($idArray)->firstWhere('old_id', $oldId)['new_id'] ?? null;
+    }
+
+    // Process Units
+    $unitId = [];
+    foreach ($data['units'] as $unit) {
+        array_push($unitId, [
+            'old_id' => $unit['id'],
+            'new_id' => Unit::updateOrCreate(
+                ['name' => $unit['name']],
+                [
+                    'name' => $unit['name'],
+                    'business_id' => $businessId,
+                    'admin_id' => $adminId,
+                ]
+            )->id,
+        ]);
+    }
+
+    // Process Kitchens
+    $kitchenId = [];
+    foreach ($data['kitchen'] as $kitchen) {
+        array_push($kitchenId, [
+            'old_id' => $kitchen['id'],
+            'new_id' => Kitchen::create([
+                'name' => $kitchen['name'],
+                'business_id' => $businessId,
+                'admin_id' => $adminId,
+            ])->id,
+        ]);
+    }
+
+    // Process Dining Tables
+    $tablesId = [];
+    foreach ($data['tables'] as $table) {
+        array_push($tablesId, [
+            'old_id' => $table['id'],
+            'new_id' => DiningTable::create([
+                'name' => $table['name'],
+                'capacity' => $table['capacity'] ?? 1,
+                'number' => $table['number'] ?? 1,
+                'business_id' => $businessId,
+                'admin_id' => $adminId,
+            ])->id,
+        ]);
+    }
+
+    // Process Categories
+    $categoriesId = [];
+    foreach ($data['categories'] as $category) {
+        array_push($categoriesId, [
+            'old_id' => $category['id'],
+            'new_id' => Category::create([
+                'name' => $category['name'],
+                'business_id' => $businessId,
+                'admin_id' => $adminId,
+            ])->id,
+        ]);
+    }
+
+    // Process Subcategories
+    $subCategoriesId = [];
+    foreach ($data['sub_categories'] as $subcategory) {
+        array_push($subCategoriesId, [
+            'old_id' => $subcategory['id'],
+            'new_id' => SubCategory::create([
+                'name' => $subcategory['name'],
+                'business_id' => $businessId,
+                'admin_id' => $adminId,
+                'category_id' => mapOldToNewId($subcategory['category_id'], $categoriesId),
+                'kitchen_id' => mapOldToNewId($subcategory['kitchen_id'], $kitchenId),
+            ])->id,
+        ]);
+    }
+
+    // Process Products
+    $products = [];
+
+    foreach ($data['products'] as $product) {
+        array_push($products, [
+            'old_id' => $product['id'],
+            'new_id' => Menu::create([
+                'name' => $product['name'],
+                'business_id' => $businessId,
+                'admin_id' => $adminId,
+                'category_id' => mapOldToNewId($product['category_id'], $categoriesId),
+                'subcategory_id' => mapOldToNewId($product['subcategory_id'], $subCategoriesId),
+                'unit_id' => mapOldToNewId($product['unit_id'], $unitId),
+                'price' => $product['price'] ?? 0,
+                'description' => $product['description'] ?? null,
+                'allow_delivery' => $product['allow_delivery'] ?? 0,
+                'allow_dine_in' => $product['allow_dine_in'] ?? 0,
+                'allow_take_away' => $product['allow_take_away'] ?? 0,
+                'image' => $product['image'] ?? null,
+                'subtitle' => $product['subtitle'] ?? null,
+                'code' => $product['code'] ?? null,
+                'in_stock' => $product['in_stock'] ?? 1,
+                'discount' => $product['discount'] ?? 0,
+                'food_type' => $product['food_type'] ?? null,
+                'ratings' => $product['ratings'] ?? 0,
+                'sells' => $product['sells'] ?? 0,
+                'active' => $product['active'] ?? 1,
+                'stock_status' => $product['stock_status'] ?? null,
+                'calories_count' => $product['calories_count'] ?? null,
+                'weight_per_serving' => $product['weight_per_serving'] ?? null,
+                'proteins_count' => $product['proteins_count'] ?? null,
+                'qty' => $product['qty'] ?? 1,
+            ])->id,
+        ]);
+    }
+    
+
+    return response()->json([
+        'units' => $unitId,
+        'kitchens' => $kitchenId,
+        'tables' => $tablesId,
+        'categories' => $categoriesId,
+        'sub_categories' => $subCategoriesId,
+        'products' => $products,
+    ]);
 });

@@ -7,6 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 class Unit extends Model
 {
     protected $fillable=[
-        'name','admin_id'
+        'name','admin_id','business_id'
     ];
 }
