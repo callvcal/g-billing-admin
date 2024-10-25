@@ -31,6 +31,13 @@ class StaffController extends Controller
         $admin = new AdminUser();
         if ($request->filled('id')) {
             $admin = AdminUser::find($request->id);
+
+            if($admin->business_id!=(auth()->user()->id)){
+                return response([
+                    'message'=>"You don't have access to change this user."
+                ],401);
+            }
+
         }
 
         $role=$request->role;
