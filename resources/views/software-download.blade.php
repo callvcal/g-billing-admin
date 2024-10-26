@@ -119,7 +119,7 @@
 
                         </p>
 
-                        <a href="https://drive.google.com/file/d/1kLbJ6FA5sJEtFJEpxSTjDHWyeMCX3QLW/view?usp=sharing" target="_blank">
+                        <a href="https://drive.google.com/file/d/1d04AbzcylW7jyR6e2qall0y-A_oVIAuH/view?usp=sharing" target="_blank">
     <button class="btn btn-hover">Download Now</button>
 </a>
 
