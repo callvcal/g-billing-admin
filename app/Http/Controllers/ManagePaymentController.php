@@ -41,7 +41,7 @@ class ManagePaymentController extends Controller
             'user_id' => $user->id,
             'date_time' => now(),
             'expiry_date' => $request->expiry_date,
-            'location_id' => $user->location_id,
+            'business_id' => $user->business_id,
             'plan' => $request->plan,
             'platform' => $request->platform ?? 'android',
             'method' => 'razorPay',
@@ -126,7 +126,7 @@ class ManagePaymentController extends Controller
         $plan = $transaction->plan;
     
         if ($status['status'] === 'paid') {
-            $business = Business::find($transaction->location_id);
+            $business = Business::find($transaction->business_id);
     
             if (!$business) {
                 return false;
