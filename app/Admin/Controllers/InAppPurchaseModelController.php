@@ -32,6 +32,18 @@ class InAppPurchaseModelController extends AdminController
         $grid->column('business_id', __('Location id'));
         // $grid->column('json', __('Json'));
         $grid->column('status', __('Status'));
+        $grid->business()->display(function ($model) {
+            if ($model == null) {
+                return '<span class="badge rounded-pill bg-success">' . "N/A" . '</span> ';
+            }
+            return '<span class="badge rounded-pill bg-success">' . $model['name'] . '</span> ';
+        })->sortable();
+        $grid->user()->display(function ($model) {
+            if ($model == null) {
+                return '<span class="badge rounded-pill bg-success">' . "N/A" . '</span> ';
+            }
+            return '<span class="badge rounded-pill bg-success">' . $model['name'] . '</span> ';
+        })->sortable();
         $grid->column('product_id', __('Product id'));
         $grid->column('purchase_id', __('Purchase id'));
         $grid->column('created_at', __('Created at'));
