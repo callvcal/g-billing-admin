@@ -17,6 +17,7 @@ use App\Admin\Controllers\EarningTransactionController;
 use App\Admin\Controllers\ExpenseController;
 use App\Admin\Controllers\ExpenseTransactionController;
 use App\Admin\Controllers\HomeController;
+use App\Admin\Controllers\InAppPurchaseModelController;
 use App\Admin\Controllers\KitchenController;
 use App\Admin\Controllers\MaterialController;
 use App\Admin\Controllers\MenuController;
@@ -30,6 +31,7 @@ use App\Admin\Controllers\PageDesignerImagesController;
 use App\Admin\Controllers\PageDesignerInlineGalleryController;
 use App\Admin\Controllers\PageDesignerTextController;
 use App\Admin\Controllers\PageDesignerVideoController;
+use App\Admin\Controllers\PaymentTransactionController;
 use App\Admin\Controllers\PizzaKDSController;
 use App\Admin\Controllers\POSController;
 use App\Admin\Controllers\PremiumPermissionController;
@@ -124,6 +126,8 @@ Route::group([
 
     $router->resource('recipe-materials', RecipeMaterialController::class);
 
+    $router->resource('payment-transactions', PaymentTransactionController::class);
+    $router->resource('in-app-purchase-models', InAppPurchaseModelController::class);
 
     
     $router->get('pusher/events', [HomeController::class, function () {
