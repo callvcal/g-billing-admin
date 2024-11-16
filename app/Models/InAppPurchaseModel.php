@@ -21,4 +21,10 @@ class InAppPurchaseModel extends Model
         'product_id',
         'purchase_id',
     ];
+    function user()  {
+        return $this->belongsTo(AdminUser::class,'admin_id');
+    }
+    function business()  {
+        return $this->belongsTo(Business::class,'business_id');
+    }
 }
