@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Middleware\PremiumPlan;
 use App\Models\AdminUser;
 use App\Models\AdsBanner;
 use App\Models\AppHome;
@@ -12,6 +13,7 @@ use App\Models\Kitchen;
 use App\Models\Material;
 use App\Models\Menu;
 use App\Models\OfflineTransaction;
+use App\Models\PremiumPlan as ModelsPremiumPlan;
 use App\Models\RawMatrial;
 use App\Models\Sell;
 use App\Models\Setting;
@@ -72,6 +74,7 @@ class HomeController extends Controller
                 'recentProducts' => Menu::where('business_id', $business_id)->get(),
                 'settings' => Setting::find($business_id),
                 'app_settings' => Setting::find(1),
+                'plans'=>ModelsPremiumPlan::all(),
                 'sales' => $this->query(Sell::class)->with(['admin.roles','user', 'address', 'items.address'])->whereDate('created_at', today())->where('business_id', $business_id)->get(),
                 'tables' => $this->query(DiningTable::class)->with('sell')->where('business_id', $business_id)->get(),
                 'units' => (Unit::all()),

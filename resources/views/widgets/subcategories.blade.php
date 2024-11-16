@@ -60,7 +60,7 @@
     }
 
     .subcategory-selected {
-        background-color: blue;
+        background-color: #6a0dad;
         color: white;
     }
 

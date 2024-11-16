@@ -6,7 +6,7 @@
                     @foreach ($data['counts'] as $item)
                         <div class="col-md-3 grid-margin stretch-card">
                             <div class="card mb-3 shadow-sm" style="border-radius: 10px; background-color: #f4f4f4; transition: transform 0.2s;">
-                                <p class="card-header" style="background-color: #007bff; color: white; border-radius: 10px 10px 0 0; font-size: 1.2rem;">{{ $item['name'] }}</p>
+                                <p class="card-header" style="background-color: #6a0dad; color: white; border-radius: 10px 10px 0 0; font-size: 1.2rem;">{{ $item['name'] }}</p>
                                 <div class="card-body" style="text-align: center; padding: 20px;">
                                     <h5 class="card-title mb-0" style="font-size: 2rem; color: #333;">{{ $item['count'] }}</h5>
                                 </div>

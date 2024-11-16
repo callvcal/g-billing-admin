@@ -183,6 +183,7 @@ class HomeController extends AdminController
             ->css_file(Admin::asset("open-admin/css/pages/dashboard.css"))
             ->title('Dashboard')
             ->description('Summary...')
+            
             ->body(view('index', compact('data')));
     }
 
