@@ -4,18 +4,19 @@ namespace App\Http\Controllers;
 
 
 use App\Jobs\SendMessages;
-use App\Models\AdminUser;
 use App\Models\Driver;
 use App\Models\EarningModel;
-use App\Models\Business;
+use App\Models\Location;
 use App\Models\Order;
 use App\Models\PaymentTransaction;
+use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use paytm\paytmchecksum\PaytmChecksum;
+
 use App\Models\TransactionDetails;
 use Barryvdh\DomPDF\PDF;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Mockery\Matcher\Type;
@@ -26,42 +27,58 @@ class ManagePaymentController extends Controller
 
     protected $mid = 'VGPkMx36117629022922';
     protected $key = '5ZnAu3EpiaDJpeev';
-    protected $callbackUrl = 'https://eatinsta.callvcal.com/api/paytm/callback';
+    protected $callbackUrl = 'https://parking.callvcal.com/api/paytm/callback';
 
 
     function buyPlan(Request $request)
     {
         $user = auth()->user();
+
+
         $transaction = PaymentTransaction::create([
             'user_id' => $user->id,
             'date_time' => now(),
             'expiry_date' => $request->expiry_date,
-            'business_id' => $user->business_id,
+            'location_id' => $user->location_id,
             'plan' => $request->plan,
+            'platform' => $request->platform ?? 'android',
+            'method' => 'razorPay',
             'transaction_status_local' => 'pending',
             'transaction_status_callback' => 'pending',
             'amount' => $request->amount,
             'gst' => $request->gst,
+            'json' => [],
             'order_id' => $this->generateUniqueOrderId($user->id),
             'service_charge' => $request->service_charge,
         ]);
 
+        if (!isset($request->razorpay)) {
+            return response([
+                'message' => "Please use the Google Pay option for plan upgrades. We are currently experiencing issues with our payment gateway, which will be resolved in an upcoming update."
+            ], 401);
+        }
+
+
+
         return response([
             'transaction' => $transaction,
-            'token' => $this->getToken($transaction),
+            'token' => null,
+            'razorpay' => (new RazorPayController())->createOrder($transaction),
             'callbackUrl' => $this->callbackUrl,
         ]);
     }
 
     public static function generateUniqueOrderId($userId)
     {
-        $prefix = 'ORD'; // You can customize the prefix as needed
-        $timestamp = now()->timestamp; // Current Unix timestamp
-        $uniqueId = Str::random(8); // Generate a random string (8 characters)
+        $prefix = 'ORD'; // 3 characters
+        $timestamp = now()->timestamp; // 10 characters
+        $uniqueId = Str::random(16); // Adjusted to 16 characters for a unique string within 40-character limit
 
+        // Concatenate to create orderId
         $orderId = $prefix . $userId . $timestamp . $uniqueId;
 
-        return $orderId;
+        // Ensure the final length is within 40 characters
+        return substr($orderId, 0, 40);
     }
 
 
@@ -71,180 +88,117 @@ class ManagePaymentController extends Controller
 
 
 
-    public function getToken($transaction)
+
+
+
+
+
+    public function onCallBack(Request $request)
     {
 
 
+        $order_id = $request->payload['payment']['entity']['order_id'];
 
-        $body = $this->getBookingPaymentBody($transaction->order_id, $transaction->amount);
-        $res = $this->exec($body, $transaction->order_id);
-
-        // $transaction->json = json_decode($res);
-        // $transaction->save();
-
-        return json_decode($res)->body->txnToken;
+        return response($this->verifyStatus($order_id));
     }
 
-    public function getBookingPaymentBody($orderId, $amount)
+
+
+
+
+    function verifyStatus($orderId)
     {
-        $user = auth()->user();
-        return array(
-            'requestType' => 'Payment',
-            'mid' => $this->mid,
-            'websiteName' => 'DEFAULT',
-            'orderId' => $orderId,
-            'callbackUrl' => $this->callbackUrl,
-            'txnAmount' => array(
-                'value' => $amount,
-                'currency' => 'INR',
-            ),
-            'enablePaymentMode' => $this->enablePaymentMode(),
-            'userInfo' => [
-                'custId' => $user->id,
-                'id' => $user->id,
-                'mobile' => $user->mobile,
-                'email' => $user->email,
-                'firstName' => $user->name,
-            ]
-        );
-    }
-
-    public function isCallbackVerified($request)
-    {
-
-
-        $paytmChecksum = $request->CHECKSUMHASH;
-        unset($request->CHECKSUMHASH);
-
-        $isVerifySignature = PaytmChecksum::verifySignature($request->all(), $this->key, $paytmChecksum);
-
-        if ($isVerifySignature) {
-            return true;
+        // Verify payment status
+        $status = (new RazorPayController())->isSuccessfully($orderId);
+    
+        if (!isset($status['receipt'])) {
+            return false;
         }
-
-        return false;
-    }
-
-
-    public function onCallback(Request $request)
-    {
-
-        $request = $request->all();
-
-        $this->verifyStatus($request);
-    }
-
-    function verifyStatus($request,$local=false)
-    {
-        $orderId = $request['ORDERID'];
-
-        $order = PaymentTransaction::with('user')->where('order_id', $orderId)->first();
-       
-
-        if($local){
-            $order->transaction_status_local = $request['STATUS'];
-        }else{
-            $order->callback_json = [
-                'status' => $request['STATUS'],
-            ];
+    
+        $transaction = PaymentTransaction::where('order_id', $status['receipt'])->first();
+        if (!$transaction) {
+            return false;
         }
-
-        $paytmChecksum = $request['CHECKSUMHASH'];
-
-        $isVerifySignature = PaytmChecksum::verifySignature($request, $this->key, $paytmChecksum);
-
-        if ($isVerifySignature) {
-            if ($request['STATUS'] === 'TXN_SUCCESS') {
-                $business = Business::find($order->business_id);
-
-                if ($business->expiry_date != $order->expiry_date || $business->plan != $order->plan || $order->transaction_status_callback != $request['STATUS'] || $order->transaction_status_local != $request['STATUS']) {
-                    $business->expiry_date = $order->expiry_date;
-                    $business->purchase_date = now();
-                    $business->plan = $order->plan;
-                    $business->active = 1;
-                    $business->save();
-                }
+    
+        $json = is_array($transaction->json) ? $transaction->json : [];
+        $plan = $transaction->plan;
+    
+        if ($status['status'] === 'paid') {
+            $business = Location::find($transaction->location_id);
+    
+            if (!$business) {
+                return false;
             }
-            if(!$local){
-                $order->transaction_status_callback = $request['STATUS'];
+    
+            // Calculate the new expiry date based on the plan
+            $expiry_date = Carbon::now();
+            switch ($plan) {
+                case 'monthly':
+                    $expiry_date->addMonth();
+                    break;
+                    case 'weekly':
+                        $expiry_date->addDays(7);
+                        break;
+                case 'annual':
+                    $expiry_date->addYear();
+                    break;
+                case 'lifetime':
+                    $expiry_date->addYears(10);
+                    break;
             }
-        }
 
-        $order->json = [
-            'status' => $request['STATUS'],
-            'title' => $request['STATUS'] === 'TXN_SUCCESS' ? "Transaction successfull" : 'Transaction Failed',
-            'body' => $request['STATUS'] === 'TXN_SUCCESS' ? "Dear customer, plan upgraded to " . $order->plan : "Dear customer, plan not upgraded to " . $order->plan . " you can try again with another payment option.",
-        ];
-        $order->save();
+            Log::channel("callvcal")->info('expiry_date: '.$expiry_date.' '.$plan);
+    
+            $businessExpiryDate = Carbon::parse($business->expiry_date);
+    
+            // Check if the business plan and expiry date match, allowing a slight difference
+            if (
+                $business->plan === $plan &&
+                $businessExpiryDate->diffInMinutes($expiry_date) <= 5 // Changed to 5 for greater reliability
+            ) {
+                return true;
+            }
+    
+            // Update the business with new plan details
+            $business->expiry_date = $expiry_date;
+            $business->purchase_date = now();
+            $business->plan = $plan;
+            $business->active = 1;
+            $business->save();
+    
+            // Update transaction json with success message
+            $json['title'] = "Payment Successful";
+            $json['body'] = "Dear customer, your plan has been successfully upgraded to the $plan Plan. It is valid until $expiry_date.";
+        } else {
+            // Update transaction json with failure message
+            $json['title'] = "Payment Failed";
+            $json['body'] = "Dear customer, we could not upgrade your plan to the $plan Plan.";
+        }
+    
+        // Save the updated JSON data in the transaction
+        $transaction->json = $json;
+        $transaction->save();
+    
+        return $status['status'] === 'paid';
     }
+    
 
     function paymentSuccess(Request $request)
     {
-        $orderId = $request->response['ORDERID'];
-        $this->verifyStatus($request->response);
-        $order = PaymentTransaction::with('user')->where('order_id', $orderId)->first();
-        return response([
-            'user' => AdminUser::with('business')->find(auth()->user()->id),
-            'message' => $order->transaction_status_callback == 'TXN_SUCCESS' ? "Plan upgraded successfully" : "Failed to upgrate plan please try again"
-        ]);
-    }
+        $isPaid = $this->verifyStatus($request->response['razorpay_order_id']);
 
-
-
-
-    public function exec($body, $orderId)
-    {
-        $data = array();
-        $data['body'] = $body;
-
-        $checksum = PaytmChecksum::generateSignature(json_encode($data['body'], JSON_UNESCAPED_SLASHES), $this->key);
-        $data['head'] = array(
-            'signature' => $checksum
-        );
-        $postData = json_encode($data, JSON_UNESCAPED_SLASHES);
-        $url = "https://securegw.paytm.in/theia/api/v1/initiateTransaction?mid=$this->mid&orderId=$orderId";
-
-        $curl = curl_init($url);
-        curl_setopt($curl, CURLOPT_POST, 1);
-        curl_setopt($curl, CURLOPT_POSTFIELDS, $postData);
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
-
-        return curl_exec($curl);
-    }
-
-
-    public function enablePaymentMode()
-    {
-        return array(
-            array(
-                'mode' => "UPI",
-                'channels' => ['UPIPUSH', 'UPIPUSHEXPRESS', 'UPI']
-            ),
-            array(
-                'mode' => "BALANCE",
-                // 'channels' => ['UPIPUSH', 'UPIPUSHEXPRESS']
-            ),
-            array(
-                'mode' => "PPBL",
-                // 'channels' => ['UPIPUSH', 'UPIPUSHEXPRESS']
-            ),
-            array(
-                'mode' => "CREDIT_CARD",
-                'channels' => ['VISA', 'MASTER', 'AMEX', 'RUPAY']
-            ),
-            array(
-                'mode' => "DEBIT_CARD",
-                'channels' => ['VISA', 'MASTER', 'AMEX', 'RUPAY']
-            ),
-            array(
-                'mode' => "NET_BANKING",
-                // 'channels' => ['UPIPUSH', 'UPIPUSHEXPRESS']
-            ),
-            array(
-                'mode' => "PAYTM_DIGITAL_CREDITFor",
-                // 'channels' => ['UPIPUSH', 'UPIPUSHEXPRESS']
-            ),
-        );
+        if ($isPaid) {
+            return response([
+                'user' => User::with('business')->find(auth()->user()->id),
+                'isPaid' => $isPaid,
+                'message' => $isPaid ? "Plan upgraded successfully" : "Failed to upgrade plan, please try again",
+            ]);
+        } else {
+            return response([
+                'user' => User::with('business')->find(auth()->user()->id),
+                'isPaid' => $isPaid,
+                'message' => $isPaid ? "Plan upgraded successfully" : "Failed to upgrade plan, please try again",
+            ], 201);
+        }
     }
 }
