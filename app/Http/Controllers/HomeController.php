@@ -101,7 +101,9 @@ class HomeController extends Controller
     public function plans()
     {
 
-        return response(ModelsPremiumPlan::all());
+        return response([
+            'data'=>ModelsPremiumPlan::all()
+        ]);
     }
     public function getServiceLocation()
     {
