@@ -28,7 +28,7 @@ class InAppPurchaseModelController extends AdminController
         $grid->model()->orderBy('id',"DESC");
 
         $grid->column('id', __('Id'));
-        $grid->column('user_id', __('User id'));
+        $grid->column('admin_id', __('User id'));
         $grid->column('business_id', __('Location id'));
         // $grid->column('json', __('Json'));
         $grid->column('status', __('Status'));
@@ -63,7 +63,7 @@ class InAppPurchaseModelController extends AdminController
         $show = new Show(InAppPurchaseModel::findOrFail($id));
 
         $show->field('id', __('Id'));
-        $show->field('user_id', __('User id'));
+        $show->field('admin_id', __('User id'));
         $show->field('business_id', __('Location id'));
         $show->field('json', __('Json'));
         $show->field('status', __('Status'));
@@ -84,7 +84,7 @@ class InAppPurchaseModelController extends AdminController
     {
         $form = new Form(new InAppPurchaseModel());
 
-        $form->number('user_id', __('User id'));
+        $form->number('admin_id', __('User id'));
         $form->number('business_id', __('Location id'));
         $form->text('json', __('Json'));
         $form->text('status', __('Status'));
