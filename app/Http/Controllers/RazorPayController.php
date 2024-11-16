@@ -170,7 +170,8 @@ class RazorPayController extends Controller
 
         array_push($json,$res);
         
-
+        $json['title'] = "Payment Started";
+        $json['body'] = "Waiting for payment...";
         $transaction->json=$json;
         $transaction->save();
 

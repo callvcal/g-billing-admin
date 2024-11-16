@@ -192,7 +192,7 @@ class SendMessage implements ShouldQueue
             Log::channel('callvcal')->error("Line: " . $e->getLine());
             Log::channel('callvcal')->error("Stack trace: " . $e->getTraceAsString());
 
-            throw $e;
+            
         }
     }
 
