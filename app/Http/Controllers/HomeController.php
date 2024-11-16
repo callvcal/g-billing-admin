@@ -98,6 +98,11 @@ class HomeController extends Controller
         return (Category::all());
     }
 
+    public function plans()
+    {
+
+        return response(ModelsPremiumPlan::all());
+    }
     public function getServiceLocation()
     {
 

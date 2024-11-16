@@ -91,6 +91,7 @@ Route::group(['middleware' => ['security', 'auth:sanctum']], function () {
     Route::get('/addresses/delete/{id}', [OrderController::class, 'deleteAddress']);
 
     Route::get('/home', [HomeController::class, 'home']);
+    Route::get('/plans', [HomeController::class, 'plans']);
     Route::post('/settings/update', [SettingController::class, 'update']);
 
     Route::get('/sales/items/{id}', [OrderController::class, 'getOrderItems']);
