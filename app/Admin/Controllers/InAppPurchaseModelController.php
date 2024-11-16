@@ -30,7 +30,7 @@ class InAppPurchaseModelController extends AdminController
         $grid->column('id', __('Id'));
         $grid->column('user_id', __('User id'));
         $grid->column('business_id', __('Location id'));
-        $grid->column('json', __('Json'));
+        // $grid->column('json', __('Json'));
         $grid->column('status', __('Status'));
         $grid->column('product_id', __('Product id'));
         $grid->column('purchase_id', __('Purchase id'));
