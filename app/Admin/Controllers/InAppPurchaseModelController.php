@@ -29,7 +29,7 @@ class InAppPurchaseModelController extends AdminController
 
         $grid->column('id', __('Id'));
         $grid->column('user_id', __('User id'));
-        $grid->column('location_id', __('Location id'));
+        $grid->column('business_id', __('Location id'));
         $grid->column('json', __('Json'));
         $grid->column('status', __('Status'));
         $grid->column('product_id', __('Product id'));
@@ -52,7 +52,7 @@ class InAppPurchaseModelController extends AdminController
 
         $show->field('id', __('Id'));
         $show->field('user_id', __('User id'));
-        $show->field('location_id', __('Location id'));
+        $show->field('business_id', __('Location id'));
         $show->field('json', __('Json'));
         $show->field('status', __('Status'));
         $show->field('product_id', __('Product id'));
@@ -73,7 +73,7 @@ class InAppPurchaseModelController extends AdminController
         $form = new Form(new InAppPurchaseModel());
 
         $form->number('user_id', __('User id'));
-        $form->number('location_id', __('Location id'));
+        $form->number('business_id', __('Location id'));
         $form->text('json', __('Json'));
         $form->text('status', __('Status'));
         $form->text('product_id', __('Product id'));
