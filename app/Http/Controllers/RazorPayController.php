@@ -44,8 +44,7 @@ class RazorPayController extends Controller
     }
     // protected $keySecrete = '';
     // protected $keySecrete = 'scnsflKLMAKKjsI89C8u9q44';
-    protected $callbackUrl = 'https://amarjeans.in/api/callback';
-
+ 
 
 
     // protected $callvcalWalletID = null;

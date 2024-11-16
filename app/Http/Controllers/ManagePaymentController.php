@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 
 use App\Jobs\SendMessages;
+use App\Models\AdminUser;
+use App\Models\Business;
 use App\Models\Driver;
 use App\Models\EarningModel;
 use App\Models\Location;
@@ -124,7 +126,7 @@ class ManagePaymentController extends Controller
         $plan = $transaction->plan;
     
         if ($status['status'] === 'paid') {
-            $business = Location::find($transaction->location_id);
+            $business = Business::find($transaction->location_id);
     
             if (!$business) {
                 return false;
@@ -189,13 +191,13 @@ class ManagePaymentController extends Controller
 
         if ($isPaid) {
             return response([
-                'user' => User::with('business')->find(auth()->user()->id),
+                'user' => AdminUser::with('business')->find(auth()->user()->id),
                 'isPaid' => $isPaid,
                 'message' => $isPaid ? "Plan upgraded successfully" : "Failed to upgrade plan, please try again",
             ]);
         } else {
             return response([
-                'user' => User::with('business')->find(auth()->user()->id),
+                'user' => AdminUser::with('business')->find(auth()->user()->id),
                 'isPaid' => $isPaid,
                 'message' => $isPaid ? "Plan upgraded successfully" : "Failed to upgrade plan, please try again",
             ], 201);
