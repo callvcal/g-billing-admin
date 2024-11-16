@@ -26,7 +26,7 @@ class PaymentTransactionController extends AdminController
     protected function grid()
     {
         $grid = new Grid(new PaymentTransaction());
-        $grid->quickSearch('location_id');
+        $grid->quickSearch('business_id');
 
         $grid->model()->orderBy('id',"DESC");
         $grid->column('id', __('Id'))->sortable();
@@ -38,14 +38,14 @@ class PaymentTransactionController extends AdminController
             }
             return '<span class="badge rounded-pill bg-success">' . $model['name'] . '</span> ';
         })->sortable();
-        $grid->column('location_id', __('Location id'));
+        $grid->column('business_id', __('Location id'));
         $grid->business()->display(function ($model) {
             if ($model == null) {
                 return '<span class="badge rounded-pill bg-success">' . "N/A" . '</span> ';
             }
             return '<span class="badge rounded-pill bg-success">' . $model['name'] . '</span> ';
         })->sortable();
-        $grid->column('location_id', __('Location id'))->sortable();
+        $grid->column('business_id', __('Location id'))->sortable();
         $grid->column('date_time', __('Date time'))->sortable();
         $grid->column('transaction_status_local', __('Transaction status local'))->sortable();
         $grid->column('transaction_status_callback', __('Transaction status callback'))->sortable();
@@ -119,7 +119,7 @@ class PaymentTransactionController extends AdminController
         $form->text('transaction_id', __('Transaction id'));
         $form->number('user_id', __('User id'));
         $form->text('json', __('Json'));
-        $form->number('location_id', __('Location id'));
+        $form->number('business_id', __('Location id'));
         $form->datetime('date_time', __('Date time'))->default(date('Y-m-d H:i:s'));
         $form->text('transaction_status_local', __('Transaction status local'));
         $form->text('transaction_status_callback', __('Transaction status callback'));
