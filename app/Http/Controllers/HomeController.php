@@ -15,6 +15,7 @@ use App\Models\Menu;
 use App\Models\OfflineTransaction;
 use App\Models\PremiumPlan as ModelsPremiumPlan;
 use App\Models\RawMatrial;
+use App\Models\Restorent;
 use App\Models\Sell;
 use App\Models\Setting;
 use App\Models\SubCategory;
@@ -74,6 +75,7 @@ class HomeController extends Controller
                 'recentProducts' => Menu::where('business_id', $business_id)->get(),
                 'settings' => Setting::find($business_id),
                 'app_settings' => Setting::find(1),
+                'restorents'=>Restorent::where('business_id', $business_id)->get(),
                 'plans'=>ModelsPremiumPlan::all(),
                 'sales' => $this->query(Sell::class)->with(['admin.roles','user', 'address', 'items.address'])->whereDate('created_at', today())->where('business_id', $business_id)->get(),
                 'tables' => $this->query(DiningTable::class)->with('sell')->where('business_id', $business_id)->get(),

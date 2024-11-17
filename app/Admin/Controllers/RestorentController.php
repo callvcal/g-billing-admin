@@ -30,7 +30,7 @@ class RestorentController extends AdminController
 
         $grid->column('id', __('Id'));
         $grid->column('name', __('Name'));
-        $grid->column('image', __('Image'));
+        $grid->column('image', __('Image'))->image('',64,64);
         $grid->column('address', __('Address'));
         $grid->column('subtitle', __('Subtitle'));
         $grid->column('restorent_types', __('Restorent types'));
