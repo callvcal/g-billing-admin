@@ -40,6 +40,7 @@ use App\Admin\Controllers\PushNotificationController;
 use App\Admin\Controllers\RawMatrialController;
 use App\Admin\Controllers\RecipeMaterialController;
 use App\Admin\Controllers\RecipeController;
+use App\Admin\Controllers\RestorentController;
 use App\Admin\Controllers\SellController;
 use App\Admin\Controllers\SellItemController;
 use App\Admin\Controllers\SpecialDiscountController;
@@ -128,6 +129,8 @@ Route::group([
 
     $router->resource('payment-transactions', PaymentTransactionController::class);
     $router->resource('in-app-purchase-models', InAppPurchaseModelController::class);
+    $router->resource('restorents', RestorentController::class);
+
 
     
     $router->get('pusher/events', [HomeController::class, function () {
