@@ -121,7 +121,7 @@ class AuthController extends Controller
     public function changePassword(Request $request)
     {
         $data = $request->validate([
-            'old_password' => ['required', 'string', 'max:255'],
+            // 'old_password' => ['required', 'string', 'max:255'],
             'password' => ['required', 'string', 'max:20'],
             // 'user_id' => ['required']
         ]);
