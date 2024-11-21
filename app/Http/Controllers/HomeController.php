@@ -6,6 +6,7 @@ use App\Http\Middleware\PremiumPlan;
 use App\Models\AdminUser;
 use App\Models\AdsBanner;
 use App\Models\AppHome;
+use App\Models\Business;
 use App\Models\CartItem;
 use App\Models\Category;
 use App\Models\DiningTable;
@@ -80,6 +81,7 @@ class HomeController extends Controller
                 'sales' => $this->query(Sell::class)->with(['admin.roles','user', 'address', 'items.address'])->whereDate('created_at', today())->where('business_id', $business_id)->get(),
                 'tables' => $this->query(DiningTable::class)->with('sell')->where('business_id', $business_id)->get(),
                 'units' => (Unit::all()),
+                'business' => (Business::find($business_id)),
                 'users' => AdminUser::with(['roles','business'])->where('business_id', $business_id)->get(),
                 'kitchens' => (Kitchen::where('business_id', $business_id)->get()),
                 'materials' => (Material::where('business_id', $business_id)->get()),
