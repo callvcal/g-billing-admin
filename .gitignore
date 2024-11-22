@@ -12,7 +12,7 @@
 !/public/ringtones/
 composer.lock
 !/public/.well-known
-.htaccess
+!.htaccess
 .env
 .env.backup
 .env.production

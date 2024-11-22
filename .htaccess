@@ -1,0 +1,33 @@
+<IfModule mod_rewrite.c>
+    <IfModule mod_negotiation.c>
+        Options -MultiViews -Indexes
+    </IfModule>
+
+    RewriteEngine On
+    RewriteBase /
+
+    # Handle Authorization Header
+    RewriteCond %{HTTP:Authorization} .
+    RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+
+    # Set CORS headers for specific origins
+    <IfModule mod_headers.c>
+        SetEnvIf Origin "http(s)?://(www\.)?(localhost|eatplan8.com)$" CORS=$0
+        Header set Access-Control-Allow-Origin %{CORS}e env=CORS
+        Header always set Access-Control-Allow-Methods "POST, GET, PUT, DELETE, OPTIONS"
+        Header always set Access-Control-Allow-Headers "Authorization, Content-Type, Accept, Origin, X-Requested-With"
+        Header always set Access-Control-Allow-Credentials true
+    </IfModule>
+
+    # Redirect Trailing Slashes If Not A Folder...
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^(.*)/$ /$1 [L,R=301]
+
+    # Send Requests To Front Controller...
+    RewriteCond %{REQUEST_URI} !^/public/
+    RewriteRule ^(css|js|photos|vendor|images|web|backend|frontend)/(.*)$ /public/$1/$2 [L,NC]
+
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^ index.php [L]
+</IfModule>
