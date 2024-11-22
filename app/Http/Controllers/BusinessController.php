@@ -166,14 +166,14 @@ class BusinessController extends Controller
 
         $mobile = $request->mobile;
         $name = $request->name;
-        $username = $request->username;
+       
 
 
 
         $user->mobile = $mobile;
         $user->password = Hash::make($request->password);
         $user->name = $name;
-        $user->username = $username;
+        
         $user->save();
 
         $user->load('business');
