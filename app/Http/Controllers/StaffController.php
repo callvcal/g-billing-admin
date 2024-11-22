@@ -19,7 +19,7 @@ class StaffController extends Controller
 
         if ($id == (auth()->user()->id)) {
             return response([
-                'message' => "You don't have access to change this user."
+                'message' => "You can' delete by own"
             ], 401);
         }
         return response(AdminUser::find($id)->delete());
