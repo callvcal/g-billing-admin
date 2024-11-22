@@ -43,6 +43,7 @@ class StaffController extends AdminController
             $filter->disableIdFilter();
             $filter->like('created_at')->date();
             $filter->like('username');
+            $filter->like('email');
             $filter->like('name');
             if(isAdministrator()){
             $filter->like('business_key');
@@ -50,6 +51,7 @@ class StaffController extends AdminController
             }
         });
         $grid->column('id', 'ID')->sortable();
+        $grid->column('email', "Email");
         $grid->column('username', trans('admin.username'));
         $grid->column('name', trans('admin.name'));
         $grid->column('roles', trans('admin.roles'))->pluck('name')->label();
