@@ -122,7 +122,7 @@ class AuthController extends Controller
     {
         $data = $request->validate([
             // 'old_password' => ['required', 'string', 'max:255'],
-            'password' => ['required', 'string', 'max:20'],
+            'password' => ['required', 'string', 'max:20','min:6'],
             // 'user_id' => ['required']
         ]);
 
@@ -141,7 +141,7 @@ class AuthController extends Controller
         //     ], 401);
         // }
 
-        $user->password = $request->password;
+        $user->password = Hash::make($request->password);
         $user->save();
 
         return response($user);
