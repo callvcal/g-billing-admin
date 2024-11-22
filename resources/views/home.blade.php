@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" href="{{ asset('public/img/logo.png') }}" type="image/x-icon">
+    <link rel="shortcut icon" href="{{ asset('img/logo.png') }}" type="image/x-icon">
     <title>EatPlan8 Restro & Lounge - Great Food Make Great Mood!</title>
 
     <!--
@@ -51,7 +51,7 @@
 
            
     <a href="/" class="logo">
-    <img src="{{ asset('public/img/logoname.png') }}" alt="Eatplan8" style="width: 100px; height: auto;">
+    <img src="{{ asset('img/logoname.png') }}" alt="Eatplan8" style="width: 100px; height: auto;">
 </a>
 
 
@@ -107,7 +107,7 @@
 
             <section class="hero" id="home" style="#">
                 <div class="hero-image">
-                    <img src="{{ asset('public/img/hero1.jpg') }}" alt="Background">
+                    <img src="{{ asset('img/hero1.jpg') }}" alt="Background">
                 </div>
 
                 <div class="container">
@@ -131,10 +131,10 @@
                     </div>
 
                     <figure class="hero-banner">
-                    <img src="{{ asset('public/img/hero-banner-bg.png') }}" width="820" height="716" alt="" aria-hidden="true"
+                    <img src="{{ asset('img/hero-banner-bg.png') }}" width="820" height="716" alt="" aria-hidden="true"
                          class="w-100 hero-img-bg">
 
-                    <img src="{{ asset('public/img/heroi.png') }}" width="700" height="637" loading="lazy" alt="img"
+                    <img src="{{ asset('img/heroi.png') }}" width="700" height="637" loading="lazy" alt="img"
                          class="w-100 hero-img">
                    
                     </figure>
@@ -176,15 +176,15 @@ Celebrate at Eatplan8 Restro & Lounge! Book our versatile party hall for birthda
           <figure class="cta-banner">
 
           <div class="banner-images">
-            <img src="{{asset('public/img/1.png')}}" alt="eatplan8" class="active">
-            <img src="{{asset('public/img/2.png')}}" alt="eatplan8">
-            <img src="{{asset('public/img/3.png')}}" alt="eatplan8">
-            <img src="{{asset('public/img/4.png')}}" alt="eatplan8">
-            <img src="{{asset('public/img/5.png')}}" alt="eatplan8">
-            <img src="{{asset('public/img/6.png')}}" alt="eatplan8">
-            <img src="{{asset('public/img/7.png')}}" alt="eatplan8">
-            <img src="{{asset('public/img/8.png')}}" alt="eatplan8">
-            <img src="{{asset('public/img/9.png')}}" alt="eatplan8">
+            <img src="{{asset('img/1.png')}}" alt="eatplan8" class="active">
+            <img src="{{asset('img/2.png')}}" alt="eatplan8">
+            <img src="{{asset('img/3.png')}}" alt="eatplan8">
+            <img src="{{asset('img/4.png')}}" alt="eatplan8">
+            <img src="{{asset('img/5.png')}}" alt="eatplan8">
+            <img src="{{asset('img/6.png')}}" alt="eatplan8">
+            <img src="{{asset('img/7.png')}}" alt="eatplan8">
+            <img src="{{asset('img/8.png')}}" alt="eatplan8">
+            <img src="{{asset('img/9.png')}}" alt="eatplan8">
             
             
           </div> 
