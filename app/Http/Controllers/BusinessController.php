@@ -122,8 +122,7 @@ class BusinessController extends Controller
             // 'password' => ['required', 'string', 'max:20'],
             'mobile' => ['required'],
             'name' => ['required'],
-            'username' => ['required'],
-            'business_key' => ['required'],
+           
         ]);
         $name = $request->name;
         $mobile = $request->mobile;
