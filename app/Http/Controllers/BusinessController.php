@@ -113,7 +113,101 @@ class BusinessController extends Controller
 
         return response($user);
     }
+    function setBusinessV2(Request $request)
+    {
 
+        $user = AdminUser::find(auth()->user()->id);
+
+        $request->validate([
+            // 'password' => ['required', 'string', 'max:20'],
+            'mobile' => ['required'],
+            'name' => ['required'],
+            'username' => ['required'],
+            'business_key' => ['required'],
+        ]);
+        $name = $request->name;
+        $mobile = $request->mobile;
+        $business = strtoupper(substr($name, 0, 3) . substr($mobile, -3));
+
+        $i = 0;
+
+        $business2 = $business;
+        do {
+            $i++;
+            // Query the database to check for existing business names that match
+            $existingBusiness = Business::where('name', $business2)->get();
+
+            // If there are existing businesses, append the count to make the name unique
+            $existingAdmin = AdminUser::where('username', 'admin@' . $business2)->get();
+            if ($existingBusiness->isNotEmpty() || $existingAdmin->isNotEmpty()) {
+                $business2 = $business . $i; // Update business2 for uniqueness
+            }
+        } while ($existingBusiness->isNotEmpty() || $existingAdmin->isNotEmpty());  // Continue the loop if there is a match
+
+        $business = $business2;
+
+        $user->business_key = $business;
+        $user->username = 'admin@' . $business;
+        $business = Business::create(
+            [
+                'name' => $business,
+                'on_board_way' => 'app',
+                'active' => 1,
+                'plan' => 'free',
+                'on_board_date' => Carbon::now(),
+                'purchase_date' => null,
+                'last_subscription_date' => null,
+                'expiry_date' => null,
+                'admin_id' => $user->id
+            ]
+        );
+        $user->business_id = $business->id;
+        $user->business_key = $business->name;
+
+
+        $mobile = $request->mobile;
+        $name = $request->name;
+        $username = $request->username;
+
+
+
+        $user->mobile = $mobile;
+        $user->password = Hash::make($request->password);
+        $user->name = $name;
+        $user->username = $username;
+        $user->save();
+
+        $user->load('business');
+
+        $posRoleId = DB::table('admin_roles')->where('slug', 'Partner-Admin')->value('id');
+        if (!$posRoleId) {
+            $posRoleId = DB::table('admin_roles')->insertGetId([
+                'name' => 'Partner-Admin',
+                'slug' => 'Partner-Admin'
+            ]);
+        }
+
+        Setting::create([
+            'id' => $user->business_id,
+            'json' => [
+                'mobile' => $user->mobile ?? null,
+                'email' => $user->email ?? null,
+                'shop_name' => ucfirst($business->name),
+                'footer_message' => "Thank You",
+
+            ]
+        ]);
+
+        // Assign the role to the user
+        DB::table('admin_role_users')->insert([
+            'role_id' => $posRoleId,
+            'user_id' => $user->id
+        ]);
+
+        $user->load('business', 'roles', 'permissions');
+
+        return response($user);
+    }
     public function status($id)
     {
         $user = AdminUser::find($id);
