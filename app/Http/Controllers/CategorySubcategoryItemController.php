@@ -592,23 +592,22 @@ class CategorySubcategoryItemController extends Controller
 
     function duplicateMenuMaterial($id)
     {
-        $recipe = Menu::find($id);
-        if (!$recipe) {
-            return response(['message' => "Requested resource does not exists"], 401);
+        // Find the menu by ID, or fail with a 404 response if not found.
+        $menu = Menu::find($id);
+        if (!$menu) {
+            return response()->json(['message' => "Requested resource does not exist"], 404);
         }
-
-        if (auth()->user()->business_id != $recipe->business_id) {
-            return response(['message' => "You don't have access to this resource",
-        
-        'user()->business_id'=>auth()->user()->business_id,
-        '$recipe->business_id'=>$recipe->business_id
-        
-        ], 401);
+    
+        // Verify the user's access to the menu's business context.
+        if (auth()->user()->business_id != $menu->business_id) {
+            return response()->json(['message' => "You don't have access to this resource"], 403);
         }
-        $recipe = $recipe->replicate();
-
-       
-
-        return response(['data' =>$recipe], 200);
+    
+        // Duplicate the menu and save it.
+        $duplicatedMenu = $menu->replicate();
+        $duplicatedMenu->save();
+    
+        // Return the duplicated menu as part of the response.
+        return response()->json(['data' => $duplicatedMenu], 200);
     }
-}
+    }

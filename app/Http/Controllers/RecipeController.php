@@ -27,14 +27,13 @@ class RecipeController extends Controller
             'message' => "Recipe Created Successfully"
         ]);
     }
-    function recipes(){
+    function recipes()
+    {
 
-        $page=request('page')??1;
-        $data=Recipe::with(['materials.material'])->where('business_id',auth()->user()->business_id)->latest()->paginate(100,['*'],'page',$page);
+        $page = request('page') ?? 1;
+        $data = Recipe::with(['materials.material'])->where('business_id', auth()->user()->business_id)->latest()->paginate(100, ['*'], 'page', $page);
 
         return response($data);
-
-
     }
     function addMaterial(Request $request)
     {
@@ -92,23 +91,22 @@ class RecipeController extends Controller
     }
     function duplicateRecipeMaterial($id)
     {
+        // Retrieve the recipe material or fail with a 404 response.
         $recipe = RecipeMaterial::find($id);
         if (!$recipe) {
-            return response(['message' => "Requested resource does not exists"], 401);
+            return response()->json(['message' => "Requested resource does not exist"], 404);
         }
 
+        // Check user authorization.
         if (auth()->user()->business_id != $recipe->business_id) {
-            return response(['message' => "You don't have access to this resource",
-        
-        'user()->business_id'=>auth()->user()->business_id,
-        '$recipe->business_id'=>$recipe->business_id
-        
-        ], 401);
+            return response()->json(['message' => "You don't have access to this resource"], 403);
         }
-        $recipe = $recipe->replicate();
 
-       
+        // Replicate the recipe material.
+        $duplicatedRecipe = $recipe->replicate();
+        $duplicatedRecipe->save();
 
-        return response(['data' =>$recipe], 200);
+        // Return the duplicated recipe.
+        return response()->json(['data' => $duplicatedRecipe], 200);
     }
 }
