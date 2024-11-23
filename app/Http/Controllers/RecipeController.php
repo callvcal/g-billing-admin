@@ -90,4 +90,20 @@ class RecipeController extends Controller
 
         return response(['message' => "Recipe delete successfully"], 200);
     }
+    function duplicateRecipeMaterial($id)
+    {
+        $recipe = RecipeMaterial::find($id);
+        if (!$recipe) {
+            return response(['message' => "Requested resource does not exists"], 401);
+        }
+
+        if (auth()->user()->business_id != $recipe->business_id) {
+            return response(['message' => "You don't have access to this resource"], 401);
+        }
+        $recipe = $recipe->replicate();
+
+       
+
+        return response(['data' =>$recipe], 200);
+    }
 }

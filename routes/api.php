@@ -210,6 +210,7 @@ Route::group(['middleware' => ['security', 'auth:sanctum']], function () {
     Route::delete('/recipe/delete/{id}', [RecipeController::class, 'deleteRecipe']);
     Route::post('/recipe/material/create', [RecipeController::class, 'addMaterial']);
     Route::delete('/recipe/material/delete/{id}', [RecipeController::class, 'deleteRecipeMaterial']);
+    Route::get('/recipe/material/duplicate/{id}', [RecipeController::class, 'duplicateRecipeMaterial']);
 });
 
 
