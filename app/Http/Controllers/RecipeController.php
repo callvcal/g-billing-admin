@@ -98,7 +98,12 @@ class RecipeController extends Controller
         }
 
         if (auth()->user()->business_id != $recipe->business_id) {
-            return response(['message' => "You don't have access to this resource"], 401);
+            return response(['message' => "You don't have access to this resource",
+        
+        'user()->business_id'=>auth()->user()->business_id,
+        '$recipe->business_id'=>$recipe->business_id
+        
+        ], 401);
         }
         $recipe = $recipe->replicate();
 
