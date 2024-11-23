@@ -589,4 +589,26 @@ class CategorySubcategoryItemController extends Controller
 
         return $newImagePath;
     }
+
+    function duplicateMenuMaterial($id)
+    {
+        $recipe = Menu::find($id);
+        if (!$recipe) {
+            return response(['message' => "Requested resource does not exists"], 401);
+        }
+
+        if (auth()->user()->business_id != $recipe->business_id) {
+            return response(['message' => "You don't have access to this resource",
+        
+        'user()->business_id'=>auth()->user()->business_id,
+        '$recipe->business_id'=>$recipe->business_id
+        
+        ], 401);
+        }
+        $recipe = $recipe->replicate();
+
+       
+
+        return response(['data' =>$recipe], 200);
+    }
 }
