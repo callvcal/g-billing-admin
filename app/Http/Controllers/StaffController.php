@@ -12,17 +12,23 @@ class StaffController extends Controller
 {
     function all()
     {
-        return response(AdminUser::with('roles','business')->where('business_id',auth()->user()->business_id)->get());
+        return response(AdminUser::with('roles', 'business')->where('business_id', auth()->user()->business_id)->get());
     }
     function delete($id)
     {
+
+        if ($id == (auth()->user()->id)) {
+            return response([
+                'message' => "You can' delete by own"
+            ], 401);
+        }
         return response(AdminUser::find($id)->delete());
     }
 
     function create(Request $request)
     {
 
-       
+
         $data = $request->validate([
             'username' => ['required', 'string', 'max:255', Rule::unique('admin_users')->ignore($request->id)],
             'role' => ['required'],
@@ -32,17 +38,16 @@ class StaffController extends Controller
         if ($request->filled('id')) {
             $admin = AdminUser::find($request->id);
 
-            if($admin->business_id!=(auth()->user()->id)){
+            if ($admin->business_id != (auth()->user()->business_id)) {
                 return response([
-                    'message'=>"You don't have access to change this user."
-                ],401);
+                    'message' => "You don't have access to change this user."
+                ], 401);
             }
-
         }
 
-        $role=$request->role;
-        
-        $username = str_replace(' ', '',$request->input('username'));
+        $role = $request->role;
+
+        $username = str_replace(' ', '', $request->input('username'));
 
         $admin->username = $username;
         $admin->name = $request->input('name');

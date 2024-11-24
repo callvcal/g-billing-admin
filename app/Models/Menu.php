@@ -37,6 +37,8 @@ class Menu extends Model
         'category_id',
         'subcategory_id',
         'unit_id',
+        'alert_stocks',
+        'stocks',
         'admin_id',
         'ratings',
         'sells',

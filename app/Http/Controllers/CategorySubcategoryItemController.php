@@ -589,4 +589,45 @@ class CategorySubcategoryItemController extends Controller
 
         return $newImagePath;
     }
-}
+
+    function duplicateMenuMaterial($id)
+    {
+        // Find the menu by ID, or fail with a 404 response if not found.
+        $menu = Menu::find($id);
+        if (!$menu) {
+            return response()->json(['message' => "Requested resource does not exist"], 404);
+        }
+    
+        // Verify the user's access to the menu's business context.
+        if (auth()->user()->business_id != $menu->business_id) {
+            return response()->json(['message' => "You don't have access to this resource"], 403);
+        }
+    
+        // Duplicate the menu and save it.
+        $duplicatedMenu = $menu->replicate();
+        $duplicatedMenu->save();
+    
+        // Return the duplicated menu as part of the response.
+        return response()->json(['data' => $duplicatedMenu], 200);
+    }
+    function duplicateSubcategory($id)
+    {
+        // Find the menu by ID, or fail with a 404 response if not found.
+        $menu = SubCategory::find($id);
+        if (!$menu) {
+            return response()->json(['message' => "Requested resource does not exist"], 404);
+        }
+    
+        // Verify the user's access to the menu's business context.
+        if (auth()->user()->business_id != $menu->business_id) {
+            return response()->json(['message' => "You don't have access to this resource"], 403);
+        }
+    
+        // Duplicate the menu and save it.
+        $duplicatedMenu = $menu->replicate();
+        $duplicatedMenu->save();
+    
+        // Return the duplicated menu as part of the response.
+        return response()->json(['data' => $duplicatedMenu], 200);
+    }
+    }

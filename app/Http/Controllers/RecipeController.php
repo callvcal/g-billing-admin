@@ -27,14 +27,13 @@ class RecipeController extends Controller
             'message' => "Recipe Created Successfully"
         ]);
     }
-    function recipes(){
+    function recipes()
+    {
 
-        $page=request('page')??1;
-        $data=Recipe::with(['materials.material'])->where('business_id',auth()->user()->business_id)->latest()->paginate(100,['*'],'page',$page);
+        $page = request('page') ?? 1;
+        $data = Recipe::with(['materials.material'])->where('business_id', auth()->user()->business_id)->latest()->paginate(100, ['*'], 'page', $page);
 
         return response($data);
-
-
     }
     function addMaterial(Request $request)
     {
@@ -89,5 +88,25 @@ class RecipeController extends Controller
         $recipe->delete();
 
         return response(['message' => "Recipe delete successfully"], 200);
+    }
+    function duplicateRecipeMaterial($id)
+    {
+        // Retrieve the recipe material or fail with a 404 response.
+        $recipe = RecipeMaterial::find($id);
+        if (!$recipe) {
+            return response()->json(['message' => "Requested resource does not exist"], 404);
+        }
+
+        // Check user authorization.
+        if (auth()->user()->business_id != $recipe->business_id) {
+            return response()->json(['message' => "You don't have access to this resource"], 403);
+        }
+
+        // Replicate the recipe material.
+        $duplicatedRecipe = $recipe->replicate();
+        $duplicatedRecipe->save();
+
+        // Return the duplicated recipe.
+        return response()->json(['data' => $duplicatedRecipe], 200);
     }
 }
