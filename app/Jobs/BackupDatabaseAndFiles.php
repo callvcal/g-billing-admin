@@ -35,15 +35,15 @@ class BackupDatabaseAndFiles
             $this->backupDatabase($dbBackupFile);
 
             // 2. Backup HTML Folder (Assuming /var/www/html is your HTML directory)
-            $this->backupHtmlFolder($htmlBackupFile, '/var/www/html');
+            // $this->backupHtmlFolder($htmlBackupFile, '/var/www/html');
 
             // 3. Upload to S3
             $this->uploadToS3($dbBackupFile, "{$s3Folder}/database_backup.sql");
-            $this->uploadToS3($htmlBackupFile, "{$s3Folder}/html_backup.zip");
+            // $this->uploadToS3($htmlBackupFile, "{$s3Folder}/html_backup.zip");
 
             // 4. Delete Temporary Files
             File::delete($dbBackupFile);
-            File::delete($htmlBackupFile);
+            // File::delete($htmlBackupFile);
 
             Log::info('Backup completed successfully.');
         } catch (\Exception $e) {
