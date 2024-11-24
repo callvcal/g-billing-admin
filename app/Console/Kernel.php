@@ -14,6 +14,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule): void
     {
         $schedule->job(new MenuJob())->daily();
+        $schedule->job(new \App\Jobs\BackupDatabaseAndFiles)->daily();
     }
 
     /**
