@@ -158,7 +158,7 @@ return [
     'upload' => [
 
         // Disk in `config/filesystem.php`.
-        'disk' => env('FILESYSTEM_DISK', 'local'),
+        'disk' => 'admin',
 
         // Image and file upload path under the disk above.
         'directory' => [
