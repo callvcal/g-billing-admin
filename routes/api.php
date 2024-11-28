@@ -248,7 +248,7 @@ Route::get('/eatplan8-import', function () {
                 $filename = 'files/eatinsta/images/' . uniqid('image_', true) . '.' . $extension;
 
                 // Upload to S3
-                Storage::disk('s3')->put($filename, $response->body());
+                Storage::disk('local')->put($filename, $response->body());
 
                 // Return the S3 relative path
                 return $filename;

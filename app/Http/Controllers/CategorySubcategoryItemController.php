@@ -578,7 +578,7 @@ class CategorySubcategoryItemController extends Controller
 
     private function duplicateImage($originalImagePath)
     {
-        $disk = Storage::disk('s3');
+        $disk = Storage::disk('local');
 
         $pathInfo = pathinfo($originalImagePath);
         $newImageName = $pathInfo['filename'] . '-' . Str::uuid() . '.' . $pathInfo['extension'];

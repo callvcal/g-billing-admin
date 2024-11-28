@@ -724,7 +724,7 @@ class AuthController extends Controller
                     $dist = 'eatinsta/images';
                     $name = time() . '_' . 'avatar.png';
                     $path = $dist . '/' . $name;
-                    Storage::disk('s3')->put("$dist/$name", file_get_contents($user['image']));
+                    Storage::disk('local')->put("$dist/$name", file_get_contents($user['image']));
                     $userModel->image = $path;
                     $userModel->save();
                 }

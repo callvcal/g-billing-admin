@@ -333,7 +333,7 @@ class BusinessController extends Controller
                     $dist = 'eatinsta/images';
                     $name = time() . '_' . 'avatar.png';
                     $path = $dist . '/' . $name;
-                    Storage::disk('s3')->put("$dist/$name", file_get_contents($user['image']));
+                    Storage::disk('local')->put("$dist/$name", file_get_contents($user['image']));
                     $userModel->image = $path;
                     $userModel->save();
                 }
@@ -380,11 +380,11 @@ class BusinessController extends Controller
             $name = time() . '_' . $image->getClientOriginalName();
 
 
-            Storage::disk('s3')->put("$dist/$name", file_get_contents($image));
+            Storage::disk('local')->put("$dist/$name", file_get_contents($image));
 
             if (isset($model)) {
-                if ($model->$key && Storage::disk('s3')->exists($model->$key)) {
-                    Storage::disk('s3')->delete($model->$key);
+                if ($model->$key && Storage::disk('local')->exists($model->$key)) {
+                    Storage::disk('local')->delete($model->$key);
                 }
 
                 $model->$key =  $dist . '/' . $name;
@@ -407,8 +407,8 @@ class BusinessController extends Controller
     {
 
 
-        if ($model->$key && Storage::disk('s3')->exists($model->$key)) {
-            Storage::disk('s3')->delete($model->$key);
+        if ($model->$key && Storage::disk('local')->exists($model->$key)) {
+            Storage::disk('local')->delete($model->$key);
         }
         $model->$key = null;
         $model->save();
