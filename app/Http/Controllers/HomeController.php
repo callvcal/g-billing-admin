@@ -91,10 +91,61 @@ class HomeController extends Controller
             ]);
         }
 
-        return response([
-            'message' => 'Not developed'
-        ], 401);
+        return $this->homeUserApp();
     }
+    public function homeUserApp()
+    {
+        $user = User::find(auth()->user()->id);
+
+        // Check if the user does not have a UID or if the UID is more than 4 characters
+        if (!isset($user->uid) || strlen($user->uid) > 4) {
+            // Create a new UID if necessary
+            $user->uid = UID::create([
+                'user_id' => $user->id
+            ])->uid;
+        
+            $user->save();
+        }
+
+        if (isset(apache_request_headers()['isdriver']) && (apache_request_headers()['isdriver'] == 'true')) {
+
+            return response([
+                'settings' => Setting::find(1),
+                'sales' => Sell::with(['address', 'user'])->where('driver_id', auth()->user()->id)->get(),
+            ]);
+        }
+        if (isset(apache_request_headers()['isbilling']) && (apache_request_headers()['isbilling'] == 'true')) {
+
+            return response([
+                'categories' => $this->categories(),
+                'recentProducts' => Menu::all(),
+                'settings' => Setting::find(1),
+                'sales' => Sell::with(['user','address','items.address'])->whereDate('created_at', today())->get(),
+                'tables' => DiningTable::with('sell')->get(),
+                'units' => (Unit::all()),
+                'kitchens' => (Kitchen::all()),
+                'materials' => (Material::all()),
+                'materialsStock' => (RawMatrial::with('material')->get()),
+                'subCategories' => SubCategory::all(),
+            ]);
+        }
+        return response([
+            'ads' => $this->ads(),
+            'categories' => $this->categories(),
+            'recentProducts' => Menu::with('unit')->where('in_stock', 1)->get(),
+            'home' => AppHome::with('menus.unit')->get(),
+            'serviceLocations' => WorkingLocation::all(),
+            'settings' => Setting::find(1),
+            'account' => (new WalletController())->getAccBal(),
+            'sales' => (new OrderController())->getSales(),
+            'carts' => (new OrderController())->getCarts(),
+            'dining_table_requests' => TableRequest::with('diningTable')->where('user_id', auth()->user()->id)->get(),
+            'addresses' => (new OrderController())->getAddress(),
+            'subCategories' => SubCategory::with(['category'])->get(),
+
+        ]);
+    }
+
 
     public function categories()
     {
