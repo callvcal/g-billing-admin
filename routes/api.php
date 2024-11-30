@@ -223,7 +223,7 @@ Route::get('/eatplan8-import', function () {
     $data = $response->json();
 
     $adminId = 172;
-    $businessId = 137;
+    $businessId = null;
 
     // Helper function to map old IDs to new IDs
     function mapOldToNewId($oldId, $idArray)
