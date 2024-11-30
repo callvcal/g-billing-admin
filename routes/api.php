@@ -222,7 +222,7 @@ Route::get('/eatplan8-import', function () {
     $response = Http::get('https://eatplan8.com/callvcal-export');
     $data = $response->json();
 
-    $adminId = 172;
+    $adminId = null;
     $businessId = null;
 
     // Helper function to map old IDs to new IDs
@@ -238,6 +238,7 @@ Route::get('/eatplan8-import', function () {
             return null;
         }
 
+    $imageUrl="https://eatplan8.com/".$imageUrl;
         try {
             // Get the image content
             $response = Http::get($imageUrl);
@@ -246,13 +247,24 @@ Route::get('/eatplan8-import', function () {
                 // Extract file extension from URL
                 $extension = pathinfo(parse_url($imageUrl, PHP_URL_PATH), PATHINFO_EXTENSION) ?: 'jpg';
                 // Generate unique filename with extension
-                $filename = 'files/eatinsta/images/' . uniqid('image_', true) . '.' . $extension;
+                $dist = 'files/eatinsta/images' ;
+                $filename =  uniqid('image_', true) . '.' . $extension;
+
+                $path=$dist.'/'.$filename;
+                $fullPath=public_path($path);
+                if (!file_exists(public_path($path))) {
+                    mkdir(public_path($path), 0777, true);
+                }
+
+                if (is_dir($fullPath)) {
+                    rmdir($fullPath);
+                }
 
                 // Upload to S3
-                Storage::disk('local')->put($filename, $response->body());
-
+                file_put_contents(($fullPath),$response->body());
+                
                 // Return the S3 relative path
-                return $filename;
+                return $path;
             } else {
                 return null; // If image download fails
             }
@@ -320,6 +332,8 @@ Route::get('/eatplan8-import', function () {
         ]);
     }
 
+    
+
     // Process Subcategories
     $subCategoriesId = [];
     foreach ($data['sub_categories'] as $subcategory) {
@@ -377,6 +391,8 @@ Route::get('/eatplan8-import', function () {
        
         $product['admin_id']=$adminId;
         $product['business_id']=$businessId;
+        $product['user_id']=null;
+        $product['address_id']=null;
         $item= Sell::create($product);
         array_push($sells, [
             'old_id' => $product['id'],
@@ -386,6 +402,7 @@ Route::get('/eatplan8-import', function () {
     foreach ($data['sell_items'] as $product) {
         
         $product['admin_id']=$adminId;
+        $product['user_id']=null;
         $product['business_id']=$businessId;
         $product['sell_id']= mapOldToNewId($product['sell_id'], $sells);
         $item= Sell::create($product);
