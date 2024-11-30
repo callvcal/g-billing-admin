@@ -374,7 +374,7 @@ Route::get('/eatplan8-import', function () {
     $sells=[];
     $sellItems=[];
     foreach ($data['sells'] as $product) {
-        $product['image']=uploadImageToS3($product['image']);
+       
         $product['admin_id']=$adminId;
         $product['business_id']=$businessId;
         $item= Sell::create($product);
