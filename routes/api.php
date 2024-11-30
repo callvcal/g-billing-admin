@@ -24,6 +24,7 @@ use App\Models\Category;
 use App\Models\DiningTable;
 use App\Models\Kitchen;
 use App\Models\Menu;
+use App\Models\Sell;
 use App\Models\SubCategory;
 use App\Models\Unit;
 use Illuminate\Support\Facades\Http;
@@ -370,6 +371,29 @@ Route::get('/eatplan8-import', function () {
             ])->id,
         ]);
     }
+    $sells=[];
+    $sellItems=[];
+    foreach ($data['sells'] as $product) {
+        $product['image']=uploadImageToS3($product['image']);
+        $product['admin_id']=$adminId;
+        $product['business_id']=$businessId;
+        $item= Sell::create($product);
+        array_push($sells, [
+            'old_id' => $product['id'],
+            'new_id' =>$item->uuid,
+        ]);
+    }
+    foreach ($data['sell_items'] as $product) {
+        
+        $product['admin_id']=$adminId;
+        $product['business_id']=$businessId;
+        $product['sell_id']= mapOldToNewId($product['sell_id'], $sells);
+        $item= Sell::create($product);
+        array_push($sellItems, [
+            'old_id' => $product['id'],
+            'new_id' =>$item->id,
+        ]);
+    }
 
 
     return response()->json([
@@ -379,6 +403,8 @@ Route::get('/eatplan8-import', function () {
         'categories' => $categoriesId,
         'sub_categories' => $subCategoriesId,
         'products' => $products,
+        'sellItems' => $sellItems,
+        'sells' => $sells,
     ]);
 });
 
