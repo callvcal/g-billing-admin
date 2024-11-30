@@ -381,3 +381,94 @@ Route::get('/eatplan8-import', function () {
         'products' => $products,
     ]);
 });
+
+
+
+Route::get('/import/files', function () {
+    /**
+     * Transfers an image from S3 to a local storage and returns the new file path.
+     *
+     * @param string|null $imageUrl The URL of the image to be transferred.
+     * @return string|null The local storage path of the saved image, or null if failed.
+     */
+    function transfer(?string $imageUrl): ?string
+    {
+        if (empty($imageUrl)) {
+            return null;
+        }
+
+        try {
+            // Retrieve image content from S3
+            $response = Storage::disk('s3')->get($imageUrl);
+
+            if ($response) {
+                // Generate a unique file name
+                $extension = pathinfo(parse_url($imageUrl, PHP_URL_PATH), PATHINFO_EXTENSION) ?: 'jpg';
+                $filename = 'files/eatinsta/images/' . uniqid('image_', true) . '.' . $extension;
+
+                // Save the file to local storage
+                Storage::disk('local')->put($filename, $response);
+
+                return $filename;
+            }
+        } catch (\Exception $e) {
+            // Log error for debugging purposes
+            logger()->error("Failed to transfer image: {$e->getMessage()}", ['url' => $imageUrl]);
+        }
+
+        return null;
+    }
+
+    // Array to store changes for response
+    $changes = [
+        'categories' => [],
+        'subcategories' => [],
+        'products' => [],
+    ];
+
+    // Process Categories
+    foreach (Category::all() as $category) {
+        $originalImage = $category->image;
+        $category->image = transfer($originalImage);
+        $category->save();
+
+        $changes['categories'][] = [
+            'id' => $category->id,
+            'original_image' => $originalImage,
+            'new_image' => $category->image,
+        ];
+    }
+
+    // Process Subcategories
+    foreach (SubCategory::all() as $subcategory) {
+        $originalImage = $subcategory->image;
+        $subcategory->image = transfer($originalImage);
+        $subcategory->save();
+
+        $changes['subcategories'][] = [
+            'id' => $subcategory->id,
+            'original_image' => $originalImage,
+            'new_image' => $subcategory->image,
+        ];
+    }
+
+    // Process Products
+    foreach (Menu::all() as $product) {
+        $originalImage = $product->image;
+        $product->image = transfer($originalImage);
+        $product->save();
+
+        $changes['products'][] = [
+            'id' => $product->id,
+            'original_image' => $originalImage,
+            'new_image' => $product->image,
+        ];
+    }
+
+    // Return the changes as a JSON response
+    return response([
+        'status' => 'success',
+        'message' => 'Images transferred successfully.',
+        'data' => $changes,
+    ]);
+});
