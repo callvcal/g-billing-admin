@@ -136,6 +136,7 @@ class HomeController extends Controller
             'home' => AppHome::with('menus.unit')->get(),
             'serviceLocations' => WorkingLocation::all(),
             'settings' => Setting::find(1),
+            'user' => $user,
             'account' => (new WalletController())->getAccBal(),
             'sales' => (new OrderController())->getSales(),
             'carts' => (new OrderController())->getCarts(),
