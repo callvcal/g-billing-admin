@@ -234,7 +234,7 @@ class RazorPayController extends Controller
                 "attempts" => $res['attempts'],
                 "notes" => $res['notes'],
                 "notes" => $res['notes'],
-                "razorpayKey" => $this->razorpayKey,
+                "razorpayKey" => $this->razorpayKey(),
                 "created_at" => $res['created_at']
             ];
         }
@@ -309,7 +309,7 @@ class RazorPayController extends Controller
                 "attempts" => $res['attempts'],
                 "notes" => $res['notes'],
                 "notes" => $res['notes'],
-                "razorpayKey" => $this->razorpayKey,
+                "razorpayKey" => $this->razorpayKey(),
                 "created_at" => $res['created_at']
             ];
         }
