@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Address;
 use App\Models\CartItem;
 use App\Models\DiningTable;
+use App\Models\Menu;
 use App\Models\OrderStatusUpdate;
 use App\Models\PaymentData;
 use App\Models\PaymentTransaction;
@@ -126,7 +127,7 @@ class OrderController extends Controller
         $orderData['order_complete_otp'] = $this->generateOtp();
         $orderData['order_id'] = $this->generateOrderID($user_id);
         $items = $request->items;
-        $orderData['business_id'] = $request->items[0]['business_id']??null;
+        $orderData['business_id'] = Menu::find($request->items[0]['id'])->business_id??null;
 
         $order = Sell::create($orderData);
         if ($orderData['payment_method'] == "wallet") {
