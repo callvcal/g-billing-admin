@@ -200,6 +200,7 @@ class SendMessage implements ShouldQueue
     {
         switch ($orderStatus) {
             case 'unknown':
+            case 'payment_pending':
                 return null;
             case 'a_sent':
                 // Initial state when the order is placed
