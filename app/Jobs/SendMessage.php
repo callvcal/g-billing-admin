@@ -205,24 +205,8 @@ class SendMessage implements ShouldQueue
                 // Initial state when the order is placed
                 return 'Your order has been placed successfully';
             case 'b_accepted':
-                // Order has been accepted by the restaurant
-                // switch ($deliveryStatus) {
-                //     case 'b_assigned':
-                //         return 'A delivery boy has been assigned to your order';
-                //     case 'c_accepted':
-                //         return 'A delivery boy has accepted your order';
-                //     case 'h_rejected':
-                //         return 'Your order is ready for pickup';
-                //     case 'd_pickedUp':
-                //         return 'The delivery boy has picked up your order';
-                //     case 'e_outForDelivery':
-                //         return 'Your order is now out for delivery';
-                //     case 'f_delivered':
-                //         return 'Your order has been delivered successfully';
-                //     case 'g_returned':
-                //         return 'The customer has returned the order';
-                //     default:
-                // }
+               
+                
                 return 'Your order has been accepted and is in progress';
             case 'f_rejected':
                 // Order has been rejected by the restaurant

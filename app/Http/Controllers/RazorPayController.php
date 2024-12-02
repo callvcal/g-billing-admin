@@ -201,7 +201,7 @@ class RazorPayController extends Controller
 
 
 
-        $api = new Api($this->razorpayKey, $this->keySecrete);
+        $api = new Api($this->razorpayKey(), $this->keySecrete());
         $body = [
             'amount' => $amount * 100,
             'currency' => 'INR',
