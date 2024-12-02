@@ -112,6 +112,13 @@ class OrderController extends Controller
 
         $orderData['customer_mobile'] = $user->mobile;
         $orderData['order_status'] = ($orderData['payment_status'] == 'pending') ? "a_sent" : 'e_completed';
+        if ($orderData['payment_method'] != "cash") {
+            
+            
+            $orderData['order_status']='payment_pending';
+            
+           
+        }
         $orderData['invoice_id'] = (new KotTokenController())->generateToken(type: 'invoice');
         // $orderData['gst_amt'] = $orderData['total_amt'] * 0.05;
         $orderData['total_amt'] = (int) $orderData['total_amt'];

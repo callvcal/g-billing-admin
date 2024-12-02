@@ -92,35 +92,8 @@ class Sell extends Model
         return $this->hasMany(SellItem::class,'sell_id','uuid');
     }
 
-    // Define an event to create a user_coupon record when an order is created
-    // protected static function booted()
-    // {
-    //     static::created(function ($model) {
-
-    //         if (isset($model->coupon_id)) {
-    //             UserCoupon::create([
-    //                 'sell_id'=>$model->id,
-    //                 'user_id'=>$model->user_id,
-    //                 'order_status'=>$model->order_status,
-    //                 'status'=>$model->coupon_id,
-    //             ]);
-    //         }
-
-    //         dispatch(new SendMessage($model->id, "order_create",'order'))->afterResponse();
-    //     });
-    //     static::updated(function ($model) {
-    //         if (isset($model->coupon_id)) {
-    //             $coupon=UserCoupon::where('sell_id',$model->id)->first();
-    //             if($coupon){
-    //                 $coupon->order_status=$model->order_status;
-    //                 $coupon->save();
-    //             }
-    //         }
-
-    //         dispatch(new SendMessage($model->id, "order_update",'order'))->afterResponse();
-    //     });
-    // }
-
+    
+    
     protected static function booted()
     {
         static::created(function ($model) {
@@ -140,10 +113,6 @@ class Sell extends Model
                     'sell_id' => $model->id,
                 ]);
             }
-
-
-
-
             // Dispatch job immediately without queuing
             SendMessage::dispatch($model->id, "order_create", 'order')->afterResponse();
         });

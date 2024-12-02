@@ -120,7 +120,7 @@ class SendMessage implements ShouldQueue
                     }
                     if (($order->delivery_status == 'a_unassigned')) {
                         $order->delivery_status = 'b_assigned';
-                        $order->save();
+                        $order->saveQuietly();
                     }
                 }
                 if ($orderStatus == 'a_sent') {
