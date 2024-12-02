@@ -415,6 +415,9 @@ class CategorySubcategoryItemController extends Controller
     public function deleteUnit($id)
     {
         $unit = Unit::findOrFail($id);
+        if (auth()->user()->business_id != $unit->business_id) {
+            return response()->json(['message' => "You don't have access to this resource"], 403);
+        }
         $unit->delete();
         return response(['message' => 'Unit deleted successfully']);
     }
