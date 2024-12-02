@@ -127,7 +127,7 @@ class OrderController extends Controller
         $orderData['order_complete_otp'] = $this->generateOtp();
         $orderData['order_id'] = $this->generateOrderID($user_id);
         $items = $request->items;
-        $orderData['business_id'] = Menu::find($request->items[0]['id'])->business_id??null;
+        // $orderData['business_id'] = $orderData['business_id']??null;
 
         $order = Sell::create($orderData);
         if ($orderData['payment_method'] == "wallet") {
