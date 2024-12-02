@@ -233,6 +233,7 @@ Route::get('/eatplan8-import', function () {
 
     function uploadImageToS3($imageUrl)
     {
+        return $imageUrl;
         // Check if URL is valid
         if (empty($imageUrl)) {
             return null;
@@ -387,30 +388,30 @@ Route::get('/eatplan8-import', function () {
     }
     $sells=[];
     $sellItems=[];
-    foreach ($data['sells'] as $product) {
+    // foreach ($data['sells'] as $product) {
        
-        $product['admin_id']=$adminId;
-        $product['business_id']=$businessId;
-        $product['user_id']=null;
-        $product['address_id']=null;
-        $item= Sell::create($product);
-        array_push($sells, [
-            'old_id' => $product['id'],
-            'new_id' =>$item->uuid,
-        ]);
-    }
-    foreach ($data['sell_items'] as $product) {
+    //     $product['admin_id']=$adminId;
+    //     $product['business_id']=$businessId;
+    //     $product['user_id']=null;
+    //     $product['address_id']=null;
+    //     $item= Sell::create($product);
+    //     array_push($sells, [
+    //         'old_id' => $product['id'],
+    //         'new_id' =>$item->uuid,
+    //     ]);
+    // }
+    // foreach ($data['sell_items'] as $product) {
         
-        $product['admin_id']=$adminId;
-        $product['user_id']=null;
-        $product['business_id']=$businessId;
-        $product['sell_id']= mapOldToNewId($product['sell_id'], $sells);
-        $item= Sell::create($product);
-        array_push($sellItems, [
-            'old_id' => $product['id'],
-            'new_id' =>$item->id,
-        ]);
-    }
+    //     $product['admin_id']=$adminId;
+    //     $product['user_id']=null;
+    //     $product['business_id']=$businessId;
+    //     $product['sell_id']= mapOldToNewId($product['sell_id'], $sells);
+    //     $item= Sell::create($product);
+    //     array_push($sellItems, [
+    //         'old_id' => $product['id'],
+    //         'new_id' =>$item->id,
+    //     ]);
+    // }
 
 
     return response()->json([
