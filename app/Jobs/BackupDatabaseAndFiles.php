@@ -93,7 +93,7 @@ class BackupDatabaseAndFiles
 
     private function uploadToS3($localPath, $s3Path)
     {
-        if (Storage::disk('local')->put($s3Path, fopen($localPath, 'r+'))) {
+        if (file_put_contents($s3Path, fopen($localPath, 'r+'))) {
             Log::info("File uploaded to S3: {$s3Path}");
         } else {
             throw new \Exception("Failed to upload file to S3: {$s3Path}");

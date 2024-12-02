@@ -450,7 +450,7 @@ Route::get('/import/files', function () {
                 $filename = 'files/eatinsta/images/' . uniqid('image_', true) . '.' . $extension;
 
                 // Save the file to local storage
-                Storage::disk('local')->put($filename, $response);
+                file_put_contents($filename, $response);
 
                 return $filename;
             }

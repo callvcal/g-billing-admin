@@ -6,6 +6,8 @@ use App\Models\Address;
 use App\Models\CartItem;
 use App\Models\DiningTable;
 use App\Models\OrderStatusUpdate;
+use App\Models\PaymentData;
+use App\Models\PaymentTransaction;
 use App\Models\Sell;
 use App\Models\SellItem;
 use App\Models\User;
@@ -150,7 +152,11 @@ class OrderController extends Controller
             'order' => $order,
         ];
         if ($order->payment_method == "razorpay") {
-            $response['razorpay'] = (new RazorPayController())->createOrder($order->id);
+            
+            
+        
+            
+            $response['razorpay'] = (new RazorPayController())->razorpayOrder($order->id);
         }
 
         $order->load('address');
