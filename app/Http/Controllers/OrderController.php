@@ -125,6 +125,8 @@ class OrderController extends Controller
         $orderData['delivery_pick_up_otp'] = $this->generateOtp();
         $orderData['order_complete_otp'] = $this->generateOtp();
         $orderData['order_id'] = $this->generateOrderID($user_id);
+        $items = $request->items;
+        $orderData['business_id'] = $request->items[0]['business_id']??null;
 
         $order = Sell::create($orderData);
         if ($orderData['payment_method'] == "wallet") {
@@ -138,7 +140,6 @@ class OrderController extends Controller
             $order->save();
         }
 
-        $items = $request->items;
         foreach ($items as $item) {
 
             CartItem::where('id', $item['id'])->delete();
