@@ -78,7 +78,6 @@ class UserController extends AdminController
         $form->image('image', __('Image'));
         $form->date('date_of_birth', __('Date of birth'))->default(date('Y-m-d'));
         $form->text('gender', __('Gender'));
-         $form->hidden('business_id', __('Business id'))->default(Admin::user()->business_id);
-        return $form;
+         return $form;
     }
 }
