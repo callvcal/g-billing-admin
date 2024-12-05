@@ -48,7 +48,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::post('/auth/users/verifyOTP', [AuthController::class, 'verifyOTP'])->middleware('security');
 Route::get('/app/home', [HomeController::class, 'home']);
 
-Route::post('/auth/users/verifyOTP', [AuthController::class, 'verifyOTP'])->middleware('security');
 Route::post('/auth/users/otp/email', [AuthController::class, 'sendUserEmailOtp'])->middleware('security');
 Route::post('/auth/users/otp/mobile', [AuthController::class, 'sendUserMobileOtp'])->middleware('security');
 Route::post('/auth/users/otp/verify/email', [AuthController::class, 'verifyUserEmailOtp'])->middleware('security');
