@@ -20,7 +20,7 @@ class CreateRewardsTable extends Migration
             $table->boolean('active')->default(1)->nullable();
             $table->string('mobile')->nullable();
             $table->string('name')->nullable();
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('user_id')->references('id')->on('users')->nullOnDelete();
             $table->timestamps();
         });
     }
