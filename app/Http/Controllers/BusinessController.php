@@ -368,33 +368,41 @@ class BusinessController extends Controller
     }
     public function saveFilePath($request, $dir, $model, $key)
     {
+
         $image = $request->file($key);
-    
-        if ($image) {
+
+        if ($image !== null) {
             try {
                 $this->deleteFilePath($model, $key);
             } catch (Exception $e) {
-                Log::error("Error deleting file: " . $e->getMessage());
             }
-    
-            $dist = "eatplan8/$dir";
-            $name = time() . '_' . md5($image->getClientOriginalName()) . '.' . $image->getClientOriginalExtension();
-    
-            // Save the file using Laravel's storage
-            $filePath = $image->storeAs($dist, $name, 'public');
-    
-            // Update model's file path
-            if ($model) {
-                $model->$key = $filePath;
+            $dist = "eatinsta/$dir";
+            $name = time() . '_' . $image->getClientOriginalName();
+
+
+            file_put_contents("$dist/$name", file_get_contents($image));
+
+            if (isset($model)) {
+                if ($model->$key && file_exists($model->$key)) {
+                    unlink($model->$key);
+                }
+             
+
+                $model->$key =  $dist . '/' . $name;
                 $model->save();
             }
-    
-            return $filePath;
+            return response()->json([
+                'message' => 'File uploaded successfully',
+                $key => $dist . '/' . $name,
+
+            ]);
         }
-    
-        throw new \Exception("File not uploaded.");
+
+        return response()->json([
+            'message' => 'Please select file to upload',
+        ], 401);
     }
-    
+
 
     public function deleteFilePath($model, $key)
     {
