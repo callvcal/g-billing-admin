@@ -350,9 +350,9 @@ class AuthController extends Controller
 
         $user->update($data);
 
-        
 
-        (new BusinessController())->saveFilePath($request, 'images', $user, 'image');
+
+        // (new BusinessController())->saveFilePath($request, 'images', $user, 'image');
 
         return response(User::find(auth()->user()->id));
     }
