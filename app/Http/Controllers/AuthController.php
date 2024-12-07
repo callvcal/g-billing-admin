@@ -336,7 +336,7 @@ class AuthController extends Controller
         $data = $request->validate([
             'name' => ['required', 'string', 'max:255'],
             // 'gender' => ['required', 'string', 'max:20'],
-            'date_of_birth' => ['required', 'string', 'max:10'],
+            // 'date_of_birth' => ['required', 'string', 'max:10'],
         ]);
 
         $user = User::find(auth()->user()->id);
