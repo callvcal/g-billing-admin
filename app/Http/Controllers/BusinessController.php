@@ -380,7 +380,7 @@ class BusinessController extends Controller
                 Log::channel('callvcal')->info('File size: ' . $image->getSize() . ' bytes');
 
                 // Full file path
-                $fullPath = public_path("$dist/$name");
+                $fullPath = ("$dist/$name");
 
                 // Ensure directory exists
                 $directory = dirname($fullPath);
@@ -398,7 +398,7 @@ class BusinessController extends Controller
 
                 // Update model with the new file path
                 if ($model) {
-                    $model->$key = "public/$dist/$name";
+                    $model->$key = "$dist/$name";
                     $model->save();
                 }
 
