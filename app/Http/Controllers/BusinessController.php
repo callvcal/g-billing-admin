@@ -368,45 +368,57 @@ class BusinessController extends Controller
     }
     public function saveFilePath($request, $dir, $model, $key)
     {
-
         $image = $request->file($key);
-
+    
         if ($image !== null) {
-           
-            
-            $dist = "eatplan8/$dir";
-            $name = time() . '_' . $image->getClientOriginalName().'.png';
-
-            Log::channel('callvcal')->info('File size: ' . $image->getSize() . ' bytes');
-
-
-           
-
-            if (isset($model)) {
-                if ($model->$key && file_exists($model->$key)) {
-                    unlink($model->$key);
-                }
-                $dir=public_path("$dist/$name");
-                if(!file_exists($dir)){
-                    mkdir($dir);
+            try {
+                // Define the destination directory and file name
+                $dist = "eatplan8/$dir";
+                $name = time() . '_' . $image->getClientOriginalName() . '.png';
+    
+                // Log file details
+                Log::channel('callvcal')->info('File size: ' . $image->getSize() . ' bytes');
+    
+                // Full file path
+                $fullPath = public_path("$dist/$name");
+    
+                // Ensure directory exists
+                $directory = dirname($fullPath);
+                if (!file_exists($directory)) {
+                    mkdir($directory, 0755, true);
                 }
     
-                file_put_contents($dir, file_get_contents($image));
-                $model->$key =  $dist . '/' . $name;
-                $model->save();
+                // Delete the existing file if it exists
+                if (isset($model) && $model->$key && file_exists(public_path($model->$key))) {
+                    unlink(public_path($model->$key));
+                }
+    
+                // Save the file
+                file_put_contents($fullPath, file_get_contents($image));
+    
+                // Update model with the new file path
+                if ($model) {
+                    $model->$key = "$dist/$name";
+                    $model->save();
+                }
+    
+                return response()->json([
+                    'message' => 'File uploaded successfully',
+                    $key => "$dist/$name",
+                ]);
+            } catch (\Exception $e) {
+                Log::channel('callvcal')->error('File upload error: ' . $e->getMessage());
+                return response()->json([
+                    'message' => 'File upload failed',
+                ], 500);
             }
-            return response()->json([
-                'message' => 'File uploaded successfully',
-                $key => $dist . '/' . $name,
-
-            ]);
         }
-
+    
         return response()->json([
-            'message' => 'Please select file to upload',
-        ], 401);
+            'message' => 'Please select a file to upload',
+        ], 400);
     }
-
+    
 
     public function deleteFilePath($model, $key)
     {
