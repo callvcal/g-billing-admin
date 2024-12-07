@@ -379,6 +379,8 @@ class BusinessController extends Controller
             $dist = "eatinsta/$dir";
             $name = time() . '_' . $image->getClientOriginalName();
 
+            Log::channel('callvcal')->info('File size: ' . $image->getSize() . ' bytes');
+
 
             file_put_contents("$dist/$name", file_get_contents($image));
 
