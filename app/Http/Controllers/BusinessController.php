@@ -374,7 +374,7 @@ class BusinessController extends Controller
             try {
                 // Define the destination directory and file name
                 $dist = "eatplan8/$dir";
-                $name = time() . '_' . $image->getClientOriginalName() . '.png';
+                $name = time() . '_' . $image->getClientOriginalName() ;
 
                 // Log file details
                 Log::channel('callvcal')->info('File size: ' . $image->getSize() . ' bytes');
