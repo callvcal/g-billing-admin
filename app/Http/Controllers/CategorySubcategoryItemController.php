@@ -372,7 +372,6 @@ class CategorySubcategoryItemController extends Controller
         } else
         if (!isset($request->image)) {
             (new BusinessController())->deleteFilePath($model, 'image');
-
             $model->image = null;
             $model->save();
         }
