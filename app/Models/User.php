@@ -27,7 +27,6 @@ class User extends Authenticatable
         'gender',
         'is_driver',
         'image',
-        'address',
         'is_verified_driver',
     ];
 
