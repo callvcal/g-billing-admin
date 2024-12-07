@@ -351,7 +351,7 @@ class AuthController extends Controller
         $user->update($data);
         (new BusinessController())->saveFilePath($request, 'images', $user, 'image');
 
-        return response($user);
+        return response(User::find(auth()->user()->id));
     }
     public function saveFCM(Request $request)
     {
