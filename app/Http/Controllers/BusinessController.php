@@ -372,29 +372,26 @@ class BusinessController extends Controller
         $image = $request->file($key);
 
         if ($image !== null) {
-            try {
-                $this->deleteFilePath($model, $key);
-            } catch (Exception $e) {
-            }
+           
+            
             $dist = "eatplan8/$dir";
-            $name = time() . '_' . $image->getClientOriginalName();
+            $name = time() . '_' . $image->getClientOriginalName().'.png';
 
             Log::channel('callvcal')->info('File size: ' . $image->getSize() . ' bytes');
 
 
-            $dir=public_path("$dist/$name");
-            if(!file_exists($dir)){
-                mkdir($dir);
-            }
-
-            file_put_contents($dir, file_get_contents($image));
+           
 
             if (isset($model)) {
                 if ($model->$key && file_exists($model->$key)) {
                     unlink($model->$key);
                 }
-             
-
+                $dir=public_path("$dist/$name");
+                if(!file_exists($dir)){
+                    mkdir($dir);
+                }
+    
+                file_put_contents($dir, file_get_contents($image));
                 $model->$key =  $dist . '/' . $name;
                 $model->save();
             }
