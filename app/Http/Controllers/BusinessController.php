@@ -369,7 +369,7 @@ class BusinessController extends Controller
     public function saveFilePath($request, $dir, $model, $key)
     {
 
-        $image = $request->file($key);
+        $image = $request->file('file');
 
         if ($image !== null) {
             try {
