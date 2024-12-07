@@ -122,7 +122,7 @@ class BusinessController extends Controller
             // 'password' => ['required', 'string', 'max:20'],
             'mobile' => ['required'],
             'name' => ['required'],
-           
+
         ]);
         $name = $request->name;
         $mobile = $request->mobile;
@@ -166,14 +166,14 @@ class BusinessController extends Controller
 
         $mobile = $request->mobile;
         $name = $request->name;
-       
+
 
 
 
         $user->mobile = $mobile;
         $user->password = Hash::make($request->password);
         $user->name = $name;
-        
+
         $user->save();
 
         $user->load('business');
@@ -369,39 +369,39 @@ class BusinessController extends Controller
     public function saveFilePath($request, $dir, $model, $key)
     {
         $image = $request->file($key);
-    
+
         if ($image !== null) {
             try {
                 // Define the destination directory and file name
                 $dist = "eatplan8/$dir";
                 $name = time() . '_' . $image->getClientOriginalName() . '.png';
-    
+
                 // Log file details
                 Log::channel('callvcal')->info('File size: ' . $image->getSize() . ' bytes');
-    
+
                 // Full file path
                 $fullPath = public_path("$dist/$name");
-    
+
                 // Ensure directory exists
                 $directory = dirname($fullPath);
                 if (!file_exists($directory)) {
                     mkdir($directory, 0755, true);
                 }
-    
+
                 // Delete the existing file if it exists
                 if (isset($model) && $model->$key && file_exists(public_path($model->$key))) {
                     unlink(public_path($model->$key));
                 }
-    
+
                 // Save the file
                 file_put_contents($fullPath, file_get_contents($image));
-    
+
                 // Update model with the new file path
                 if ($model) {
                     $model->$key = "$dist/$name";
                     $model->save();
                 }
-    
+
                 return response()->json([
                     'message' => 'File uploaded successfully',
                     $key => "$dist/$name",
@@ -413,12 +413,12 @@ class BusinessController extends Controller
                 ], 500);
             }
         }
-    
+
         return response()->json([
             'message' => 'Please select a file to upload',
         ], 400);
     }
-    
+
 
     public function deleteFilePath($model, $key)
     {
