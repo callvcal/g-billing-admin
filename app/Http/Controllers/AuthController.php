@@ -341,6 +341,7 @@ class AuthController extends Controller
 
         $user = User::find(auth()->user()->id);
 
+        (new BusinessController())->saveFilePath($request, 'images', $user, 'image');
 
 
         $data = $request->all();
@@ -352,7 +353,6 @@ class AuthController extends Controller
 
 
 
-        // (new BusinessController())->saveFilePath($request, 'images', $user, 'image');
 
         return response(User::find(auth()->user()->id));
     }
