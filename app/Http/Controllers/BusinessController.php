@@ -398,7 +398,7 @@ class BusinessController extends Controller
 
                 // Update model with the new file path
                 if ($model) {
-                    $model->$key = "$dist/$name";
+                    $model->$key = "public/$dist/$name";
                     $model->save();
                 }
 
