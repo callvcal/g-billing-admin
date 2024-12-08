@@ -189,7 +189,7 @@ class HomeController extends Controller
 
     function subCategoriesByCategory($id)
     {
-        return response($this->query(SubCategory::class)->with(['category'])->where('category_id', $id)->get());
+        return response(SubCategory::with(['category'])->where('category_id', $id)->get());
     }
 
     public function loadSubcategories(Request $request)
