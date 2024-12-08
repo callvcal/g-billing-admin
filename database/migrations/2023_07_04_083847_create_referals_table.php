@@ -16,7 +16,7 @@ class CreateReferalsTable extends Migration
         Schema::create('referals', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id')->nullable()->unique();
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('user_id')->references('id')->on('users')->nullOnDelete();
             $table->boolean('active')->default(1)->nullable();
             $table->string('mobile')->nullable();
             $table->string('name')->nullable();

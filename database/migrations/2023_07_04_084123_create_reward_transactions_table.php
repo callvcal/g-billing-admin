@@ -18,9 +18,9 @@ class CreateRewardTransactionsTable extends Migration
             $table->unsignedBigInteger('user_id')->nullable();
             $table->unsignedBigInteger('reward_id')->nullable();
             $table->unsignedBigInteger('referal_id')->nullable();
-            $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('referal_id')->references('id')->on('referals');
-            $table->foreign('reward_id')->references('id')->on('rewards');
+            $table->foreign('user_id')->references('id')->on('users')->nullOnDelete();
+            $table->foreign('referal_id')->references('id')->on('referals')->nullOnDelete();
+            $table->foreign('reward_id')->references('id')->on('rewards')->nullOnDelete();
             $table->integer("points")->default(0)->nullable();
             $table->string('mobile')->nullable();
             $table->string('name')->nullable();

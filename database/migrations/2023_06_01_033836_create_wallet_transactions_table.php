@@ -22,10 +22,10 @@ class CreateWalletTransactionsTable extends Migration
             $table->enum("transaction_type",['credit','debit'])->nullable();
             $table->integer("authenticated_user_id")->nullable();
             $table->enum("authenticated_user_role",['user','admin'])->nullable();
-            $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('credit_wallet_id')->references('id')->on('wallets');
-            $table->foreign('debit_wallet_id')->references('id')->on('wallets');
-            $table->foreign('reward_point_id')->references('id')->on('rewards');
+            $table->foreign('user_id')->references('id')->on('users')->nullOnDelete();
+            $table->foreign('credit_wallet_id')->references('id')->on('wallets')->nullOnDelete();
+            $table->foreign('debit_wallet_id')->references('id')->on('wallets')->nullOnDelete();
+            $table->foreign('reward_point_id')->references('id')->on('rewards')->nullOnDelete();
             $table->double("amount")->default(0)->nullable();
             $table->string("name")->nullable();
             $table->string("mobile")->nullable();
