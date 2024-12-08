@@ -184,7 +184,7 @@ class HomeController extends Controller
 
     function menuItemsBySubCategory($id)
     {
-        return response($this->query(Menu::class)->with(['unit'])->where('subcategory_id', $id)->where('in_stock', 1)->get());
+        return response(Menu::with(['unit'])->where('subcategory_id', $id)->where('in_stock', 1)->get());
     }
 
     function subCategoriesByCategory($id)
