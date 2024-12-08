@@ -40,6 +40,13 @@ return new class extends Migration
             $table->dropForeign(['reward_id']);
             $table->foreign('reward_id')->references('id')->on('rewards')->nullOnDelete();
         });
+        Schema::table('rewards', function (Blueprint $table) {
+            $table->dropForeign(['user_id']);
+            $table->foreign('user_id')->references('id')->on('users')->nullOnDelete();
+
+          
+            
+        });
     }
 
     /**
