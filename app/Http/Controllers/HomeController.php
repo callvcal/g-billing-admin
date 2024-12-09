@@ -97,6 +97,8 @@ class HomeController extends Controller
     {
         $user = User::find(auth()->user()->id);
 
+        $bID=Business::first()->id;
+
         // Check if the user does not have a UID or if the UID is more than 4 characters
         if (!isset($user->uid) || strlen($user->uid) > 4) {
             // Create a new UID if necessary
@@ -135,7 +137,7 @@ class HomeController extends Controller
             'recentProducts' => Menu::with('unit')->where('in_stock', 1)->get(),
             'home' => AppHome::with('menus.unit')->get(),
             'serviceLocations' => WorkingLocation::all(),
-            'settings' => Setting::find(1),
+            'settings' => Setting::find($bID),
             'user' => $user,
             'account' => (new WalletController())->getAccBal(),
             'sales' => (new OrderController())->getSales(),
