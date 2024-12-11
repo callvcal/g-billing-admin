@@ -5,7 +5,8 @@
 /public/storage
 /storage/*.key
 /vendor/*
-/public/*
+/public/photos/
+/public/files/
 !/public/css/
 !/public/js/
 !/public/app-ads.txt
@@ -25,7 +26,7 @@ yarn-error.log
 /.fleet
 /.idea
 /.vscode
-!/public/img
+public/img/
 
 
 
