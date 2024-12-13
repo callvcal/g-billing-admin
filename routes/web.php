@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\BarcodeController;
 use App\Http\Controllers\FoodProductController;
+use App\Http\Controllers\InviteController;
 use App\Http\Controllers\PageDesignerController;
 use App\Http\Controllers\ProfileController;
 use App\Models\Menu;
@@ -79,6 +80,7 @@ Route::get('/page/{id}', [PageDesignerController::class, 'index'])->name('page-d
 
 
 Route::get('/shop', [FoodProductController::class, 'index'])->name('shop.index');
+Route::get('/refer/{code}', [InviteController::class, 'view'])->name('invite.view');
 
 Route::get('/account-delete-request', function () {
     return view('account-delete-request');

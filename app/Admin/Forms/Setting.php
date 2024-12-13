@@ -79,26 +79,27 @@ class Setting extends Form
      */
     public function form()
     {
-        // $this->text('price_per_km', 'Delivery Charge Per KM')->rules('required');
-        // $this->image('refer_earn_image', 'Refer & Earn Image');
-        // $this->number('refer_earn_new_user_rewards', 'Refere & Earn New user rewards')->default(200)->rules('required');
-        // $this->number('refer_earn_old_user_rewards', 'Refere & Earn Old user rewards')->default(0)->rules('required');
-        // $this->number('refer_earn_referer_discount', 'Referer user discount (0-100)%')->default(10)->rules('required');
-        // $this->number('refer_earn_refered_discount_first_order', 'Refered user discount for 1st order(0-100)%')->default(50)->rules('required');
-        // $this->number('refer_earn_refered_discount_second_order', 'Refered user discount for 2nd order(0-100)%')->default(25)->rules('required');
-        // $this->number('refer_earn_refered_discount_third_order', 'Refered user discount for 3rd order(0-100)%')->default(10)->rules('required');
-        // $this->text('rewardConvertRate', 'Reward convert rate')->rules('required');
+        
         $states = [
             0 => "No",
             1 => "Yes",
         ];
         if (isAdministrator()) {
+            $this->text('price_per_km', 'Delivery Charge Per KM')->rules('required');
+            $this->image('refer_earn_image', 'Refer & Earn Image');
+            $this->number('refer_earn_new_user_rewards', 'Refere & Earn New user rewards')->default(200)->rules('required');
+            $this->number('refer_earn_old_user_rewards', 'Refere & Earn Old user rewards')->default(0)->rules('required');
+            $this->number('refer_earn_referer_discount', 'Referer user discount (0-100)%')->default(10)->rules('required');
+            $this->number('refer_earn_refered_discount_first_order', 'Refered user discount for 1st order(0-100)%')->default(50)->rules('required');
+            $this->number('refer_earn_refered_discount_second_order', 'Refered user discount for 2nd order(0-100)%')->default(25)->rules('required');
+            $this->number('refer_earn_refered_discount_third_order', 'Refered user discount for 3rd order(0-100)%')->default(10)->rules('required');
+            $this->text('rewardConvertRate', 'Reward convert rate')->rules('required');
             $this->number('invoice_id_label_width', 'invoice_id_label_width')->default(4);
             $this->number('invoice_id_value_width', 'invoice_id_value_width')->default(8);
             $this->number('customer_name_label_width', 'customer_name_label_width')->default(4);
             $this->number('customer_name_value_width', 'customer_name_value_width')->default(8);
             $this->number('item_name_width', 'item_name_width')->default(2);
-            $this->number('image_quality', 'image_quality')->default(15);  
+            $this->number('image_quality', 'image_quality')->default(15);
             $this->number('qty_width', 'qty_width')->default(2);
             $this->number('rate_width', 'rate_width')->default(2);
             $this->number('total_width', 'total_width')->default(6);
@@ -135,7 +136,7 @@ class Setting extends Form
             $this->text('latitude', 'Shop Location Latitude');
             $this->text('longitude', 'Shop Location  Longitude');
 
-           
+
             $this->text('printer_network_address', 'Printer Network address');
             $this->text('printer_port', 'Printer Port');
             $this->text('footer_message', 'Footer Message')->default("Thank You");

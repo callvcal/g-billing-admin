@@ -17,6 +17,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CategorySubcategoryItemController;
 use App\Http\Controllers\InAppPurchaseController;
+use App\Http\Controllers\InviteController;
 use App\Http\Controllers\ManagePaymentController;
 use App\Http\Controllers\RecipeController;
 use App\Http\Controllers\SettingController;
@@ -201,6 +202,7 @@ Route::group(['middleware' => ['security', 'auth:sanctum']], function () {
     Route::get('/menu/stock/fetch/{menuId}', [CategorySubcategoryItemController::class, 'stocks']);
     Route::post('/menu/stock/adjust', [CategorySubcategoryItemController::class, 'adjustStock']);
     Route::post('/staffs/password/change', [AuthController::class, 'changePassword']);
+    Route::get('/invite', [InviteController::class, 'share'])->name('invite.share');
 
 
 
