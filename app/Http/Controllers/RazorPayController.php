@@ -29,7 +29,7 @@ class RazorPayController extends Controller
     // protected $razorpayKey = '';
     public function razorpayKey()
     {
-        // return 'rzp_test_jSpVqLFtzzb2Ws';
+        return 'rzp_test_jSpVqLFtzzb2Ws';
         return env('RAZORPAY_IOS_KEY');
         // return (new Setting())->data()['razorpayKey'];
     }
@@ -38,7 +38,7 @@ class RazorPayController extends Controller
 
     public function keySecrete()
     {
-        // return 'Y3Wdsko5BWZuNdH7aGVdjzJp';
+        return 'Y3Wdsko5BWZuNdH7aGVdjzJp';
         return env('RAZORPAY_IOS_SECRETE');
         // return (new Setting())->data()['keySecrete'];
     }
