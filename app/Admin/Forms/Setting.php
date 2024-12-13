@@ -60,7 +60,7 @@ class Setting extends Form
                 $dist = "files/images/settings";
                 $name = "settings"  . '-' . time() . '.' . $ext;
 
-                $image->move(public_path($dist), $name);
+                $image->move(($dist), $name);
 
                 $data[$key] = $dist . '/' . $name;
             }
