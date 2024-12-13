@@ -69,7 +69,7 @@ class InviteController extends Controller
         $appName = config('app.name'); // Your application's domain URL
         $s3BucketUrl = null; // Optional, S3 bucket URL
 
-        $imageUrl = $s3BucketUrl ? "{$s3BucketUrl}/{$imagePath}" : "{$domainUrl}/public/{$imagePath}";
+        $image = $s3BucketUrl ? "{$s3BucketUrl}/{$imagePath}" : "{$domainUrl}/public/{$imagePath}";
 
         $title = "Enjoy Delicious Meals with $appName!";
         $description = "Get ready to enjoy delicious meals delivered to your doorstep with $appName! Use my referral code to get a special discount on your first order.";
@@ -77,7 +77,7 @@ class InviteController extends Controller
 
 
 
-        return view('invite', compact('title', 'description', 'imageUrl', 'url'));
+        return view('invite', compact('title', 'description', 'image', 'url'));
     }
 
 
