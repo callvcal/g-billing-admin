@@ -64,6 +64,7 @@ class InviteController extends Controller
 
         $userId = $dLink->user_id;
 
+        $url=null;
         $domainUrl = config('app.url'); // Your application's domain URL
         $appName = config('app.name'); // Your application's domain URL
         $s3BucketUrl = null; // Optional, S3 bucket URL
