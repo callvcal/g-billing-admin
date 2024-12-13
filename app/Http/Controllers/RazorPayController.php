@@ -177,6 +177,70 @@ class RazorPayController extends Controller
 
         return ($res);
     }
+
+    public function makeWalletPayment(WalletTransaction $walletTransaction)
+    {
+        $amount=$walletTransaction->amount;
+        $order_id=$walletTransaction->order_id;
+
+        Log::info('razorpayKey: '.$this->razorpayKey().' Secrete: '. $this->keySecrete().' '.$order_id);
+
+        $api = new Api($this->razorpayKey(), $this->keySecrete());
+        $body = [
+            'amount' => $amount * 100,
+            'currency' => 'INR',
+            'receipt' => $order_id,
+        ];
+
+        
+
+        $res = $api->order->create($body);
+
+
+
+        if ($res['id'] == null) {
+            $res = [
+                "error" => $res['error']
+            ];
+        } else {
+            $res = [
+                "id" => $res['id'],
+                "entity" => $res['entity'],
+                "amount" => $res['amount'],
+                "amount_paid" => $res['amount_paid'],
+                "amount_due" => $res['amount_due'],
+                "currency" => $res['currency'],
+                "receipt" => $res['receipt'],
+                "offer_id" => $res['offer_id'],
+                "status" => $res['status'],
+                "attempts" => $res['attempts'],
+                "notes" => $res['notes'],
+                "notes" => $res['notes'],
+                "razorpayKey" => $this->razorpayKey(),
+                "created_at" => $res['created_at']
+            ];
+        $walletTransaction->transaction_id=$res['id'];
+
+        }
+
+        PaymentData::create(
+            [
+                'json' => $res,
+                'user_id' => $walletTransaction->user_id,
+                'sell_id' => null,
+                'receipt_id' => $order_id,
+                'payment_gateway' => 'razorpay',
+                'request_type' => 'createOrder',
+                'wallet_transaction_id' => null,
+                'table_request_id' => null,
+                'payment_type' => 'wallet',
+            ]
+        );
+
+
+        return ($res);
+    }
+
     public function razorpayOrder($sellId = null, $walletTransactionID = null)
     {
 

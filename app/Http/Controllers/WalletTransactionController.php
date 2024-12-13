@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Admin\Forms\Setting as FormsSetting;
 use App\Jobs\WalletCreditJob;
+use App\Models\PaymentTransaction;
 use App\Models\RewardTransaction;
 use App\Models\ServiceModel;
 use App\Models\Setting;
@@ -76,11 +77,12 @@ class WalletTransactionController extends Controller
         ]);
         Log::channel($this->walletTransactionLogger)->info("transaction started with user_id:" . auth()->user()->id . ", walletTransactionID: " . $walletTransaction->id);
 
-
+       
+        
 
         return response([
             'data' => $walletTransaction,
-            'razorpay' => (new RazorPayController())->createOrder(walletTransactionID: $walletTransaction->id)
+            'razorpay' => (new RazorPayController())->makeWalletPayment(walletTransaction: $walletTransaction)
         ]);
     }
 
