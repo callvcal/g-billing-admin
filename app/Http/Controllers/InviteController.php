@@ -79,7 +79,44 @@ class InviteController extends Controller
 
         return view('invite', compact('title', 'description', 'image', 'url'));
     }
+    public function decode($code)
+    {
 
+        $dLink = DeepLinkCode::where('code', $code)->first();
+
+        if (!$dLink) {
+            return redirect('/');
+        }
+        $menuItemId = $dLink->menu_id;
+
+        $imagePath = null;
+
+        if (isset($menuItemId)) {
+            $menu = Menu::find($menuItemId);
+            $imagePath = $menu->image;
+        }
+
+        if (!$imagePath) {
+            $imagePath = ModelsSetting::find(1)->json['refer_earn_image'];
+        }
+
+        $userId = $dLink->user_id;
+
+        $url=null;
+        $domainUrl = config('app.url'); // Your application's domain URL
+        $appName = config('app.name'); // Your application's domain URL
+        $s3BucketUrl = null; // Optional, S3 bucket URL
+
+        $image = $s3BucketUrl ? "{$s3BucketUrl}/{$imagePath}" :asset($imagePath);
+
+        $title = "Enjoy Delicious Meals with $appName!";
+        $description = "Get ready to enjoy delicious meals delivered to your doorstep with $appName! Use my referral code to get a special discount on your first order.";
+
+
+
+
+        return view('invite', compact('title', 'description', 'image', 'url'));
+    }
 
 
 
