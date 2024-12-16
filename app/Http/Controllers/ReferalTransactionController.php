@@ -10,6 +10,7 @@ use App\Jobs\SendMessage;
 use App\Models\Referal;
 use App\Models\ReferalTransaction;
 use App\Models\RewardTransaction;
+use App\Models\Setting as ModelsSetting;
 use App\Models\SpecialDiscount;
 use App\Models\User;
 use Carbon\Carbon;
@@ -28,7 +29,7 @@ class ReferalTransactionController extends Controller
         try {
 
 
-            $setting = (new Setting())->data();
+            $setting = ModelsSetting::find(1)->json;
 
 
 
