@@ -65,7 +65,7 @@ class InAppPurchaseModelController extends AdminController
         $show->field('id', __('Id'));
         $show->field('admin_id', __('User id'));
         $show->field('business_id', __('Location id'));
-        $show->field('json', __('Json'));
+        $show->field('json', __('Json'))->json();
         $show->field('status', __('Status'));
         $show->field('product_id', __('Product id'));
         $show->field('purchase_id', __('Purchase id'));
