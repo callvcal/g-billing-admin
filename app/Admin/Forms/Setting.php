@@ -137,13 +137,21 @@ class Setting extends Form
             $this->text('longitude', 'Shop Location  Longitude');
 
 
-            $this->text('printer_network_address', 'Printer Network address');
-            $this->text('printer_port', 'Printer Port');
+           
+            
             $this->text('footer_message', 'Footer Message')->default("Thank You");
             $this->text('gstin', 'GSTIN');
-            $this->select('allow_breakfast', 'Allow Breakfast')->options($states)->default(1);
-            $this->select('allow_lunch', 'Allow Lunch')->options($states)->default(1);
-            $this->select('allow_dinner', 'Allow Dinner')->options($states)->default(1);
+            
+            $this->select('allow_breakfast', 'Allow Breakfast (Table Booking)')->options($states)->default(1);
+            $this->select('allow_lunch', 'Allow Lunch (Table Booking)')->options($states)->default(1);
+            $this->select('allow_dinner', 'Allow Dinner (Table Booking)')->options($states)->default(1);
+
+            $this->select('accept_online_orders', 'Accept Online Orders (User App)')->options($states)->default(1);
+            $this->select('allow_dine_in_order', 'Allow Dine In Order (User App)')->options($states)->default(1);
+            $this->select('allow_take_away_order', 'Allow Take Away Order (User App)')->options($states)->default(1);
+            $this->select('allow_delivery_order', 'Allow Delivery Order (User App)')->options($states)->default(1);
+
+
             $this->select('print_gst', 'Print GST')->options($states)->default(1);
             $this->select('is_gst_included', 'Is GST Included')->options($states)->default(1);
             $this->number('gst_rate', 'Enter GST Rate(0-100)%')->default(10)->rules('required');

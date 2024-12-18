@@ -122,7 +122,7 @@ class HomeController extends Controller
                 'categories' => $this->categories(),
                 'recentProducts' => Menu::all(),
                 'settings' => Setting::find(1),
-                'sales' => Sell::with(['user','address','items.address'])->whereDate('created_at', today())->get(),
+                'sales' => [],
                 'tables' => DiningTable::with('sell')->get(),
                 'units' => (Unit::all()),
                 'kitchens' => (Kitchen::all()),
