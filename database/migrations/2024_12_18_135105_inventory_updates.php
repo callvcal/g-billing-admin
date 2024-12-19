@@ -12,11 +12,31 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('categories', function (Blueprint $table) {
-            $table->boolean('allow_dine_in')->default(0)->nullable();
-            $table->boolean('allow_take_away')->default(0)->nullable();
-            $table->boolean('allow_delivery')->default(0)->nullable();
+            $table->dropColumn('allow_dine_in')->default(1)->nullable();
+            $table->dropColumn('allow_take_away')->default(1)->nullable();
+            $table->dropColumn('allow_delivery')->default(1)->nullable();
+        });
+        Schema::table('categories', function (Blueprint $table) {
+            $table->boolean('allow_dine_in')->default(1)->nullable();
+            $table->boolean('allow_take_away')->default(1)->nullable();
+            $table->boolean('allow_delivery')->default(1)->nullable();
         });
         Schema::table('sub_categories', function (Blueprint $table) {
+            $table->dropColumn('allow_dine_in')->default(1)->nullable();
+            $table->dropColumn('allow_take_away')->default(1)->nullable();
+            $table->dropColumn('allow_delivery')->default(1)->nullable();
+        });
+        Schema::table('sub_categories', function (Blueprint $table) {
+            $table->boolean('allow_dine_in')->default(1)->nullable();
+            $table->boolean('allow_take_away')->default(1)->nullable();
+            $table->boolean('allow_delivery')->default(1)->nullable();
+        });
+        Schema::table('menus', function (Blueprint $table) {
+            $table->dropColumn('allow_dine_in')->default(1)->nullable();
+            $table->dropColumn('allow_take_away')->default(1)->nullable();
+            $table->dropColumn('allow_delivery')->default(1)->nullable();
+        });
+        Schema::table('menus', function (Blueprint $table) {
             $table->boolean('allow_dine_in')->default(0)->nullable();
             $table->boolean('allow_take_away')->default(0)->nullable();
             $table->boolean('allow_delivery')->default(0)->nullable();
