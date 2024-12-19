@@ -37,9 +37,9 @@ return new class extends Migration
             $table->dropColumn('allow_delivery')->default(1)->nullable();
         });
         Schema::table('menus', function (Blueprint $table) {
-            $table->boolean('allow_dine_in')->default(0)->nullable();
-            $table->boolean('allow_take_away')->default(0)->nullable();
-            $table->boolean('allow_delivery')->default(0)->nullable();
+            $table->boolean('allow_dine_in')->default(1)->nullable();
+            $table->boolean('allow_take_away')->default(1)->nullable();
+            $table->boolean('allow_delivery')->default(1)->nullable();
         });
     }
 
