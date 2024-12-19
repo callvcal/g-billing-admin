@@ -186,6 +186,12 @@ Route::group(['middleware' => ['security', 'auth:sanctum']], function () {
     Route::post('/billing/place', [OrderController::class, 'placeOrderPOS']);
 
 
+    
+    Route::post('/inventory/menu', [BusinessController::class, 'toggleInventoryMenu']);
+    Route::post('/inventory/category', [BusinessController::class, 'toggleInventoryCategory']);
+    Route::post('/inventory/sub-category', [BusinessController::class, 'toggleInventorySubCategory']);
+
+
     Route::post('/business/set', [BusinessController::class, 'setBusiness']);
     Route::post('/business/v2/set', [BusinessController::class, 'setBusinessV2']);
     Route::get('/business/verify', [BusinessController::class, 'verifyBusiness']);

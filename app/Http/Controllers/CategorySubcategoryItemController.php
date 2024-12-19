@@ -76,8 +76,8 @@ class CategorySubcategoryItemController extends Controller
             ['id' => $request->id],
             [
                 'name' => $request->name,
-                'alert_qty' => (int) $request->alert_qty ,
-                'unit_id' => (int) $request->unit_id ,
+                'alert_qty' => (int) $request->alert_qty,
+                'unit_id' => (int) $request->unit_id,
                 'business_id' => auth()->user()->business_id,
                 'admin_id' => auth()->user()->id
 
@@ -124,18 +124,17 @@ class CategorySubcategoryItemController extends Controller
         if ($item->material) {
             // Update the stock based on the type
 
-            if($request->type === 'stock-in'){
-                $item->material->stock = $item->material->stock+$item->qty;
-                $item->material->total_stock_in = $item->material->total_stock_in+$item->qty;
-                
-            }else{
-                $item->material->stock = $item->material->stock-$item->qty;
-                $item->material->total_stock_out = $item->material->total_stock_out+$item->qty;
+            if ($request->type === 'stock-in') {
+                $item->material->stock = $item->material->stock + $item->qty;
+                $item->material->total_stock_in = $item->material->total_stock_in + $item->qty;
+            } else {
+                $item->material->stock = $item->material->stock - $item->qty;
+                $item->material->total_stock_out = $item->material->total_stock_out + $item->qty;
             }
-            $item->latest_stock=$item->material->stock;
+            $item->latest_stock = $item->material->stock;
             $item->save();
 
-           $item->material->save(); // Save the updated stock
+            $item->material->save(); // Save the updated stock
         }
 
         return response($item);
@@ -367,7 +366,7 @@ class CategorySubcategoryItemController extends Controller
     protected function saveImageFile(Request $request, $model)
     {
         if ($request->hasFile('file')) {
-            
+
             (new BusinessController())->saveFilePath($request, 'images', $model, 'image');
         } else
         if (!isset($request->image)) {
@@ -407,7 +406,7 @@ class CategorySubcategoryItemController extends Controller
 
     public function deleteUnit($id)
     {
-       
+
         $unit = Unit::findOrFail($id);
         if (auth()->user()->business_id != $unit->business_id) {
             return response()->json(['message' => "You don't have access to this resource"], 403);
@@ -594,16 +593,16 @@ class CategorySubcategoryItemController extends Controller
         if (!$menu) {
             return response()->json(['message' => "Requested resource does not exist"], 404);
         }
-    
+
         // Verify the user's access to the menu's business context.
         if (auth()->user()->business_id != $menu->business_id) {
             return response()->json(['message' => "You don't have access to this resource"], 403);
         }
-    
+
         // Duplicate the menu and save it.
         $duplicatedMenu = $menu->replicate();
         $duplicatedMenu->save();
-    
+
         // Return the duplicated menu as part of the response.
         return response()->json(['data' => $duplicatedMenu], 200);
     }
@@ -614,17 +613,79 @@ class CategorySubcategoryItemController extends Controller
         if (!$menu) {
             return response()->json(['message' => "Requested resource does not exist"], 404);
         }
-    
+
         // Verify the user's access to the menu's business context.
         if (auth()->user()->business_id != $menu->business_id) {
             return response()->json(['message' => "You don't have access to this resource"], 403);
         }
-    
+
         // Duplicate the menu and save it.
         $duplicatedMenu = $menu->replicate();
         $duplicatedMenu->save();
-    
+
         // Return the duplicated menu as part of the response.
         return response()->json(['data' => $duplicatedMenu], 200);
     }
+
+
+    function toggleInventoryMenu(Request $request)
+    {
+
+        $model = Menu::find($request->id);
+        if (!$model) {
+            return response()->json(['message' => "Requested resource does not exist"], 404);
+        }
+
+        // Verify the user's access to the menu's business context.
+        if (auth()->user()->business_id != $model->business_id) {
+            return response()->json(['message' => "You don't have access to this resource"], 403);
+        }
+
+        $model->allow_dine_in = $request->allow_dine_in;
+        $model->allow_delivery = $request->allow_delivery;
+        $model->allow_take_away = $request->allow_take_away;
+        $model->save();
+
+        return response(['data' => $model, 'message' => 'Updated Successfully.']);
     }
+    function toggleInventoryCategory(Request $request)
+    {
+
+        $model = Category::find($request->id);
+        if (!$model) {
+            return response()->json(['message' => "Requested resource does not exist"], 404);
+        }
+
+        // Verify the user's access to the menu's business context.
+        if (auth()->user()->business_id != $model->business_id) {
+            return response()->json(['message' => "You don't have access to this resource"], 403);
+        }
+
+        $model->allow_dine_in = $request->allow_dine_in;
+        $model->allow_delivery = $request->allow_delivery;
+        $model->allow_take_away = $request->allow_take_away;
+        $model->save();
+
+        return response(['data' => $model, 'message' => 'Updated Successfully.']);
+    }
+    function toggleInventorySubCategory(Request $request)
+    {
+
+        $model = SubCategory::find($request->id);
+        if (!$model) {
+            return response()->json(['message' => "Requested resource does not exist"], 404);
+        }
+
+        // Verify the user's access to the menu's business context.
+        if (auth()->user()->business_id != $model->business_id) {
+            return response()->json(['message' => "You don't have access to this resource"], 403);
+        }
+
+        $model->allow_dine_in = $request->allow_dine_in;
+        $model->allow_delivery = $request->allow_delivery;
+        $model->allow_take_away = $request->allow_take_away;
+        $model->save();
+
+        return response(['data' => $model, 'message' => 'Updated Successfully.']);
+    }
+}
