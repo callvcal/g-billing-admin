@@ -187,9 +187,9 @@ Route::group(['middleware' => ['security', 'auth:sanctum']], function () {
 
 
     
-    Route::post('/inventory/menu', [BusinessController::class, 'toggleInventoryMenu']);
-    Route::post('/inventory/category', [BusinessController::class, 'toggleInventoryCategory']);
-    Route::post('/inventory/sub-category', [BusinessController::class, 'toggleInventorySubCategory']);
+    Route::post('/inventory/menu', [CategorySubcategoryItemController::class, 'toggleInventoryMenu']);
+    Route::post('/inventory/category', [CategorySubcategoryItemController::class, 'toggleInventoryCategory']);
+    Route::post('/inventory/sub-category', [CategorySubcategoryItemController::class, 'toggleInventorySubCategory']);
 
 
     Route::post('/business/set', [BusinessController::class, 'setBusiness']);
